@@ -25,10 +25,14 @@ public class LogitechDualActionGamepad {
     public Trigger left;
 
     private GenericHID hid;
+    private double deadBand;
+    private boolean squareInputs; 
 
-    public LogitechDualActionGamepad(int port) {
+    public LogitechDualActionGamepad(int port, double deadBand, boolean squareInputs) {
 
         hid = new GenericHID(port);
+        this.deadBand = deadBand;
+        this.squareInputs = squareInputs;
 
         x = new JoystickButton(hid, 1);
         a = new JoystickButton(hid, 2);
@@ -50,15 +54,28 @@ public class LogitechDualActionGamepad {
     }
 
     public double getLeftXAxis() {
-        return hid.getRawAxis(0);
+        return modifyAxis(hid.getRawAxis(0));
     }
     public double getLeftYAxis() {
-        return hid.getRawAxis(1);
+        return modifyAxis(hid.getRawAxis(1)) * -1;
     }
     public double getRightXAxis() {
-        return hid.getRawAxis(2);
+        return modifyAxis(hid.getRawAxis(2));
     }
     public double getRightYAxis() {
-        return hid.getRawAxis(3);
+         return modifyAxis(hid.getRawAxis(3)) * -1;
+    }
+
+    private double modifyAxis(Double value) {
+        
+        if (Math.abs(value) < deadBand) {
+            return 0;
+        }
+
+        if (squareInputs == true){
+            return Math.abs(value) * value;
+        }
+        
+        return value;
     }
 }

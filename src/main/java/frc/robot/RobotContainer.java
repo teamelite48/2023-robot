@@ -6,14 +6,26 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.controls.LogitechDualActionGamepad;
+import frc.robot.subsystems.DriveSubsystem;
 
 public class RobotContainer {
  
-  private LogitechDualActionGamepad pilotGamepad = new LogitechDualActionGamepad(0);
+  public DriveSubsystem driveSubsystem = new DriveSubsystem();
+  private LogitechDualActionGamepad pilotGamepad = new LogitechDualActionGamepad(0, 0.02, true);
+
+  RunCommand driveCommand = new RunCommand(() -> driveSubsystem.drive(
+    pilotGamepad.getLeftXAxis(),
+    pilotGamepad.getLeftYAxis(),
+    pilotGamepad.getRightXAxis(),
+    pilotGamepad.getRightYAxis()
+  ), driveSubsystem);
 
   public RobotContainer() {
     initPilotControls();
+    
+    driveSubsystem.setDefaultCommand(driveCommand);
   }
 
   private void initPilotControls() {
