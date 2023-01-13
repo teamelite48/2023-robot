@@ -6,26 +6,29 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.commands.TeleopSwerve;
 import frc.robot.controls.LogitechDualActionGamepad;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 public class RobotContainer {
  
-  public DriveSubsystem driveSubsystem = new DriveSubsystem();
   private LogitechDualActionGamepad pilotGamepad = new LogitechDualActionGamepad(0, 0.02, true);
 
-  RunCommand driveCommand = new RunCommand(() -> driveSubsystem.drive(
-    pilotGamepad.getLeftXAxis(),
-    pilotGamepad.getLeftYAxis(),
-    pilotGamepad.getRightXAxis(),
-    pilotGamepad.getRightYAxis()
-  ), driveSubsystem);
+  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   public RobotContainer() {
-    initPilotControls();
-    
-    driveSubsystem.setDefaultCommand(driveCommand);
+
+    swerveSubsystem.setDefaultCommand(
+      new TeleopSwerve(
+        swerveSubsystem,
+        () -> pilotGamepad.getLeftYAxis(),
+        () -> pilotGamepad.getLeftXAxis(),
+        () -> pilotGamepad.getRightXAxis(),
+        () -> false
+      )
+    );
+
+    initPilotControls();  
   }
 
   private void initPilotControls() {
@@ -38,7 +41,9 @@ public class RobotContainer {
     pilotGamepad.lt.onTrue(new InstantCommand(() -> logButtonPress("LT")));
     pilotGamepad.rt.onTrue(new InstantCommand(() -> logButtonPress("RT")));
     pilotGamepad.back.onTrue(new InstantCommand(() -> logButtonPress("Back")));
-    pilotGamepad.start.onTrue(new InstantCommand(() -> logButtonPress("Start")));
+
+    pilotGamepad.start.onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    
     pilotGamepad.l3.onTrue(new InstantCommand(() -> logButtonPress("L3")));
     pilotGamepad.r3.onTrue(new InstantCommand(() -> logButtonPress("R3")));
     pilotGamepad.up.onTrue(new InstantCommand(() -> logButtonPress("Up")));
