@@ -24,15 +24,18 @@ public class LogitechDualActionGamepad {
     public Trigger down;
     public Trigger left;
 
+    
     private GenericHID hid;
     private double deadBand;
     private boolean squareInputs; 
+    private double maxOutput;
 
-    public LogitechDualActionGamepad(int port, double deadBand, boolean squareInputs) {
+    public LogitechDualActionGamepad(int port, double deadBand, boolean squareInputs, double maxOutput) {
 
         hid = new GenericHID(port);
         this.deadBand = deadBand;
         this.squareInputs = squareInputs;
+        this.maxOutput = maxOutput;
 
         x = new JoystickButton(hid, 1);
         a = new JoystickButton(hid, 2);
@@ -68,14 +71,16 @@ public class LogitechDualActionGamepad {
 
     private double modifyAxis(Double value) {
         
+        double limitedValue = value * maxOutput;      
+
         if (Math.abs(value) < deadBand) {
             return 0;
         }
 
         if (squareInputs == true){
-            return Math.abs(value) * value;
+            return Math.abs(limitedValue) * limitedValue;
         }
         
-        return value;
+        return limitedValue;
     }
 }

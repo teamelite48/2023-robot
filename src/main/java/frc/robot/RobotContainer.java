@@ -6,32 +6,32 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.commands.TeleopSwerve;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.controls.LogitechDualActionGamepad;
-import frc.robot.subsystems.swerve.SwerveSubsystem;
+import frc.robot.subsystems.drive.DriveSubsystem;
 
 public class RobotContainer {
  
-  private LogitechDualActionGamepad pilotGamepad = new LogitechDualActionGamepad(0, 0.02, true);
+  private LogitechDualActionGamepad pilotGamepad = new LogitechDualActionGamepad(0, 0.02, true, 0.25);
 
-  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
   public RobotContainer() {
 
-    swerveSubsystem.setDefaultCommand(
-      new TeleopSwerve(
-        swerveSubsystem,
-        () -> pilotGamepad.getLeftYAxis(),
-        () -> pilotGamepad.getLeftXAxis(),
-        () -> pilotGamepad.getRightXAxis(),
-        () -> false
-      )
-    );
+    Command driveCommand = new RunCommand(() -> driveSubsystem.drive(
+      pilotGamepad.getLeftYAxis(),
+      pilotGamepad.getLeftXAxis(),
+      pilotGamepad.getRightXAxis(),
+      true
+    ), driveSubsystem);
 
+    driveSubsystem.setDefaultCommand(driveCommand);
+      
     initPilotControls();  
   }
 
   private void initPilotControls() {
+
     pilotGamepad.x.onTrue(new InstantCommand(() -> logButtonPress("X")));
     pilotGamepad.a.onTrue(new InstantCommand(() -> logButtonPress("A")));
     pilotGamepad.b.onTrue(new InstantCommand(() -> logButtonPress("B")));
@@ -42,7 +42,7 @@ public class RobotContainer {
     pilotGamepad.rt.onTrue(new InstantCommand(() -> logButtonPress("RT")));
     pilotGamepad.back.onTrue(new InstantCommand(() -> logButtonPress("Back")));
 
-    pilotGamepad.start.onTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro()));
+    pilotGamepad.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
     
     pilotGamepad.l3.onTrue(new InstantCommand(() -> logButtonPress("L3")));
     pilotGamepad.r3.onTrue(new InstantCommand(() -> logButtonPress("R3")));
