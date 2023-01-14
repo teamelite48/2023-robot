@@ -4,109 +4,56 @@
 
 package frc.robot.subsystems.drive;
 
-import com.ctre.phoenix.sensors.CANCoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-
+import frc.robot.subsystems.drive.components.SwerveDriveEncoder;
+import frc.robot.subsystems.drive.components.SwerveDriveMotor;
+import frc.robot.subsystems.drive.components.SwerveTurnEncoder;
+import frc.robot.subsystems.drive.components.SwerveTurnMotor;
 
 public class SwerveModule {
-    private static final double kWheelRadius = 0.0508;
-    private static final int kEncoderResolution = 4096;
 
-    private static final double kModuleMaxAngularVelocity = DriveSubsystem.kMaxAngularSpeed;
-    private static final double kModuleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
+    private final SwerveDriveMotor driveMotor;
+    private final SwerveTurnMotor turnMotor;
 
-    private final CANSparkMax driveMotor;
-    private final CANSparkMax turningMotor;
+    private final SwerveDriveEncoder driveEncoder;
+    private final SwerveTurnEncoder turnEncoder;
 
-    private final RelativeEncoder driveEncoder;
-    private final CANCoder turningEncoder;
-
-    private final PIDController drivePID = new PIDController(1, 0, 0);
-    private final ProfiledPIDController turningPID = new ProfiledPIDController(
-        1,
-        0,
-        0,
-        new TrapezoidProfile.Constraints(kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration));
-
-    private final SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(1, 3);
-    private final SimpleMotorFeedforward turnFeedforward = new SimpleMotorFeedforward(1, 0.5);
 
     public SwerveModule(
-        int driveMotorChannel,
-        int turningMotorChannel,
-        int driveEncoderChannelA,
-        int driveEncoderChannelB,
-        int turningEncoderId
+        int driveMotorId,
+        int turnMotorId,
+        int turnEncoderId
     ) {
-        driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
-        turningMotor = new CANSparkMax(turningMotorChannel, MotorType.kBrushless);
+        driveMotor = new SwerveDriveMotor(driveMotorId);
+        turnMotor = new SwerveTurnMotor(turnMotorId);
 
         driveEncoder = driveMotor.getEncoder();
-        turningEncoder = new CANCoder(turningEncoderId);
-
-        driveEncoder.setVelocityConversionFactor((2 * Math.PI * kWheelRadius) / 60);
-        driveEncoder.setPositionConversionFactor(2* Math.PI * kWheelRadius);
-
-        turningPID.enableContinuousInput(-Math.PI, Math.PI);
+        turnEncoder = new SwerveTurnEncoder(turnEncoderId);
     }
 
     public SwerveModuleState getState() {
         return new SwerveModuleState(
             driveEncoder.getVelocity(),
-            getRotation2dFromTurnMotor()
+            turnEncoder.getRotation2d()
         );
-    }
-
-
-    private Rotation2d getRotation2dFromTurnMotor() {
-        return Rotation2d.fromDegrees(turningEncoder.getPosition());
     }
 
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
-            driveEncoder.getPosition(),
-            getRotation2dFromTurnMotor()
+            driveEncoder.getDistance(),
+            turnEncoder.getRotation2d()
         );
     }
 
-    public void setDesiredState(SwerveModuleState desiredState) {        
+    public void setDesiredState(SwerveModuleState desiredState) {
 
         SwerveModuleState optomizedState = SwerveModuleState.optimize(
             desiredState,
-            getRotation2dFromTurnMotor()
+            turnEncoder.getRotation2d()
         );
 
-        setDriveSpeed(optomizedState.speedMetersPerSecond);
-        setTurnAngle(optomizedState);
-    }
-
-    private void setDriveSpeed(double speedMetersPerSecond) {
-    
-        double output = drivePID.calculate(driveEncoder.getVelocity(), speedMetersPerSecond);
-        double feedforward = driveFeedforward.calculate(speedMetersPerSecond);
-        
-        driveMotor.setVoltage(output + feedforward);
-    }
-
-    private void setTurnAngle(SwerveModuleState state) {
-
-        final double turnOutput = turningPID.calculate(
-            Math.toRadians(turningEncoder.getPosition()),
-            state.angle.getRadians()
-        );
-
-        double turnFeedforwardValue = turnFeedforward.calculate(turningPID.getSetpoint().velocity);
-
-        turningMotor.setVoltage(turnOutput + turnFeedforwardValue);
+        driveMotor.setSpeed(driveEncoder.getVelocity(), optomizedState.speedMetersPerSecond);
+        turnMotor.setAngle(turnEncoder.getRadians(), optomizedState.angle.getRadians());
     }
 }
