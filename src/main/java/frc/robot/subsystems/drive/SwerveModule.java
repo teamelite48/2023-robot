@@ -22,7 +22,6 @@ public class SwerveModule {
     private final SwerveAngleEncoder angleEncoder;
 
     private boolean isDriveOpenLoop = true;
-
     private SwerveModuleState optomizedState = new SwerveModuleState();
 
     public SwerveModule(
@@ -71,7 +70,7 @@ public class SwerveModule {
 
     private void initReporting(int driveMotorId) {
 
-        var reportingId = "";
+        var reportingId = "undefined";
 
         switch (driveMotorId) {
             case FRONT_LEFT_DRIVE_MOTOR_ID:
