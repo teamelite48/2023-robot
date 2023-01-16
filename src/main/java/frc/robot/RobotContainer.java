@@ -11,45 +11,42 @@ import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.drive.DriveSubsystem;
 
 public class RobotContainer {
- 
-  private LogitechDualActionGamepad pilotGamepad = new LogitechDualActionGamepad(0, 0.02, true, 0.25);
+
+  private LogitechDualActionGamepad pilot = new LogitechDualActionGamepad(0);
 
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
   public RobotContainer() {
 
-    Command driveCommand = new RunCommand(() -> driveSubsystem.drive(
-      pilotGamepad.getLeftYAxis(),
-      pilotGamepad.getLeftXAxis(),
-      pilotGamepad.getRightXAxis(),
-      true
-    ), driveSubsystem);
+    driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.drive(
+      pilot.getLeftYAxis(),
+      pilot.getLeftXAxis(),
+      pilot.getRightXAxis()
+    ), driveSubsystem));
 
-    driveSubsystem.setDefaultCommand(driveCommand);
-      
-    initPilotControls();  
+    initPilotControls();
   }
 
   private void initPilotControls() {
 
-    pilotGamepad.x.onTrue(new InstantCommand(() -> logButtonPress("X")));
-    pilotGamepad.a.onTrue(new InstantCommand(() -> logButtonPress("A")));
-    pilotGamepad.b.onTrue(new InstantCommand(() -> logButtonPress("B")));
-    pilotGamepad.y.onTrue(new InstantCommand(() -> logButtonPress("Y")));
-    pilotGamepad.lb.onTrue(new InstantCommand(() -> logButtonPress("LB")));
-    pilotGamepad.rb.onTrue(new InstantCommand(() -> logButtonPress("RB")));
-    pilotGamepad.lt.onTrue(new InstantCommand(() -> logButtonPress("LT")));
-    pilotGamepad.rt.onTrue(new InstantCommand(() -> logButtonPress("RT")));
-    pilotGamepad.back.onTrue(new InstantCommand(() -> logButtonPress("Back")));
+    pilot.x.onTrue(new InstantCommand(() -> logButtonPress("X")));
+    pilot.a.onTrue(new InstantCommand(() -> logButtonPress("A")));
+    pilot.b.onTrue(new InstantCommand(() -> logButtonPress("B")));
+    pilot.y.onTrue(new InstantCommand(() -> logButtonPress("Y")));
+    pilot.lb.onTrue(new InstantCommand(() -> logButtonPress("LB")));
+    pilot.rb.onTrue(new InstantCommand(() -> logButtonPress("RB")));
+    pilot.lt.onTrue(new InstantCommand(() -> logButtonPress("LT")));
+    pilot.rt.onTrue(new InstantCommand(() -> logButtonPress("RT")));
+    pilot.back.onTrue(new InstantCommand(() -> logButtonPress("Back")));
 
-    pilotGamepad.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
-    
-    pilotGamepad.l3.onTrue(new InstantCommand(() -> logButtonPress("L3")));
-    pilotGamepad.r3.onTrue(new InstantCommand(() -> logButtonPress("R3")));
-    pilotGamepad.up.onTrue(new InstantCommand(() -> logButtonPress("Up")));
-    pilotGamepad.right.onTrue(new InstantCommand(() -> logButtonPress("Right")));
-    pilotGamepad.down.onTrue(new InstantCommand(() -> logButtonPress("Down")));
-    pilotGamepad.left.onTrue(new InstantCommand(() -> logButtonPress("Left")));
+    pilot.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
+
+    pilot.l3.onTrue(new InstantCommand(() -> logButtonPress("L3")));
+    pilot.r3.onTrue(new InstantCommand(() -> logButtonPress("R3")));
+    pilot.up.onTrue(new InstantCommand(() -> logButtonPress("Up")));
+    pilot.right.onTrue(new InstantCommand(() -> logButtonPress("Right")));
+    pilot.down.onTrue(new InstantCommand(() -> logButtonPress("Down")));
+    pilot.left.onTrue(new InstantCommand(() -> logButtonPress("Left")));
   }
 
   private void logButtonPress(String button) {
