@@ -71,12 +71,12 @@ public class DriveSubsystem extends SubsystemBase{
 
     public void drive(double xSpeed, double ySpeed, double rotation) {
 
-        var swerveModuleStates = getSwerveModuleStates(xSpeed, ySpeed, rotation);
+        var desiredStates = getDesiredStates(xSpeed, ySpeed, rotation);
 
-        frontLeft.setDesiredState(swerveModuleStates[0]);
-        frontRight.setDesiredState(swerveModuleStates[1]);
-        backLeft.setDesiredState(swerveModuleStates[2]);
-        backRight.setDesiredState(swerveModuleStates[3]);
+        frontLeft.setDesiredState(desiredStates[0]);
+        frontRight.setDesiredState(desiredStates[1]);
+        backLeft.setDesiredState(desiredStates[2]);
+        backRight.setDesiredState(desiredStates[3]);
     }
 
     public void updateOdometry() {
@@ -106,7 +106,7 @@ public class DriveSubsystem extends SubsystemBase{
         backRight.setDriveOpenLoop(isOpenLoop);
     }
 
-    private SwerveModuleState[] getSwerveModuleStates(double xSpeed, double ySpeed, double rotation) {
+    private SwerveModuleState[] getDesiredStates(double xSpeed, double ySpeed, double rotation) {
 
         var chassisSpeeds = getChasisSpeeds(xSpeed, ySpeed, rotation);
         var swerveModuleStates = kinematics.toSwerveModuleStates(chassisSpeeds);
