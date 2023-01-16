@@ -7,11 +7,11 @@ import com.ctre.phoenix.sensors.CANCoderStatusFrame;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 
-public class SwerveTurnEncoder {
+public class SwerveAngleEncoder {
 
     private final CANCoder encoder;
 
-    public SwerveTurnEncoder(int id, double offsetRadians) {
+    public SwerveAngleEncoder(int id, double offsetRadians) {
 
         CANCoderConfiguration config = new CANCoderConfiguration();
         config.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;

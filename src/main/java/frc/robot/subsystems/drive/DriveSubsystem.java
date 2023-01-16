@@ -17,33 +17,34 @@ import static frc.robot.subsystems.drive.DriveConfig.*;
 public class DriveSubsystem extends SubsystemBase{
 
     private final SwerveGyro gyro = new SwerveGyro(GYRO_ID);
+    private boolean isFieldRelative = true;
 
     private final SwerveModule frontLeft = new SwerveModule(
         FRONT_LEFT_DRIVE_MOTOR_ID,
-        FRONT_LEFT_TURN_MOTOR_ID,
-        FRONT_LEFT_TURN_ENCODER_ID,
-        FRONT_LEFT_TURN_OFFSET
+        FRONT_LEFT_ANGLE_MOTOR_ID,
+        FRONT_LEFT_ANGLE_ENCODER_ID,
+        FRONT_LEFT_ANGLE_OFFSET
     );
 
     private final SwerveModule frontRight = new SwerveModule(
         FRONT_RIGHT_DRIVE_MOTOR_ID,
-        FRONT_RIGHT_TURN_MOTOR_ID,
-        FRONT_RIGHT_TURN_ENCODER_ID,
-        FRONT_RIGHT_TURN_OFFSET
+        FRONT_RIGHT_ANGLE_MOTOR_ID,
+        FRONT_RIGHT_ANGLE_ENCODER_ID,
+        FRONT_RIGHT_ANGLE_OFFSET
     );
 
     private final SwerveModule backLeft = new SwerveModule(
         BACK_LEFT_DRIVE_MOTOR_ID,
-        BACK_LEFT_TURN_MOTOR_ID,
-        BACK_LEFT_TURN_ENCODER_ID,
-        BACK_LEFT_TURN_OFFSET
+        BACK_LEFT_ANGLE_MOTOR_ID,
+        BACK_LEFT_ANGLE_ENCODER_ID,
+        BACK_LEFT_ANGLE_OFFSET
     );
 
     private final SwerveModule backRight = new SwerveModule(
         BACK_RIGHT_DRIVE_MOTOR_ID,
-        BACK_RIGHT_TURN_MOTOR_ID,
-        BACK_RIGHT_TURN_ENCODER_ID,
-        BACK_RIGHT_TURN_OFFSET
+        BACK_RIGHT_ANGLE_MOTOR_ID,
+        BACK_RIGHT_ANGLE_ENCODER_ID,
+        BACK_RIGHT_ANGLE_OFFSET
     );
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
@@ -68,9 +69,9 @@ public class DriveSubsystem extends SubsystemBase{
         zeroGyro();
     }
 
-    public void drive(double xSpeed, double ySpeed, double rotation, boolean fieldRelative) {
+    public void drive(double xSpeed, double ySpeed, double rotation) {
 
-        var swerveModuleStates = getSwerveModuleStates(xSpeed, ySpeed, rotation, fieldRelative);
+        var swerveModuleStates = getSwerveModuleStates(xSpeed, ySpeed, rotation);
 
         frontLeft.setDesiredState(swerveModuleStates[0]);
         frontRight.setDesiredState(swerveModuleStates[1]);
@@ -94,17 +95,28 @@ public class DriveSubsystem extends SubsystemBase{
         gyro.zero();
     }
 
-    private SwerveModuleState[] getSwerveModuleStates(double xSpeed, double ySpeed, double rotation, boolean fieldRelative) {
+    public void setFieldRelative(boolean isFieldRelative) {
+        this.isFieldRelative = isFieldRelative;
+    }
 
-        var chassisSpeeds = getChasisSpeeds(xSpeed, ySpeed, rotation, fieldRelative);
+    public void setDriveOpenLoop(boolean isOpenLoop) {
+        frontLeft.setDriveOpenLoop(isOpenLoop);
+        frontRight.setDriveOpenLoop(isOpenLoop);
+        backLeft.setDriveOpenLoop(isOpenLoop);
+        backRight.setDriveOpenLoop(isOpenLoop);
+    }
+
+    private SwerveModuleState[] getSwerveModuleStates(double xSpeed, double ySpeed, double rotation) {
+
+        var chassisSpeeds = getChasisSpeeds(xSpeed, ySpeed, rotation);
         var swerveModuleStates = kinematics.toSwerveModuleStates(chassisSpeeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, MAX_SPEED);
 
         return swerveModuleStates;
     }
 
-    private ChassisSpeeds getChasisSpeeds(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-        if (fieldRelative) {
+    private ChassisSpeeds getChasisSpeeds(double xSpeed, double ySpeed, double rot) {
+        if (isFieldRelative) {
             return ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, gyro.getRotation2d());
         }
         else {

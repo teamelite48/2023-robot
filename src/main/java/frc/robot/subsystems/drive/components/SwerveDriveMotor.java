@@ -18,10 +18,10 @@ public class SwerveDriveMotor {
 
         motor = new CANSparkMax(id, MotorType.kBrushless);
 
-        motor.setInverted(DRIVE_INVERTED);
+        motor.setInverted(DRIVE_MOTOR_INVERTED);
 
         motor.enableVoltageCompensation(NOMINAL_VOLTAGE);
-        motor.setSmartCurrentLimit((int) DRIVE_CURRENT_LIMIT);
+        motor.setSmartCurrentLimit((int) DRIVE_MOTOR_CURRENT_LIMIT);
 
         motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus0, 100);
         motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus1, 20);
@@ -34,12 +34,20 @@ public class SwerveDriveMotor {
         return new SwerveDriveEncoder(motor.getEncoder());
     }
 
-    public void setSpeed(double currentSpeed, double targetSpeed) {
+    public void setSpeed(double currentSpeed, double targetSpeed, boolean isOpenLoop) {
 
-        var output = pid.calculate(currentSpeed, targetSpeed);
-        var feedforwardValue = feedforward.calculate(targetSpeed);
+        if (isOpenLoop) {
+            setSpeed(targetSpeed);
+        }
+        else {
+            var output = pid.calculate(currentSpeed, targetSpeed);
+            var feedforwardValue = feedforward.calculate(targetSpeed);
+            setVoltage(output + feedforwardValue);
+        }
+    }
 
-        setVoltage(output + feedforwardValue);
+    private void setSpeed(double speed) {
+        motor.set(speed / MAX_SPEED);
     }
 
     private void setVoltage(double outputVolts) {

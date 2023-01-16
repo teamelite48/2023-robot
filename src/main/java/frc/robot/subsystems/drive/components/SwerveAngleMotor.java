@@ -6,21 +6,21 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import static frc.robot.subsystems.drive.DriveConfig.*;
 
-public class SwerveTurnMotor {
+public class SwerveAngleMotor {
 
     private final CANSparkMax motor;
 
-    private final ProfiledPIDController pid = TURN_MOTOR_PID;
-    private final SimpleMotorFeedforward feedforward = TURN_MOTOR_FEEDFORWARD;
+    private final ProfiledPIDController pid = ANGLE_MOTOR_PID;
+    private final SimpleMotorFeedforward feedforward = ANGLE_MOTOR_FEEDFORWARD;
 
-    public SwerveTurnMotor(int id) {
+    public SwerveAngleMotor(int id) {
 
         motor = new CANSparkMax(id, MotorType.kBrushless);
 
         motor.enableVoltageCompensation(NOMINAL_VOLTAGE);
-        motor.setSmartCurrentLimit((int) TURN_CURRENT_LIMIT);
+        motor.setSmartCurrentLimit((int) ANGLE_MOTOR_CURRENT_LIMIT);
 
-        motor.setInverted(TURN_INVERTED);
+        motor.setInverted(ANGLE_MOTOR_INVERTED);
 
         motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus0, 100);
         motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus1, 20);

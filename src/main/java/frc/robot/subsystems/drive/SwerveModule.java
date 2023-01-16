@@ -8,53 +8,58 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.subsystems.drive.components.SwerveDriveEncoder;
 import frc.robot.subsystems.drive.components.SwerveDriveMotor;
-import frc.robot.subsystems.drive.components.SwerveTurnEncoder;
-import frc.robot.subsystems.drive.components.SwerveTurnMotor;
+import frc.robot.subsystems.drive.components.SwerveAngleEncoder;
+import frc.robot.subsystems.drive.components.SwerveAngleMotor;
 
 public class SwerveModule {
 
     private final SwerveDriveMotor driveMotor;
-    private final SwerveTurnMotor turnMotor;
+    private final SwerveAngleMotor angleMotor;
 
     private final SwerveDriveEncoder driveEncoder;
-    private final SwerveTurnEncoder turnEncoder;
+    private final SwerveAngleEncoder angleEncoder;
 
+    private boolean isDriveOpenLoop = true;
 
     public SwerveModule(
         int driveMotorId,
         int turnMotorId,
         int turnEncoderId,
-        double turnOffsetDegrees
+        double angleOffsetRadians
     ) {
         driveMotor = new SwerveDriveMotor(driveMotorId);
-        turnMotor = new SwerveTurnMotor(turnMotorId);
+        angleMotor = new SwerveAngleMotor(turnMotorId);
 
         driveEncoder = driveMotor.getEncoder();
-        turnEncoder = new SwerveTurnEncoder(turnEncoderId, turnOffsetDegrees);
+        angleEncoder = new SwerveAngleEncoder(turnEncoderId, angleOffsetRadians);
     }
 
     public void setDesiredState(SwerveModuleState desiredState) {
 
         SwerveModuleState optomizedState = SwerveModuleState.optimize(
             desiredState,
-            turnEncoder.getRotation2d()
+            angleEncoder.getRotation2d()
         );
 
-        driveMotor.setSpeed(driveEncoder.getVelocity(), optomizedState.speedMetersPerSecond);
-        turnMotor.setAngle(turnEncoder.getRadians(), optomizedState.angle.getRadians());
+        driveMotor.setSpeed(driveEncoder.getVelocity(), optomizedState.speedMetersPerSecond, isDriveOpenLoop);
+        angleMotor.setAngle(angleEncoder.getRadians(), optomizedState.angle.getRadians());
     }
 
     public SwerveModuleState getState() {
         return new SwerveModuleState(
             driveEncoder.getVelocity(),
-            turnEncoder.getRotation2d()
+            angleEncoder.getRotation2d()
         );
     }
 
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
             driveEncoder.getDistance(),
-            turnEncoder.getRotation2d()
+            angleEncoder.getRotation2d()
         );
+    }
+
+    public void setDriveOpenLoop(boolean isDriveOpenLoop) {
+        this.isDriveOpenLoop = isDriveOpenLoop;
     }
 }
