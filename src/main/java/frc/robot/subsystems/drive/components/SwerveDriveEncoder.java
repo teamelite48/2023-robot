@@ -19,7 +19,7 @@ public class SwerveDriveEncoder {
         return encoder.getVelocity();
     }
 
-    public double getDistance() {
+    public double getPosition() {
         return encoder.getPosition();
     }
 }

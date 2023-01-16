@@ -23,7 +23,7 @@ public class SwerveAngleEncoder {
         encoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 100, 250);
     }
 
-    public Rotation2d getRotation2d() {
+    public Rotation2d getRotation() {
         return Rotation2d.fromDegrees(encoder.getAbsolutePosition());
     }
 

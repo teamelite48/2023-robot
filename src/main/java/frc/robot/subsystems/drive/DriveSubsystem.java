@@ -17,6 +17,7 @@ import static frc.robot.subsystems.drive.DriveConfig.*;
 public class DriveSubsystem extends SubsystemBase{
 
     private final SwerveGyro gyro = new SwerveGyro(GYRO_ID);
+
     private boolean isFieldRelative = true;
 
     private final SwerveModule frontLeft = new SwerveModule(

@@ -6,10 +6,12 @@ package frc.robot.subsystems.drive;
 
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.subsystems.drive.components.SwerveDriveEncoder;
 import frc.robot.subsystems.drive.components.SwerveDriveMotor;
 import frc.robot.subsystems.drive.components.SwerveAngleEncoder;
 import frc.robot.subsystems.drive.components.SwerveAngleMotor;
+import static frc.robot.subsystems.drive.DriveConfig.*;
 
 public class SwerveModule {
 
@@ -20,6 +22,8 @@ public class SwerveModule {
     private final SwerveAngleEncoder angleEncoder;
 
     private boolean isDriveOpenLoop = true;
+
+    private SwerveModuleState optomizedState = new SwerveModuleState();
 
     public SwerveModule(
         int driveMotorId,
@@ -32,13 +36,15 @@ public class SwerveModule {
 
         driveEncoder = driveMotor.getEncoder();
         angleEncoder = new SwerveAngleEncoder(turnEncoderId, angleOffsetRadians);
+
+        initReporting(driveMotorId);
     }
 
     public void setDesiredState(SwerveModuleState desiredState) {
 
-        SwerveModuleState optomizedState = SwerveModuleState.optimize(
+        optomizedState = SwerveModuleState.optimize(
             desiredState,
-            angleEncoder.getRotation2d()
+            angleEncoder.getRotation()
         );
 
         driveMotor.setSpeed(driveEncoder.getVelocity(), optomizedState.speedMetersPerSecond, isDriveOpenLoop);
@@ -48,18 +54,48 @@ public class SwerveModule {
     public SwerveModuleState getState() {
         return new SwerveModuleState(
             driveEncoder.getVelocity(),
-            angleEncoder.getRotation2d()
+            angleEncoder.getRotation()
         );
     }
 
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
-            driveEncoder.getDistance(),
-            angleEncoder.getRotation2d()
+            driveEncoder.getPosition(),
+            angleEncoder.getRotation()
         );
     }
 
     public void setDriveOpenLoop(boolean isDriveOpenLoop) {
         this.isDriveOpenLoop = isDriveOpenLoop;
+    }
+
+    private void initReporting(int driveMotorId) {
+
+        var reportingId = "";
+
+        switch (driveMotorId) {
+            case FRONT_LEFT_DRIVE_MOTOR_ID:
+                reportingId = "Front Left";
+                break;
+            case FRONT_RIGHT_DRIVE_MOTOR_ID:
+                reportingId = "Front Right";
+                break;
+            case BACK_LEFT_DRIVE_MOTOR_ID:
+                reportingId = "Back Left";
+                break;
+            case BACK_RIGHT_DRIVE_MOTOR_ID:
+                reportingId = "Back Right";
+                break;
+        }
+
+        var tab = Shuffleboard.getTab("Swerve Modules");
+
+        tab.addDouble(reportingId + " Target Velocity", () -> optomizedState.speedMetersPerSecond);
+        tab.addDouble(reportingId + " Current Velocity", () -> driveEncoder.getVelocity());
+
+        tab.addDouble(reportingId + " Target Angle", () -> optomizedState.angle.getDegrees());
+        tab.addDouble(reportingId + " Current Angle", () -> Math.toDegrees(angleEncoder.getRadians()));
+
+        tab.addDouble(reportingId + " Position", () -> driveEncoder.getPosition());
     }
 }
