@@ -23,13 +23,25 @@ public class SwerveModule {
     public SwerveModule(
         int driveMotorId,
         int turnMotorId,
-        int turnEncoderId
+        int turnEncoderId,
+        double turnOffsetDegrees
     ) {
         driveMotor = new SwerveDriveMotor(driveMotorId);
         turnMotor = new SwerveTurnMotor(turnMotorId);
 
         driveEncoder = driveMotor.getEncoder();
-        turnEncoder = new SwerveTurnEncoder(turnEncoderId);
+        turnEncoder = new SwerveTurnEncoder(turnEncoderId, turnOffsetDegrees);
+    }
+
+    public void setDesiredState(SwerveModuleState desiredState) {
+
+        SwerveModuleState optomizedState = SwerveModuleState.optimize(
+            desiredState,
+            turnEncoder.getRotation2d()
+        );
+
+        driveMotor.setSpeed(driveEncoder.getVelocity(), optomizedState.speedMetersPerSecond);
+        turnMotor.setAngle(turnEncoder.getRadians(), optomizedState.angle.getRadians());
     }
 
     public SwerveModuleState getState() {
@@ -44,16 +56,5 @@ public class SwerveModule {
             driveEncoder.getDistance(),
             turnEncoder.getRotation2d()
         );
-    }
-
-    public void setDesiredState(SwerveModuleState desiredState) {
-
-        SwerveModuleState optomizedState = SwerveModuleState.optimize(
-            desiredState,
-            turnEncoder.getRotation2d()
-        );
-
-        driveMotor.setSpeed(driveEncoder.getVelocity(), optomizedState.speedMetersPerSecond);
-        turnMotor.setAngle(turnEncoder.getRadians(), optomizedState.angle.getRadians());
     }
 }

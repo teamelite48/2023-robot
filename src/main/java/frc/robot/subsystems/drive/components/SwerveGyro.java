@@ -17,6 +17,6 @@ public class SwerveGyro {
     }
 
     public void zero() {
-        gyro.zeroGyroBiasNow();
+        gyro.setYaw(0.0);
     }
 }

@@ -16,24 +16,41 @@ import static frc.robot.subsystems.drive.DriveConfig.*;
 
 public class DriveSubsystem extends SubsystemBase{
 
-
-    private final Translation2d frontLeftLocation = new Translation2d(0.381, 0.381);
-    private final Translation2d frontRightLocation = new Translation2d(0.381, -0.381);
-    private final Translation2d backLeftLocation = new Translation2d(-0.381, 0.381);
-    private final Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
-
-    private final SwerveModule frontLeft = new SwerveModule(1, 2, 0);
-    private final SwerveModule frontRight = new SwerveModule(3, 4, 4);
-    private final SwerveModule backLeft = new SwerveModule(5, 6, 8);
-    private final SwerveModule backRight = new SwerveModule(7, 8, 12);
-
     private final SwerveGyro gyro = new SwerveGyro(GYRO_ID);
 
+    private final SwerveModule frontLeft = new SwerveModule(
+        FRONT_LEFT_DRIVE_MOTOR_ID,
+        FRONT_LEFT_TURN_MOTOR_ID,
+        FRONT_LEFT_TURN_ENCODER_ID,
+        FRONT_LEFT_TURN_OFFSET
+    );
+
+    private final SwerveModule frontRight = new SwerveModule(
+        FRONT_RIGHT_DRIVE_MOTOR_ID,
+        FRONT_RIGHT_TURN_MOTOR_ID,
+        FRONT_RIGHT_TURN_ENCODER_ID,
+        FRONT_RIGHT_TURN_OFFSET
+    );
+
+    private final SwerveModule backLeft = new SwerveModule(
+        BACK_LEFT_DRIVE_MOTOR_ID,
+        BACK_LEFT_TURN_MOTOR_ID,
+        BACK_LEFT_TURN_ENCODER_ID,
+        BACK_LEFT_TURN_OFFSET
+    );
+
+    private final SwerveModule backRight = new SwerveModule(
+        BACK_RIGHT_DRIVE_MOTOR_ID,
+        BACK_RIGHT_TURN_MOTOR_ID,
+        BACK_RIGHT_TURN_ENCODER_ID,
+        BACK_RIGHT_TURN_OFFSET
+    );
+
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
-        frontLeftLocation,
-        frontRightLocation,
-        backLeftLocation,
-        backRightLocation
+        new Translation2d(TRACKWIDTH_METERS / 2.0, WHEELBASE_METERS / 2.0),
+        new Translation2d(TRACKWIDTH_METERS / 2.0, -WHEELBASE_METERS / 2.0),
+        new Translation2d(-TRACKWIDTH_METERS / 2.0, WHEELBASE_METERS / 2.0),
+        new Translation2d(-TRACKWIDTH_METERS / 2.0, -WHEELBASE_METERS / 2.0)
     );
 
     private final SwerveDriveOdometry odometry = new SwerveDriveOdometry(
@@ -51,9 +68,9 @@ public class DriveSubsystem extends SubsystemBase{
         zeroGyro();
     }
 
-    public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+    public void drive(double xSpeed, double ySpeed, double rotation, boolean fieldRelative) {
 
-        var swerveModuleStates = getSwerveModuleStates(xSpeed, ySpeed, rot, fieldRelative);
+        var swerveModuleStates = getSwerveModuleStates(xSpeed, ySpeed, rotation, fieldRelative);
 
         frontLeft.setDesiredState(swerveModuleStates[0]);
         frontRight.setDesiredState(swerveModuleStates[1]);
@@ -77,9 +94,9 @@ public class DriveSubsystem extends SubsystemBase{
         gyro.zero();
     }
 
-    private SwerveModuleState[] getSwerveModuleStates(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+    private SwerveModuleState[] getSwerveModuleStates(double xSpeed, double ySpeed, double rotation, boolean fieldRelative) {
 
-        var chassisSpeeds = getChasisSpeeds(xSpeed, ySpeed, rot, fieldRelative);
+        var chassisSpeeds = getChasisSpeeds(xSpeed, ySpeed, rotation, fieldRelative);
         var swerveModuleStates = kinematics.toSwerveModuleStates(chassisSpeeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, MAX_SPEED);
 

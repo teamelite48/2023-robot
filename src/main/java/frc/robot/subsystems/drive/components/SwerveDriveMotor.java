@@ -5,15 +5,29 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import static frc.robot.subsystems.drive.DriveConfig.*;
 
 public class SwerveDriveMotor {
 
     private final CANSparkMax motor;
-    private final PIDController pid = new PIDController(1, 0, 0);
-    private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(1, 3);
+
+    private final PIDController pid = DRIVE_MOTOR_PID;
+    private final SimpleMotorFeedforward feedforward = DRIVE_MOTOR_FEEDFORWARD;
 
     public SwerveDriveMotor(int id) {
+
         motor = new CANSparkMax(id, MotorType.kBrushless);
+
+        motor.setInverted(DRIVE_INVERTED);
+
+        motor.enableVoltageCompensation(NOMINAL_VOLTAGE);
+        motor.setSmartCurrentLimit((int) DRIVE_CURRENT_LIMIT);
+
+        motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus0, 100);
+        motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus1, 20);
+        motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus2, 20);
+
+        motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
     }
 
     public SwerveDriveEncoder getEncoder() {
