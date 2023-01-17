@@ -31,14 +31,14 @@ public class SwerveAngleMotor {
         pid.enableContinuousInput(-Math.PI, Math.PI);
     }
 
-    private void setVoltage(double outputVolts) {
-        motor.setVoltage(outputVolts);
-    }
-
     public void setAngle(double current, double target) {
         double output = pid.calculate(current, target);
         double feedforwardValue = feedforward.calculate(pid.getSetpoint().velocity);
 
         setVoltage(output + feedforwardValue);
+    }
+
+    private void setVoltage(double outputVolts) {
+        motor.setVoltage(outputVolts);
     }
 }
