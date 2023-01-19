@@ -35,7 +35,7 @@ public class SwerveAngleMotor {
         double output = pid.calculate(current, target);
         double feedforwardValue = feedforward.calculate(pid.getSetpoint().velocity);
 
-        setVoltage(output + feedforwardValue);
+         setVoltage(output + feedforwardValue);
     }
 
     private void setVoltage(double outputVolts) {

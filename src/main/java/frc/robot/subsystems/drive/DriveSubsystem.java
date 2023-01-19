@@ -4,12 +4,14 @@
 
 package frc.robot.subsystems.drive;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.drive.components.SwerveGyro;
 import static frc.robot.subsystems.drive.DriveConfig.*;
@@ -18,7 +20,11 @@ public class DriveSubsystem extends SubsystemBase{
 
     private final SwerveGyro gyro = new SwerveGyro(GYRO_ID);
 
-    private boolean isFieldRelative = true;
+    private final SlewRateLimiter xSlew = new SlewRateLimiter(SLEW_RATE);
+    private final SlewRateLimiter ySlew = new SlewRateLimiter(SLEW_RATE);
+    private final SlewRateLimiter rotationSlew = new SlewRateLimiter(SLEW_RATE);
+
+    private boolean isFieldRelative = false;
 
     private final SwerveModule frontLeft = new SwerveModule(
         FRONT_LEFT_DRIVE_MOTOR_ID,
@@ -72,7 +78,13 @@ public class DriveSubsystem extends SubsystemBase{
 
     public void drive(double xSpeed, double ySpeed, double rotation) {
 
-        var desiredStates = getDesiredStates(xSpeed, ySpeed, rotation);
+        var desiredStates = getDesiredStates(
+            xSlew.calculate(xSpeed) * MAX_SPEED,
+            ySlew.calculate(ySpeed) * MAX_SPEED,
+            rotationSlew.calculate(rotation)
+        );
+
+        SmartDashboard.putNumber("Debug", desiredStates[2].speedMetersPerSecond);
 
         frontLeft.setDesiredState(desiredStates[0]);
         frontRight.setDesiredState(desiredStates[1]);

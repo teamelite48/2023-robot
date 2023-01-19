@@ -29,7 +29,9 @@ public class DriveConfig {
     public static final int BACK_RIGHT_ANGLE_ENCODER_ID = 37;
     public static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(24.6);
 
-    public static final double MAX_SPEED = 3.0; // 3 meters per second
+    public static final int SLEW_RATE = 1;
+
+    public static final double MAX_SPEED = 4.44; // 3 meters per second
     public static final double MAX_ANGULAR_SPEED = Math.PI; // 1/2 rotation per second
     public static final double MAX_ANGULAR_ACCELERATION = 2 * Math.PI;
 

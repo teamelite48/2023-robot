@@ -74,27 +74,27 @@ public class SwerveModule {
 
         switch (driveMotorId) {
             case FRONT_LEFT_DRIVE_MOTOR_ID:
-                reportingId = "Front Left";
+                reportingId = "FL";
                 break;
             case FRONT_RIGHT_DRIVE_MOTOR_ID:
-                reportingId = "Front Right";
+                reportingId = "FR";
                 break;
             case BACK_LEFT_DRIVE_MOTOR_ID:
-                reportingId = "Back Left";
+                reportingId = "BL";
                 break;
             case BACK_RIGHT_DRIVE_MOTOR_ID:
-                reportingId = "Back Right";
+                reportingId = "BR";
                 break;
         }
 
         var tab = Shuffleboard.getTab("Swerve Modules");
 
-        tab.addDouble(reportingId + " Target Velocity", () -> optomizedState.speedMetersPerSecond);
-        tab.addDouble(reportingId + " Current Velocity", () -> driveEncoder.getVelocity());
+        tab.addDouble(reportingId + " TV", () -> optomizedState.speedMetersPerSecond);
+        tab.addDouble(reportingId + " CV", () -> driveEncoder.getVelocity());
 
-        tab.addDouble(reportingId + " Target Angle", () -> optomizedState.angle.getDegrees());
-        tab.addDouble(reportingId + " Current Angle", () -> Math.toDegrees(angleEncoder.getRadians()));
+        tab.addDouble(reportingId + " TA", () -> optomizedState.angle.getDegrees());
+        tab.addDouble(reportingId + " CA", () -> Math.toDegrees(angleEncoder.getRadians()));
 
-        tab.addDouble(reportingId + " Position", () -> driveEncoder.getPosition());
+        tab.addDouble(reportingId + " Pos", () -> driveEncoder.getPosition());
     }
 }
