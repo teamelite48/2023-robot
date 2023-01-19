@@ -32,6 +32,9 @@ public class DriveConfig {
     public static final int SLEW_RATE = 1;
     public static final double MAX_OUTPUT = 0.5;
 
+    public static final boolean FIELD_RELATIVE = false;
+    public static final boolean DRIVE_MOTOR_OPEN_LOOP = true;
+
     public static final double WHEEL_DIAMETER = 0.10033;
     public static final double TRACKWIDTH_METERS = 0.66675;
     public static final double WHEELBASE_METERS = 0.57785;
@@ -53,9 +56,9 @@ public class DriveConfig {
     public final static double DRIVE_POSITION_CONVERSION_FACTOR = Math.PI * WHEEL_DIAMETER * DRIVE_MOTOR_REDUCTION;
     public final static double ANGLE_POSITION_CONVERSION_FACTOR = 2.0 * Math.PI * ANGLE_MOTOR_REDUCTION;
 
-    public static final PIDController DRIVE_MOTOR_PID = new PIDController(1.0, 0, 0.0);
+    public static final PIDController DRIVE_MOTOR_PID = new PIDController(0.0, 0, 0.0);
     public static final SimpleMotorFeedforward DRIVE_MOTOR_FEEDFORWARD = new SimpleMotorFeedforward(0, 0);
 
-    public static final ProfiledPIDController ANGLE_MOTOR_PID = new ProfiledPIDController(1.0, 0, 0.0, new TrapezoidProfile.Constraints(MAX_ANGULAR_SPEED, MAX_ANGULAR_ACCELERATION));
+    public static final ProfiledPIDController ANGLE_MOTOR_PID = new ProfiledPIDController(0.0, 0, 0.0, new TrapezoidProfile.Constraints(MAX_ANGULAR_SPEED, MAX_ANGULAR_ACCELERATION));
     public static final SimpleMotorFeedforward ANGLE_MOTOR_FEEDFORWARD = new SimpleMotorFeedforward(0, 0);
 }

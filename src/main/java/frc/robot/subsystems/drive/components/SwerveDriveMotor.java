@@ -34,23 +34,16 @@ public class SwerveDriveMotor {
         return new SwerveDriveEncoder(motor.getEncoder());
     }
 
-    public void setSpeed(double currentSpeed, double targetSpeed, boolean isOpenLoop) {
+    public void setSpeed(double currentMetersPerSeconds, double targetMetersPerSecond, boolean isOpenLoop) {
 
         if (isOpenLoop) {
-            setSpeed(targetSpeed);
+            motor.setVoltage(targetMetersPerSecond / MAX_SPEED * NOMINAL_VOLTAGE);
         }
         else {
-            var output = pid.calculate(currentSpeed, targetSpeed);
-            var feedforwardValue = feedforward.calculate(targetSpeed);
-            setVoltage(output + feedforwardValue);
+            var outputVoltage = pid.calculate(currentMetersPerSeconds, targetMetersPerSecond) / MAX_SPEED * NOMINAL_VOLTAGE;
+            var feedforwardVoltage = feedforward.calculate(targetMetersPerSecond);
+
+            motor.setVoltage(outputVoltage + feedforwardVoltage);
         }
-    }
-
-    private void setSpeed(double speed) {
-        motor.set(speed / MAX_SPEED);
-    }
-
-    private void setVoltage(double outputVolts) {
-        motor.setVoltage(outputVolts);
     }
 }

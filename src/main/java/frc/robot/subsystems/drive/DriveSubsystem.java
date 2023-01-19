@@ -24,7 +24,7 @@ public class DriveSubsystem extends SubsystemBase{
     private final SlewRateLimiter ySlew = new SlewRateLimiter(SLEW_RATE);
     private final SlewRateLimiter rotationSlew = new SlewRateLimiter(SLEW_RATE);
 
-    private boolean isFieldRelative = false;
+    private boolean isFieldRelative = FIELD_RELATIVE;
 
     private final SwerveModule frontLeft = new SwerveModule(
         FRONT_LEFT_DRIVE_MOTOR_ID,

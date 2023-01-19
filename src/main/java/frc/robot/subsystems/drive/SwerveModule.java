@@ -21,7 +21,7 @@ public class SwerveModule {
     private final SwerveDriveEncoder driveEncoder;
     private final SwerveAngleEncoder angleEncoder;
 
-    private boolean isDriveOpenLoop = true;
+    private boolean isDriveOpenLoop = DRIVE_MOTOR_OPEN_LOOP;
     private SwerveModuleState optomizedState = new SwerveModuleState();
 
     public SwerveModule(
@@ -34,7 +34,7 @@ public class SwerveModule {
         driveEncoder = driveMotor.getEncoder();
 
         angleEncoder = new SwerveAngleEncoder(turnEncoderId, angleOffsetRadians);
-        angleMotor = new SwerveAngleMotor(turnMotorId, angleEncoder);
+        angleMotor = new SwerveAngleMotor(turnMotorId);
 
         initReporting(driveMotorId);
     }
