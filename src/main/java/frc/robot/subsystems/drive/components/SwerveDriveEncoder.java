@@ -11,8 +11,8 @@ public class SwerveDriveEncoder {
 
         this.encoder = encoder;
 
-        this.encoder.setPositionConversionFactor(POSITION_CONVERSION_FACTOR);
-        this.encoder.setVelocityConversionFactor(POSITION_CONVERSION_FACTOR / 60.0);
+        this.encoder.setPositionConversionFactor(DRIVE_POSITION_CONVERSION_FACTOR);
+        this.encoder.setVelocityConversionFactor(DRIVE_POSITION_CONVERSION_FACTOR / 60.0);
     }
 
     public double getVelocity() {

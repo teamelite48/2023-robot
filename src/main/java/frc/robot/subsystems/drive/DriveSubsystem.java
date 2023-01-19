@@ -79,9 +79,9 @@ public class DriveSubsystem extends SubsystemBase{
     public void drive(double xSpeed, double ySpeed, double rotation) {
 
         var desiredStates = getDesiredStates(
-            xSlew.calculate(xSpeed) * MAX_SPEED,
-            ySlew.calculate(ySpeed) * MAX_SPEED,
-            rotationSlew.calculate(rotation)
+            xSlew.calculate(xSpeed) * MAX_SPEED * MAX_OUTPUT,
+            ySlew.calculate(ySpeed) * MAX_SPEED * MAX_OUTPUT,
+            rotationSlew.calculate(rotation) * MAX_ANGULAR_SPEED * MAX_OUTPUT
         );
 
         SmartDashboard.putNumber("Debug", desiredStates[2].speedMetersPerSecond);

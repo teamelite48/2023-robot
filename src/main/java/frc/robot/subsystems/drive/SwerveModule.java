@@ -31,10 +31,10 @@ public class SwerveModule {
         double angleOffsetRadians
     ) {
         driveMotor = new SwerveDriveMotor(driveMotorId);
-        angleMotor = new SwerveAngleMotor(turnMotorId);
-
         driveEncoder = driveMotor.getEncoder();
+
         angleEncoder = new SwerveAngleEncoder(turnEncoderId, angleOffsetRadians);
+        angleMotor = new SwerveAngleMotor(turnMotorId, angleEncoder);
 
         initReporting(driveMotorId);
     }
