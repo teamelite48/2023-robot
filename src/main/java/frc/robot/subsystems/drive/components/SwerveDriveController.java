@@ -3,8 +3,8 @@ package frc.robot.subsystems.drive.components;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import static frc.robot.subsystems.drive.DriveConfig.*;
+
 
 public class SwerveDriveController {
 
@@ -30,11 +30,11 @@ public class SwerveDriveController {
 
         encoder = motor.getEncoder();
 
-        this.encoder.setPositionConversionFactor(DRIVE_POSITION_CONVERSION_FACTOR);
-        this.encoder.setVelocityConversionFactor(DRIVE_POSITION_CONVERSION_FACTOR / 60.0);
+        this.encoder.setPositionConversionFactor(DRIVE_POSITION_TO_METERS_CONVERSION_FACTOR);
+        this.encoder.setVelocityConversionFactor(DRIVE_POSITION_TO_METERS_CONVERSION_FACTOR / 60.0);
     }
 
-    public void setSpeed(double metersPerSecond) {
+    public void setVelocity(double metersPerSecond) {
         this.targetVelocity = metersPerSecond;
         motor.setVoltage(this.targetVelocity / MAX_METERS_PER_SECOND * NOMINAL_VOLTAGE);
     }

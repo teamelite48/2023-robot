@@ -7,7 +7,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import static frc.robot.subsystems.drive.SwerveMath.*;
 import static frc.robot.subsystems.drive.DriveConfig.*;
 
 public class SwerveAngleController {
@@ -20,14 +20,14 @@ public class SwerveAngleController {
     private double targetAngle = 0.0;
     private int resetIteration = 0;
 
-    public SwerveAngleController(int motorId, int absoluteEncoderId, double offsetRadians) {
+    public SwerveAngleController(int motorId, int absoluteEncoderId, double offsetDegrees) {
 
         absoluteEncoder = new CANCoder(absoluteEncoderId);
         absoluteEncoder.setPositionToAbsolute();
         absoluteEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
-        absoluteEncoder.configSensorDirection(false);
+        absoluteEncoder.configSensorDirection(true);
         absoluteEncoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 100, 250);
-        absoluteEncoder.configMagnetOffset(Math.toDegrees(offsetRadians));
+        absoluteEncoder.configMagnetOffset(-offsetDegrees);
 
         motor = new CANSparkMax(motorId, MotorType.kBrushless);
 
@@ -40,11 +40,11 @@ public class SwerveAngleController {
         motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus1, 20);
         motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus2, 20);
 
-        motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        motor.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
         motorEncoder = motor.getEncoder();
-        motorEncoder.setPositionConversionFactor(ANGLE_POSITION_CONVERSION_FACTOR);
-        motorEncoder.setVelocityConversionFactor(ANGLE_POSITION_CONVERSION_FACTOR / 60.0);
+        motorEncoder.setPositionConversionFactor(ANGLE_POSITION_TO_RADIANS_CONVERSION_FACTOR);
+        motorEncoder.setVelocityConversionFactor(ANGLE_POSITION_TO_RADIANS_CONVERSION_FACTOR / 60.0);
         motorEncoder.setPosition(getAbsoluteAngle());
 
         pidController = motor.getPIDController();
@@ -76,20 +76,16 @@ public class SwerveAngleController {
             resetIteration = 0;
         }
 
-        double currentAngleMod = currentAngle % (2.0 * Math.PI);
-
-        if (currentAngleMod < 0.0) {
-            currentAngleMod += 2.0 * Math.PI;
-        }
+        currentAngle = normalizeAngle(currentAngle);
 
         // The target angle has the range [0, 2pi) but the Neo's encoder can go above that
-        double adjustedDesiredAngle = desiredAngle + currentAngle - currentAngleMod;
+        double adjustedDesiredAngle = desiredAngle + currentAngle - currentAngle;
 
-        if (desiredAngle - currentAngleMod > Math.PI) {
-            adjustedDesiredAngle -= 2.0 * Math.PI;
+        if (desiredAngle - currentAngle > PI) {
+            adjustedDesiredAngle -= TAU;
         }
-        else if (desiredAngle - currentAngleMod < -Math.PI) {
-            adjustedDesiredAngle += 2.0 * Math.PI;
+        else if (desiredAngle - currentAngle < -PI) {
+            adjustedDesiredAngle += TAU;
         }
 
         this.targetAngle = adjustedDesiredAngle;
@@ -102,25 +98,10 @@ public class SwerveAngleController {
     }
 
     public double getCurrentAngle() {
-
-        double angle = motorEncoder.getPosition();
-        angle %= 2.0 * Math.PI;
-
-        if (angle < 0.0) {
-            angle += 2.0 * Math.PI;
-        }
-
-        return angle;
+        return normalizeAngle(motorEncoder.getPosition());
     }
 
     public double getAbsoluteAngle() {
-        double angle = Math.toRadians(absoluteEncoder.getAbsolutePosition());
-        angle %= 2.0 * Math.PI;
-
-        if (angle < 0.0) {
-            angle += 2.0 * Math.PI;
-        }
-
-        return angle;
+        return normalizeAngle(toRadians(absoluteEncoder.getAbsolutePosition()));
     }
 }

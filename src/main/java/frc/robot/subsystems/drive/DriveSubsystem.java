@@ -21,28 +21,28 @@ public class DriveSubsystem extends SubsystemBase{
         FRONT_LEFT_DRIVE_MOTOR_ID,
         FRONT_LEFT_ANGLE_MOTOR_ID,
         FRONT_LEFT_ANGLE_ENCODER_ID,
-        FRONT_LEFT_ANGLE_OFFSET
+        FRONT_LEFT_ANGLE_OFFSET_DEGREES
     );
 
     private final SwerveModule frontRight = new SwerveModule(
         FRONT_RIGHT_DRIVE_MOTOR_ID,
         FRONT_RIGHT_ANGLE_MOTOR_ID,
         FRONT_RIGHT_ANGLE_ENCODER_ID,
-        FRONT_RIGHT_ANGLE_OFFSET
+        FRONT_RIGHT_ANGLE_OFFSET_DEGREES
     );
 
     private final SwerveModule backLeft = new SwerveModule(
         BACK_LEFT_DRIVE_MOTOR_ID,
         BACK_LEFT_ANGLE_MOTOR_ID,
         BACK_LEFT_ANGLE_ENCODER_ID,
-        BACK_LEFT_ANGLE_OFFSET
+        BACK_LEFT_ANGLE_OFFSET_DEGREES
     );
 
     private final SwerveModule backRight = new SwerveModule(
         BACK_RIGHT_DRIVE_MOTOR_ID,
         BACK_RIGHT_ANGLE_MOTOR_ID,
         BACK_RIGHT_ANGLE_ENCODER_ID,
-        BACK_RIGHT_ANGLE_OFFSET
+        BACK_RIGHT_ANGLE_OFFSET_DEGREES
     );
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(

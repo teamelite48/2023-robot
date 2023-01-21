@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.subsystems.drive.components.SwerveDriveController;
 import frc.robot.subsystems.drive.components.SwerveAngleController;
 import static frc.robot.subsystems.drive.DriveConfig.*;
+import static frc.robot.subsystems.drive.SwerveMath.*;
 
 public class SwerveModule {
 
@@ -20,52 +21,44 @@ public class SwerveModule {
         int driveMotorId,
         int angleMotorId,
         int absoluteEncoderId,
-        double angleOffset
+        double angleOffsetDegrees
     ) {
         driveController = new SwerveDriveController(driveMotorId);
-        angleController = new SwerveAngleController(angleMotorId, absoluteEncoderId, angleOffset);
+        angleController = new SwerveAngleController(angleMotorId, absoluteEncoderId, angleOffsetDegrees);
 
         initReporting(driveMotorId);
     }
 
     public void setDesiredState(SwerveModuleState desiredState) {
 
-        double desiredAngle = desiredState.angle.getRadians() % (2.0 * Math.PI);
-        double desiredVelocity = desiredState.speedMetersPerSecond;
-
-        if (desiredAngle < 0.0) {
-            desiredAngle += 2.0 * Math.PI;
-        }
-
+        double desiredAngle = normalizeAngle(desiredState.angle.getRadians());
         double currentAngle = angleController.getCurrentAngle();
-
         double angleDifference = desiredAngle - currentAngle;
 
         // Change the target angle so the difference is in the range [-pi, pi) instead of [0, 2pi)
-        if (angleDifference >= Math.PI) {
-            desiredAngle -= 2.0 * Math.PI;
-        } else if (angleDifference < -Math.PI) {
-            desiredAngle += 2.0 * Math.PI;
+        if (angleDifference >= PI) {
+            desiredAngle -= TAU;
+        } else if (angleDifference < -PI) {
+            desiredAngle += TAU;
         }
 
         angleDifference = desiredAngle - currentAngle; // Recalculate difference
 
+
+        double desiredVelocity = desiredState.speedMetersPerSecond;
+
         // If the difference is greater than 90 deg or less than -90 deg the drive can be inverted so the total
         // movement of the module is less than 90 deg
-        if (angleDifference > Math.PI / 2.0 || angleDifference < -Math.PI / 2.0) {
+        if (angleDifference > PI / 2.0 || angleDifference < -PI / 2.0) {
             // Only need to add 180 deg here because the target angle will be put back into the range [0, 2pi)
-            desiredAngle += Math.PI;
+            desiredAngle += PI;
             desiredVelocity *= -1.0;
         }
 
         // Put the target angle back into the range [0, 2pi)
-        desiredAngle %= (2.0 * Math.PI);
+        desiredAngle = normalizeAngle(desiredAngle);
 
-        if (desiredAngle < 0.0) {
-            desiredAngle += 2.0 * Math.PI;
-        }
-
-        driveController.setSpeed(desiredVelocity);
+        driveController.setVelocity(desiredVelocity);
         angleController.setAngle(desiredAngle);
     }
 
