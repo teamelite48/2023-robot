@@ -11,6 +11,8 @@ public class SwerveDriveController {
     private final CANSparkMax motor;
     private final RelativeEncoder encoder;
 
+    private double targetVelocity = 0.0;
+
     public SwerveDriveController(int id) {
 
         motor = new CANSparkMax(id, MotorType.kBrushless);
@@ -33,14 +35,19 @@ public class SwerveDriveController {
     }
 
     public void setSpeed(double metersPerSecond) {
-        motor.setVoltage(metersPerSecond / MAX_METERS_PER_SECOND * NOMINAL_VOLTAGE);
+        this.targetVelocity = metersPerSecond;
+        motor.setVoltage(this.targetVelocity / MAX_METERS_PER_SECOND * NOMINAL_VOLTAGE);
     }
 
-    public double getVelocity() {
+    public double getTargetVelocity() {
+        return targetVelocity;
+    }
+
+    public double getCurrentVelocity() {
         return encoder.getVelocity();
     }
 
-    public double getPosition() {
+    public double getCurrentPosition() {
         return encoder.getPosition();
     }
 }

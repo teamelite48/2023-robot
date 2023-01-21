@@ -17,16 +17,17 @@ public class SwerveAngleController {
     private final RelativeEncoder motorEncoder;
     private final CANCoder absoluteEncoder;
 
+    private double targetAngle = 0.0;
     private int resetIteration = 0;
 
     public SwerveAngleController(int motorId, int absoluteEncoderId, double offsetRadians) {
 
         absoluteEncoder = new CANCoder(absoluteEncoderId);
         absoluteEncoder.setPositionToAbsolute();
-        absoluteEncoder.configMagnetOffset(Math.toDegrees(offsetRadians));
-        absoluteEncoder.configSensorDirection(false);
         absoluteEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+        absoluteEncoder.configSensorDirection(false);
         absoluteEncoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 100, 250);
+        absoluteEncoder.configMagnetOffset(Math.toDegrees(offsetRadians));
 
         motor = new CANSparkMax(motorId, MotorType.kBrushless);
 
@@ -44,7 +45,7 @@ public class SwerveAngleController {
         motorEncoder = motor.getEncoder();
         motorEncoder.setPositionConversionFactor(ANGLE_POSITION_CONVERSION_FACTOR);
         motorEncoder.setVelocityConversionFactor(ANGLE_POSITION_CONVERSION_FACTOR / 60.0);
-        motorEncoder.setPosition(absoluteEncoder.getAbsolutePosition());
+        motorEncoder.setPosition(getAbsoluteAngle());
 
         pidController = motor.getPIDController();
         pidController.setP(1.0);
@@ -53,10 +54,9 @@ public class SwerveAngleController {
         pidController.setFeedbackDevice(motorEncoder);
     }
 
+    public void setAngle(double desiredAngle) {
 
-    public void setAngle(double targetAngle) {
-
-        double currentAngle = motorEncoder.getPosition();
+        double currentAngle = getCurrentAngle();
 
         // Reset the NEO's encoder periodically when the module is not rotating.
         // Sometimes (~5% of the time) when we initialize, the absolute encoder isn't fully set up, and we don't
@@ -66,13 +66,13 @@ public class SwerveAngleController {
             resetIteration++;
 
             if (resetIteration >= ENCODER_RESET_ITERATIONS) {
-                double absoluteAngle = absoluteEncoder.getAbsolutePosition();
-                motorEncoder.setPosition(absoluteAngle);
-                currentAngle = absoluteAngle;
+                currentAngle = getAbsoluteAngle();
+                motorEncoder.setPosition(currentAngle);
 
                 resetIteration = 0;
             }
-        } else {
+        }
+        else {
             resetIteration = 0;
         }
 
@@ -82,31 +82,45 @@ public class SwerveAngleController {
             currentAngleMod += 2.0 * Math.PI;
         }
 
-        // The reference angle has the range [0, 2pi) but the Neo's encoder can go above that
-        double adjustedTargetAngle = targetAngle + currentAngle - currentAngleMod;
+        // The target angle has the range [0, 2pi) but the Neo's encoder can go above that
+        double adjustedDesiredAngle = desiredAngle + currentAngle - currentAngleMod;
 
-        if (targetAngle - currentAngleMod > Math.PI) {
-            adjustedTargetAngle -= 2.0 * Math.PI;
+        if (desiredAngle - currentAngleMod > Math.PI) {
+            adjustedDesiredAngle -= 2.0 * Math.PI;
         }
-        else if (targetAngle - currentAngleMod < -Math.PI) {
-            adjustedTargetAngle += 2.0 * Math.PI;
+        else if (desiredAngle - currentAngleMod < -Math.PI) {
+            adjustedDesiredAngle += 2.0 * Math.PI;
         }
 
-        pidController.setReference(adjustedTargetAngle, CANSparkMax.ControlType.kPosition);
+        this.targetAngle = adjustedDesiredAngle;
+
+        pidController.setReference(this.targetAngle, CANSparkMax.ControlType.kPosition);
     }
 
-    public double getAngle() {
+    public double getTargetAngle() {
+        return targetAngle;
+    }
 
-        return motorEncoder.getPosition();
+    public double getCurrentAngle() {
 
-        // if (angle < 0.0) {
-        //     angle += 2.0 * Math.PI;
-        // }
+        double angle = motorEncoder.getPosition();
+        angle %= 2.0 * Math.PI;
 
-        // return angle;
+        if (angle < 0.0) {
+            angle += 2.0 * Math.PI;
+        }
+
+        return angle;
     }
 
     public double getAbsoluteAngle() {
-        return absoluteEncoder.getAbsolutePosition();
+        double angle = Math.toRadians(absoluteEncoder.getAbsolutePosition());
+        angle %= 2.0 * Math.PI;
+
+        if (angle < 0.0) {
+            angle += 2.0 * Math.PI;
+        }
+
+        return angle;
     }
 }

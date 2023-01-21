@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems.drive;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -64,7 +63,7 @@ public class DriveSubsystem extends SubsystemBase{
         // frontLeft.setDesiredState(desiredStates[0]);
         // frontRight.setDesiredState(desiredStates[1]);
         backLeft.setDesiredState(desiredStates[2]);
-        backRight.setDesiredState(desiredStates[3]);
+        // backRight.setDesiredState(desiredStates[3]);
     }
 
     public void zeroGyro() {
