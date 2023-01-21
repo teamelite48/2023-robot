@@ -7,24 +7,25 @@ public class DriveConfig {
     public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 21;
     public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 22;
     public static final int FRONT_LEFT_ANGLE_ENCODER_ID = 31;
-    public static final double FRONT_LEFT_ANGLE_OFFSET_DEGREES = 218.2;
+    public static final double FRONT_LEFT_ANGLE_OFFSET_DEGREES = 218.0 + 180.0;
 
     public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 23;
     public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = 24;
     public static final int FRONT_RIGHT_ANGLE_ENCODER_ID = 33;
-    public static final double FRONT_RIGHT_ANGLE_OFFSET_DEGREES = 190.0;
+    public static final double FRONT_RIGHT_ANGLE_OFFSET_DEGREES = 10.0 + 180.0;
 
     public static final int BACK_LEFT_DRIVE_MOTOR_ID = 25;
     public static final int BACK_LEFT_ANGLE_MOTOR_ID = 26;
     public static final int BACK_LEFT_ANGLE_ENCODER_ID = 35;
-    public static final double BACK_LEFT_ANGLE_OFFSET_DEGREES = 123.1;
+    public static final double BACK_LEFT_ANGLE_OFFSET_DEGREES = 123.3;
 
     public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 27;
     public static final int BACK_RIGHT_ANGLE_MOTOR_ID = 28;
     public static final int BACK_RIGHT_ANGLE_ENCODER_ID = 37;
-    public static final double BACK_RIGHT_ANGLE_OFFSET_DEGREES = 24.3;
+    public static final double BACK_RIGHT_ANGLE_OFFSET_DEGREES = 24.2 + 180.0;
 
-    public static final double MAX_OUTPUT = 0.5;
+    public static final double MAX_OUTPUT = 0.25;
+    public static final double SLEW_RATE = 2.0;
 
     public static final double WHEEL_DIAMETER = 0.10033;
     public static final double TRACKWIDTH_METERS = 0.66675;
@@ -38,7 +39,7 @@ public class DriveConfig {
     public static final double ANGLE_MOTOR_CURRENT_LIMIT = 20.0;
 
     public static final boolean DRIVE_MOTOR_INVERTED = true;
-    public static final boolean ANGLE_MOTOR_INVERTED = false;
+    public static final boolean ANGLE_MOTOR_INVERTED = true;
 
     public static final double DRIVE_MOTOR_REDUCTION = (14.0 / 50.0) * (27.0 / 17.0) * (15.0 / 45.0);
     public static final double ANGLE_MOTOR_REDUCTION = (14.0 / 50.0) * (10.0 / 60.0);

@@ -25,7 +25,7 @@ public class SwerveAngleController {
         absoluteEncoder = new CANCoder(absoluteEncoderId);
         absoluteEncoder.setPositionToAbsolute();
         absoluteEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
-        absoluteEncoder.configSensorDirection(true);
+        absoluteEncoder.configSensorDirection(false);
         absoluteEncoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 100, 250);
         absoluteEncoder.configMagnetOffset(-offsetDegrees);
 
@@ -40,7 +40,7 @@ public class SwerveAngleController {
         motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus1, 20);
         motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus2, 20);
 
-        motor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         motorEncoder = motor.getEncoder();
         motorEncoder.setPositionConversionFactor(ANGLE_POSITION_TO_RADIANS_CONVERSION_FACTOR);
@@ -75,8 +75,6 @@ public class SwerveAngleController {
         else {
             resetIteration = 0;
         }
-
-        currentAngle = normalizeAngle(currentAngle);
 
         // The target angle has the range [0, 2pi) but the Neo's encoder can go above that
         double adjustedDesiredAngle = desiredAngle + currentAngle - currentAngle;

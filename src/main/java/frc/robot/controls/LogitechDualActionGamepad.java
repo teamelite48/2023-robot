@@ -56,13 +56,13 @@ public class LogitechDualActionGamepad {
         return modifyAxis(hid.getRawAxis(0));
     }
     public double getLeftYAxis() {
-        return modifyAxis(hid.getRawAxis(1)) * -1;
+        return modifyAxis(hid.getRawAxis(1));
     }
     public double getRightXAxis() {
         return modifyAxis(hid.getRawAxis(2));
     }
     public double getRightYAxis() {
-         return modifyAxis(hid.getRawAxis(3)) * -1;
+         return modifyAxis(hid.getRawAxis(3));
     }
 
     private double modifyAxis(Double value) {

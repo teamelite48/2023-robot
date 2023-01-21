@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.drive;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -16,6 +18,11 @@ import com.ctre.phoenix.sensors.Pigeon2;
 public class DriveSubsystem extends SubsystemBase{
 
     private final Pigeon2 gyro = new Pigeon2(GYRO_ID);
+
+    private final SlewRateLimiter xLimiter = new SlewRateLimiter(SLEW_RATE);
+    private final SlewRateLimiter yLimiter = new SlewRateLimiter(SLEW_RATE);
+    private final SlewRateLimiter rotationLimiter = new SlewRateLimiter(SLEW_RATE);
+
 
     private final SwerveModule frontLeft = new SwerveModule(
         FRONT_LEFT_DRIVE_MOTOR_ID,
@@ -60,10 +67,10 @@ public class DriveSubsystem extends SubsystemBase{
 
         var desiredStates = getDesiredStates(x, y, rotation);
 
-        // frontLeft.setDesiredState(desiredStates[0]);
-        // frontRight.setDesiredState(desiredStates[1]);
+        frontLeft.setDesiredState(desiredStates[0]);
+        frontRight.setDesiredState(desiredStates[1]);
         backLeft.setDesiredState(desiredStates[2]);
-        // backRight.setDesiredState(desiredStates[3]);
+        backRight.setDesiredState(desiredStates[3]);
     }
 
     public void zeroGyro() {
@@ -80,10 +87,11 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     private ChassisSpeeds getChasisSpeeds(double x, double y, double rotation) {
-        return new ChassisSpeeds(
-            x * MAX_METERS_PER_SECOND * MAX_OUTPUT,
-            y * MAX_METERS_PER_SECOND * MAX_OUTPUT,
-            rotation * MAX_ANGULAR_METERS_PER_SECOND * MAX_OUTPUT
+        return ChassisSpeeds.fromFieldRelativeSpeeds(
+            -xLimiter.calculate(x) * MAX_METERS_PER_SECOND * MAX_OUTPUT,
+            -yLimiter.calculate(y) * MAX_METERS_PER_SECOND * MAX_OUTPUT,
+            -rotationLimiter.calculate(rotation) * MAX_ANGULAR_METERS_PER_SECOND * MAX_OUTPUT,
+            Rotation2d.fromDegrees(gyro.getYaw())
         );
     }
 }
