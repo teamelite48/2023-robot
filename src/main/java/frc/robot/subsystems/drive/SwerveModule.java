@@ -4,68 +4,75 @@
 
 package frc.robot.subsystems.drive;
 
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import frc.robot.subsystems.drive.components.SwerveDriveEncoder;
-import frc.robot.subsystems.drive.components.SwerveDriveMotor;
-import frc.robot.subsystems.drive.components.SwerveAngleEncoder;
-import frc.robot.subsystems.drive.components.SwerveAngleMotor;
+import frc.robot.subsystems.drive.components.SwerveDriveController;
+import frc.robot.subsystems.drive.components.SwerveAngleController;
 import static frc.robot.subsystems.drive.DriveConfig.*;
 
 public class SwerveModule {
 
-    private final SwerveDriveMotor driveMotor;
-    private final SwerveAngleMotor angleMotor;
+    private final SwerveDriveController driveController;
+    private final SwerveAngleController angleController;
 
-    private final SwerveDriveEncoder driveEncoder;
-    private final SwerveAngleEncoder angleEncoder;
-
-    private boolean isDriveOpenLoop = DRIVE_MOTOR_OPEN_LOOP;
-    private SwerveModuleState optomizedState = new SwerveModuleState();
+    private double targetVelocity = 0;
+    private double targetAngle = 0;
 
     public SwerveModule(
         int driveMotorId,
-        int turnMotorId,
-        int turnEncoderId,
-        double angleOffsetRadians
+        int angleMotorId,
+        int absoluteEncoderId,
+        double angleOffset
     ) {
-        driveMotor = new SwerveDriveMotor(driveMotorId);
-        driveEncoder = driveMotor.getEncoder();
-
-        angleEncoder = new SwerveAngleEncoder(turnEncoderId, angleOffsetRadians);
-        angleMotor = new SwerveAngleMotor(turnMotorId);
+        driveController = new SwerveDriveController(driveMotorId);
+        angleController = new SwerveAngleController(angleMotorId, absoluteEncoderId, angleOffset);
 
         initReporting(driveMotorId);
     }
 
     public void setDesiredState(SwerveModuleState desiredState) {
 
-        optomizedState = SwerveModuleState.optimize(
-            desiredState,
-            angleEncoder.getRotation()
-        );
+        double targetAngle = desiredState.angle.getRadians() % (2.0 * Math.PI);
+        double targetVelocity = desiredState.speedMetersPerSecond;
 
-        driveMotor.setSpeed(driveEncoder.getVelocity(), optomizedState.speedMetersPerSecond, isDriveOpenLoop);
-        angleMotor.setAngle(angleEncoder.getRadians(), optomizedState.angle.getRadians());
-    }
+        if (targetAngle < 0.0) {
+            targetAngle += 2.0 * Math.PI;
+        }
 
-    public SwerveModuleState getState() {
-        return new SwerveModuleState(
-            driveEncoder.getVelocity(),
-            angleEncoder.getRotation()
-        );
-    }
+        double currentAngle = angleController.getAngle();
 
-    public SwerveModulePosition getPosition() {
-        return new SwerveModulePosition(
-            driveEncoder.getPosition(),
-            angleEncoder.getRotation()
-        );
-    }
+        double angleDifference = targetAngle - currentAngle;
 
-    public void setDriveOpenLoop(boolean isDriveOpenLoop) {
-        this.isDriveOpenLoop = isDriveOpenLoop;
+        // Change the target angle so the difference is in the range [-pi, pi) instead of [0, 2pi)
+        if (angleDifference >= Math.PI) {
+            targetAngle -= 2.0 * Math.PI;
+        } else if (angleDifference < -Math.PI) {
+            targetAngle += 2.0 * Math.PI;
+        }
+
+        angleDifference = targetAngle - currentAngle; // Recalculate difference
+
+        // If the difference is greater than 90 deg or less than -90 deg the drive can be inverted so the total
+        // movement of the module is less than 90 deg
+        if (angleDifference > Math.PI / 2.0 || angleDifference < -Math.PI / 2.0) {
+            // Only need to add 180 deg here because the target angle will be put back into the range [0, 2pi)
+            targetAngle += Math.PI;
+            targetVelocity *= -1.0;
+        }
+
+        // Put the target angle back into the range [0, 2pi)
+        targetAngle %= (2.0 * Math.PI);
+
+        if (targetAngle < 0.0) {
+            targetAngle += 2.0 * Math.PI;
+        }
+
+        this.targetVelocity = targetVelocity;
+        this.targetAngle = targetAngle;
+
+        driveController.setSpeed(this.targetVelocity);
+        angleController.setAngle(this.targetAngle);
     }
 
     private void initReporting(int driveMotorId) {
@@ -88,13 +95,16 @@ public class SwerveModule {
         }
 
         var tab = Shuffleboard.getTab("Swerve Modules");
+        var layout = tab.getLayout(reportingId, BuiltInLayouts.kList);
 
-        tab.addDouble(reportingId + " TV", () -> optomizedState.speedMetersPerSecond);
-        tab.addDouble(reportingId + " CV", () -> driveEncoder.getVelocity());
+        layout.addDouble("Target Velocity", () -> targetVelocity);
+        layout.addDouble("Current Velocity", () -> driveController.getVelocity());
 
-        tab.addDouble(reportingId + " TA", () -> optomizedState.angle.getDegrees());
-        tab.addDouble(reportingId + " CA", () -> Math.toDegrees(angleEncoder.getRadians()));
+        layout.addDouble("Target Angle", () -> Math.toDegrees(targetAngle));
+        layout.addDouble("Current Angle", () -> angleController.getAngle());
 
-        tab.addDouble(reportingId + " Pos", () -> driveEncoder.getPosition());
+        layout.addDouble("Position", () -> driveController.getPosition());
+
+        layout.addDouble("Absolute Angle", () -> angleController.getAbsoluteAngle());
     }
 }
