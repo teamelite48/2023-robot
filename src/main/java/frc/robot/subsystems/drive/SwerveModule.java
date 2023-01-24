@@ -44,7 +44,6 @@ public class SwerveModule {
 
         angleDifference = desiredAngle - currentAngle; // Recalculate difference
 
-
         double desiredVelocity = desiredState.speedMetersPerSecond;
 
         // If the difference is greater than 90 deg or less than -90 deg the drive can be inverted so the total

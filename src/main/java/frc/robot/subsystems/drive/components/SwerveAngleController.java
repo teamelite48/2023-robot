@@ -56,16 +56,13 @@ public class SwerveAngleController {
 
     public void setAngle(double desiredAngle) {
 
-        double currentAngle = getCurrentAngle();
+        double currentAngle = motorEncoder.getPosition();
 
         // Reset the NEO's encoder periodically when the module is not rotating.
         // Sometimes (~5% of the time) when we initialize, the absolute encoder isn't fully set up, and we don't
         // end up getting a good reading. If we reset periodically this won't matter anymore.
         if (motorEncoder.getVelocity() < ENCODER_RESET_MAX_ANGULAR_VELOCITY) {
-
-            resetIteration++;
-
-            if (resetIteration >= ENCODER_RESET_ITERATIONS) {
+            if (++resetIteration >= ENCODER_RESET_ITERATIONS) {
                 currentAngle = getAbsoluteAngle();
                 motorEncoder.setPosition(currentAngle);
 
@@ -76,13 +73,15 @@ public class SwerveAngleController {
             resetIteration = 0;
         }
 
-        // The target angle has the range [0, 2pi) but the Neo's encoder can go above that
-        double adjustedDesiredAngle = desiredAngle + currentAngle - currentAngle;
+        var currentAngleMod = normalizeAngle(currentAngle);
 
-        if (desiredAngle - currentAngle > PI) {
+        // The target angle has the range [0, 2pi) but the Neo's encoder can go above that
+        double adjustedDesiredAngle = desiredAngle + currentAngle - currentAngleMod;
+
+        if (desiredAngle - currentAngleMod > PI) {
             adjustedDesiredAngle -= TAU;
         }
-        else if (desiredAngle - currentAngle < -PI) {
+        else if (desiredAngle - currentAngleMod < -PI) {
             adjustedDesiredAngle += TAU;
         }
 

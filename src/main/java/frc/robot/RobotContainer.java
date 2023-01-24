@@ -19,8 +19,8 @@ public class RobotContainer {
   public RobotContainer() {
 
     driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.drive(
-      pilot.getLeftYAxis(),
       pilot.getLeftXAxis(),
+      pilot.getLeftYAxis(),
       pilot.getRightXAxis()
     ), driveSubsystem));
 

@@ -88,8 +88,8 @@ public class DriveSubsystem extends SubsystemBase{
 
     private ChassisSpeeds getChasisSpeeds(double x, double y, double rotation) {
         return ChassisSpeeds.fromFieldRelativeSpeeds(
-            -xLimiter.calculate(x) * MAX_METERS_PER_SECOND * MAX_OUTPUT,
             -yLimiter.calculate(y) * MAX_METERS_PER_SECOND * MAX_OUTPUT,
+            -xLimiter.calculate(x) * MAX_METERS_PER_SECOND * MAX_OUTPUT,
             -rotationLimiter.calculate(rotation) * MAX_ANGULAR_METERS_PER_SECOND * MAX_OUTPUT,
             Rotation2d.fromDegrees(gyro.getYaw())
         );
