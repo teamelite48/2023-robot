@@ -12,7 +12,7 @@ public class DriveConfig {
     public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 23;
     public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = 24;
     public static final int FRONT_RIGHT_ANGLE_ENCODER_ID = 33;
-    public static final double FRONT_RIGHT_ANGLE_OFFSET_DEGREES = 188.4 + 180.0;
+    public static final double FRONT_RIGHT_ANGLE_OFFSET_DEGREES = 188.4;
 
     public static final int BACK_LEFT_DRIVE_MOTOR_ID = 25;
     public static final int BACK_LEFT_ANGLE_MOTOR_ID = 26;
@@ -24,8 +24,8 @@ public class DriveConfig {
     public static final int BACK_RIGHT_ANGLE_ENCODER_ID = 37;
     public static final double BACK_RIGHT_ANGLE_OFFSET_DEGREES = 204.7;
 
-    public static final double MAX_OUTPUT = 0.25;
-    public static final double SLEW_RATE = 2.0;
+    public static final double MAX_OUTPUT = 0.5;
+    public static final double SLEW_RATE = 5.0;
 
     public static final double WHEEL_DIAMETER = 0.10033;
     public static final double TRACKWIDTH_METERS = 0.66675;
