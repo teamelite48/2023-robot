@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.subsystems.drive.DriveConfig.*;
 
@@ -61,6 +62,7 @@ public class DriveSubsystem extends SubsystemBase{
 
     public DriveSubsystem() {
         zeroGyro();
+        initShuffleBoard();
     }
 
     public void drive(double x, double y, double rotation) {
@@ -75,6 +77,10 @@ public class DriveSubsystem extends SubsystemBase{
 
     public void zeroGyro() {
         gyro.setYaw(0.0);
+    }
+
+    public double getPitch() {
+        return gyro.getRoll();
     }
 
     private SwerveModuleState[] getDesiredStates(double x, double y, double rotation) {
@@ -93,5 +99,10 @@ public class DriveSubsystem extends SubsystemBase{
             -rotationLimiter.calculate(rotation) * MAX_ANGULAR_METERS_PER_SECOND * MAX_OUTPUT,
             Rotation2d.fromDegrees(gyro.getYaw())
         );
+    }
+
+    private void initShuffleBoard() {
+        var driveTab = Shuffleboard.getTab("Drive");
+        driveTab.addDouble("Pitch", () -> getPitch());
     }
 }
