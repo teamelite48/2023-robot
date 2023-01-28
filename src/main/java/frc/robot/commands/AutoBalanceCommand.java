@@ -10,9 +10,17 @@ import frc.robot.subsystems.drive.DriveSubsystem;
 
 public class AutoBalanceCommand extends CommandBase {
 
+  private final int BALANCED = 0;
+  private final int PITCH_UP = 1;
+  private final int PITCH_DOWN = 2;
+
   private DriveSubsystem driveSubsystem;
-  private boolean isOnRamp;
-  private double balanceSpeed;
+
+  private int lastState;
+  private int currentState;
+  private double speed;
+  private double desiredAngle;
+
 
   public AutoBalanceCommand() {
     driveSubsystem = RobotContainer.driveSubsystem;
@@ -21,29 +29,44 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    isOnRamp = false;
-    balanceSpeed = 0.75;
+    speed = 0.4;
+    desiredAngle = 1.0;
+    lastState = BALANCED;
   }
 
   @Override
   public void execute() {
 
-    if (driveSubsystem.getPitch() < 10 && isOnRamp == false) {
-      driveSubsystem.drive(0, -balanceSpeed, 0);
-    }
-    else if (driveSubsystem.getPitch() > 7) {
-      isOnRamp = true;
-      driveSubsystem.drive(0, -balanceSpeed, 0);
+    currentState = getState();
 
+    if (currentState != lastState && speed >= 0.0) {
+      speed = speed - 0.05;
     }
-    else if (driveSubsystem.getPitch() < -7) {
-      balanceSpeed = 0.35;
-      driveSubsystem.drive(0, balanceSpeed, 0);
+
+    if (currentState == PITCH_UP) {
+      driveForward();
+    }
+    else if (currentState == PITCH_DOWN) {
+       driveBackward();
     }
     else {
       stop();
     }
 
+    lastState = currentState;
+  }
+
+  private int getState() {
+
+    if (driveSubsystem.getPitch() > desiredAngle) {
+      return PITCH_UP;
+    }
+    else if (driveSubsystem.getPitch() < -desiredAngle) {
+      return PITCH_DOWN;
+    }
+    else {
+      return BALANCED;
+    }
   }
 
   @Override
@@ -56,13 +79,13 @@ public class AutoBalanceCommand extends CommandBase {
     return false;
   }
 
-  // private void driveForward() {
-  //   driveSubsystem.drive(0, -balancedSpeed, 0);
-  // }
+  private void driveForward() {
+    driveSubsystem.drive(0, -speed, 0);
+  }
 
-  // private void driveBackward() {
-  //   driveSubsystem.drive(0, balancedSpeed, 0);
-  // }
+  private void driveBackward() {
+    driveSubsystem.drive(0, speed, 0);
+  }
 
   private void stop() {
     driveSubsystem.drive(0, 0, 0);
