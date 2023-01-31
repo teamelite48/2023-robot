@@ -26,7 +26,7 @@ public class LogitechDualActionGamepad {
 
 
     private GenericHID hid;
-    private double deadBand = 0.02;
+    private double deadBand = 0.01;
     private boolean squareInputs = true;
 
     public LogitechDualActionGamepad(int port) {

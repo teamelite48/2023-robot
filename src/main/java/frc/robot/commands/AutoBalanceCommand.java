@@ -29,7 +29,7 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    speed = 0.4;
+    speed = 0.15;
     desiredAngle = 1.0;
     lastState = BALANCED;
   }
@@ -40,7 +40,7 @@ public class AutoBalanceCommand extends CommandBase {
     currentState = getState();
 
     if (currentState != lastState && speed >= 0.0) {
-      speed = speed - 0.05;
+      speed = speed - 0.025;
     }
 
     if (currentState == PITCH_UP) {
