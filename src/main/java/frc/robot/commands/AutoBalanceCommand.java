@@ -29,7 +29,7 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    speed = 0.2;
+    speed = 0.15;
     desiredAngle = 1.0;
     lastState = BALANCED;
   }

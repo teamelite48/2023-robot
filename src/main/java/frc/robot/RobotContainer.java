@@ -35,8 +35,8 @@ public class RobotContainer {
 
     pilot.a.whileTrue(new AutoBalanceCommand());
 
-    pilot.b.onTrue(new InstantCommand(() -> logButtonPress("B")));
-    pilot.y.onTrue(new InstantCommand(() -> logButtonPress("Y")));
+    //pilot.b.onTrue(new InstantCommand(() -> ));
+    //pilot.y.onTrue(new InstantCommand(() -> ));
     pilot.lb.onTrue(new InstantCommand(() -> logButtonPress("LB")));
     pilot.rb.onTrue(new InstantCommand(() -> logButtonPress("RB")));
     pilot.lt.onTrue(new InstantCommand(() -> logButtonPress("LT")));
@@ -45,8 +45,8 @@ public class RobotContainer {
 
     pilot.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
-    pilot.l3.onTrue(new InstantCommand(() -> logButtonPress("L3")));
-    pilot.r3.onTrue(new InstantCommand(() -> logButtonPress("R3")));
+    pilot.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
+    pilot.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
     pilot.up.onTrue(new InstantCommand(() -> logButtonPress("Up")));
     pilot.right.onTrue(new InstantCommand(() -> logButtonPress("Right")));
     pilot.down.onTrue(new InstantCommand(() -> logButtonPress("Down")));

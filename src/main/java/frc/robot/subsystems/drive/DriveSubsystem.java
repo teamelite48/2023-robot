@@ -18,12 +18,17 @@ import com.ctre.phoenix.sensors.Pigeon2;
 
 public class DriveSubsystem extends SubsystemBase{
 
+    enum Gear {
+        Low,
+        High
+    }
+
     private final Pigeon2 gyro = new Pigeon2(GYRO_ID);
 
     private final SlewRateLimiter xLimiter = new SlewRateLimiter(SLEW_RATE);
     private final SlewRateLimiter yLimiter = new SlewRateLimiter(SLEW_RATE);
     private final SlewRateLimiter rotationLimiter = new SlewRateLimiter(SLEW_RATE);
-
+    private Gear gear = Gear.High;
 
     private final SwerveModule frontLeft = new SwerveModule(
         FRONT_LEFT_DRIVE_MOTOR_ID,
@@ -70,8 +75,13 @@ public class DriveSubsystem extends SubsystemBase{
 
         double speedModifier = 1;
 
-        if(limitSpeed = true) {
+        if(limitSpeed == true) {
             speedModifier = MAX_OUTPUT;
+
+            if(gear == Gear.Low){
+                speedModifier = speedModifier * 0.5;
+            }
+
         }
 
         var desiredStates = getDesiredStates(x * speedModifier, y * speedModifier, rotation * speedModifier);
@@ -80,6 +90,13 @@ public class DriveSubsystem extends SubsystemBase{
         frontRight.setDesiredState(desiredStates[1]);
         backLeft.setDesiredState(desiredStates[2]);
         backRight.setDesiredState(desiredStates[3]);
+    }
+    public void setLowGear(){
+        gear = Gear.Low;
+    }
+
+    public void setHighGear(){
+        gear = Gear.High;
     }
 
     public void zeroGyro() {
