@@ -29,7 +29,7 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    speed = 0.15;
+    speed = 0.2;
     desiredAngle = 1.0;
     lastState = BALANCED;
   }
@@ -80,15 +80,15 @@ public class AutoBalanceCommand extends CommandBase {
   }
 
   private void driveForward() {
-    driveSubsystem.drive(0, -speed, 0);
+    driveSubsystem.drive(0, -speed, 0, false);
   }
 
   private void driveBackward() {
-    driveSubsystem.drive(0, speed, 0);
+    driveSubsystem.drive(0, speed, 0, false);
   }
 
   private void stop() {
-    driveSubsystem.drive(0, 0, 0);
+    driveSubsystem.drive(0, 0, 0, false);
   }
 }
 

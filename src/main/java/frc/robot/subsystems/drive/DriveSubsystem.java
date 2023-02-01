@@ -65,9 +65,16 @@ public class DriveSubsystem extends SubsystemBase{
         initShuffleBoard();
     }
 
-    public void drive(double x, double y, double rotation) {
+    public void drive(double x, double y, double rotation, boolean limitSpeed) {
 
-        var desiredStates = getDesiredStates(x, y, rotation);
+
+        double speedModifier = 1;
+
+        if(limitSpeed = true) {
+            speedModifier = MAX_OUTPUT;
+        }
+
+        var desiredStates = getDesiredStates(x * speedModifier, y * speedModifier, rotation * speedModifier);
 
         frontLeft.setDesiredState(desiredStates[0]);
         frontRight.setDesiredState(desiredStates[1]);

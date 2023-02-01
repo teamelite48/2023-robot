@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.drive.DriveSubsystem;
-import static frc.robot.subsystems.drive.DriveConfig.*;
 
 public class RobotContainer {
 
@@ -21,9 +20,10 @@ public class RobotContainer {
   public RobotContainer() {
 
     driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.drive(
-      pilot.getLeftXAxis() * MAX_OUTPUT,
-      pilot.getLeftYAxis() * MAX_OUTPUT,
-      pilot.getRightXAxis() * MAX_OUTPUT
+      pilot.getLeftXAxis(),
+      pilot.getLeftYAxis(),
+      pilot.getRightXAxis(),
+      true
     ), driveSubsystem));
 
     initPilotControls();

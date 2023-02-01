@@ -72,7 +72,7 @@ public class LogitechDualActionGamepad {
         }
 
         if (squareInputs == true){
-            return Math.abs(value) * value;
+            return Math.abs(value) * Math.abs(value) * value;
         }
 
         return value;
