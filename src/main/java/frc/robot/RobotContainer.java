@@ -21,7 +21,6 @@ public class RobotContainer {
 
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
-  private PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(1, 1));
 
   public RobotContainer() {
 
@@ -47,6 +46,8 @@ public class RobotContainer {
     pilot.rb.onTrue(new InstantCommand(() -> logButtonPress("RB")));
     pilot.lt.onTrue(new InstantCommand(() -> logButtonPress("LT")));
     pilot.rt.onTrue(new InstantCommand(() -> logButtonPress("RT")));
+
+    PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(1, 1));
     pilot.back.whileTrue(driveSubsystem.followTrajectoryCommand(testPath, true));
 
     pilot.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));

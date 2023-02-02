@@ -85,6 +85,23 @@ public class DriveSubsystem extends SubsystemBase{
         }
     );
 
+
+    public void periodic() {
+        updateOdometry();
+    }
+
+    private void updateOdometry() {
+        odometry.update(
+            Rotation2d.fromDegrees(gyro.getYaw()),
+            new SwerveModulePosition[] {
+                frontLeft.getPosition(),
+                frontRight.getPosition(),
+                backLeft.getPosition(),
+                backRight.getPosition()
+            }
+        );
+    }
+
     public DriveSubsystem() {
         zeroGyro();
         initShuffleBoard();
@@ -178,7 +195,7 @@ public class DriveSubsystem extends SubsystemBase{
                 kinematics, // SwerveDriveKinematics
                 new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
                 new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
-                new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+                new PIDController(1, 0, 0.1), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
                 this::setDesiredStates, // Module states consumer
                 true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
                 this // Requires this drive subsystem
