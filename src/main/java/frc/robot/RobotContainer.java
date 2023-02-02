@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -16,6 +20,8 @@ public class RobotContainer {
   private LogitechDualActionGamepad pilot = new LogitechDualActionGamepad(0);
 
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+
+  private PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(1, 1));
 
   public RobotContainer() {
 
@@ -41,7 +47,7 @@ public class RobotContainer {
     pilot.rb.onTrue(new InstantCommand(() -> logButtonPress("RB")));
     pilot.lt.onTrue(new InstantCommand(() -> logButtonPress("LT")));
     pilot.rt.onTrue(new InstantCommand(() -> logButtonPress("RT")));
-    pilot.back.onTrue(new InstantCommand(() -> logButtonPress("Back")));
+    pilot.back.whileTrue(driveSubsystem.followTrajectoryCommand(testPath, true));
 
     pilot.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 

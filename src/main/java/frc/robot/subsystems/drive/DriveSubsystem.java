@@ -4,17 +4,25 @@
 
 package frc.robot.subsystems.drive;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.subsystems.drive.DriveConfig.*;
 
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 public class DriveSubsystem extends SubsystemBase{
 
@@ -65,13 +73,24 @@ public class DriveSubsystem extends SubsystemBase{
         new Translation2d(-TRACKWIDTH_METERS / 2.0, -WHEELBASE_METERS / 2.0)
     );
 
+    private final SwerveDriveOdometry odometry =
+      new SwerveDriveOdometry(
+        kinematics,
+        Rotation2d.fromDegrees(gyro.getYaw()),
+        new SwerveModulePosition[] {
+            frontLeft.getPosition(),
+            frontRight.getPosition(),
+            backLeft.getPosition(),
+            backRight.getPosition()
+        }
+    );
+
     public DriveSubsystem() {
         zeroGyro();
         initShuffleBoard();
     }
 
     public void drive(double x, double y, double rotation, boolean limitSpeed) {
-
 
         double speedModifier = 1;
 
@@ -81,16 +100,20 @@ public class DriveSubsystem extends SubsystemBase{
             if(gear == Gear.Low){
                 speedModifier = speedModifier * 0.5;
             }
-
         }
 
         var desiredStates = getDesiredStates(x * speedModifier, y * speedModifier, rotation * speedModifier);
 
+        setDesiredStates(desiredStates);
+    }
+
+    private void setDesiredStates(SwerveModuleState[] desiredStates) {
         frontLeft.setDesiredState(desiredStates[0]);
         frontRight.setDesiredState(desiredStates[1]);
         backLeft.setDesiredState(desiredStates[2]);
         backRight.setDesiredState(desiredStates[3]);
     }
+
     public void setLowGear(){
         gear = Gear.Low;
     }
@@ -128,5 +151,38 @@ public class DriveSubsystem extends SubsystemBase{
     private void initShuffleBoard() {
         var driveTab = Shuffleboard.getTab("Drive");
         driveTab.addDouble("Pitch", () -> getPitch());
+    }
+
+    // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
+    public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> {
+                // Reset odometry for the first path you run during auto
+                if(isFirstPath){
+                    odometry.resetPosition(
+                        Rotation2d.fromDegrees(gyro.getYaw()),
+                        new SwerveModulePosition[] {
+                            frontLeft.getPosition(),
+                            frontRight.getPosition(),
+                            backLeft.getPosition(),
+                            backRight.getPosition()
+                        },
+                        traj.getInitialHolonomicPose()
+                    );
+                }
+            }),
+
+            new PPSwerveControllerCommand(
+                traj,
+                () -> odometry.getPoseMeters(),
+                kinematics, // SwerveDriveKinematics
+                new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+                new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
+                new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+                this::setDesiredStates, // Module states consumer
+                true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+                this // Requires this drive subsystem
+            )
+        );
     }
 }

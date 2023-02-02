@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.drive;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -59,6 +61,13 @@ public class SwerveModule {
 
         driveController.setVelocity(desiredVelocity);
         angleController.setAngle(desiredAngle);
+    }
+
+    public SwerveModulePosition getPosition() {
+        return new SwerveModulePosition(
+            driveController.getCurrentPosition(),
+            new Rotation2d(angleController.getCurrentAngle())
+        );
     }
 
     private void initReporting(int driveMotorId) {
