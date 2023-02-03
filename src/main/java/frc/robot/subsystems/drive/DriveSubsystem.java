@@ -36,7 +36,7 @@ public class DriveSubsystem extends SubsystemBase{
     private final SlewRateLimiter xLimiter = new SlewRateLimiter(SLEW_RATE);
     private final SlewRateLimiter yLimiter = new SlewRateLimiter(SLEW_RATE);
     private final SlewRateLimiter rotationLimiter = new SlewRateLimiter(SLEW_RATE);
-    private Gear gear = Gear.High;
+    private Gear gear = Gear.Low;
 
     private final SwerveModule frontLeft = new SwerveModule(
         FRONT_LEFT_DRIVE_MOTOR_ID,

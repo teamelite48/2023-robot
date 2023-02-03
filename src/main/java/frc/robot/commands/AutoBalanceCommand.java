@@ -21,6 +21,7 @@ public class AutoBalanceCommand extends CommandBase {
   private double speed;
   private double desiredAngle;
 
+  private long balancedMillis;
 
   public AutoBalanceCommand() {
     driveSubsystem = RobotContainer.driveSubsystem;
@@ -29,9 +30,11 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    driveSubsystem.zeroGyro();
     speed = 0.15;
-    desiredAngle = 1.0;
+    desiredAngle = 2.0;
     lastState = BALANCED;
+    balancedMillis = 0;
   }
 
   @Override
@@ -40,17 +43,20 @@ public class AutoBalanceCommand extends CommandBase {
     currentState = getState();
 
     if (currentState != lastState && speed >= 0.0) {
-      speed = speed - 0.025;
+      speed = speed - 0.02;
     }
 
     if (currentState == PITCH_UP) {
       driveForward();
+      balancedMillis = 0;
     }
     else if (currentState == PITCH_DOWN) {
        driveBackward();
+       balancedMillis = 0;
     }
     else {
       stop();
+      balancedMillis = System.currentTimeMillis();
     }
 
     lastState = currentState;
@@ -76,7 +82,7 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return currentState == BALANCED && (System.currentTimeMillis() - balancedMillis) > 2000;
   }
 
   private void driveForward() {
