@@ -12,12 +12,14 @@ import frc.robot.commands.FullAutoCommand;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.drive.PathType;
+import frc.robot.subsystems.vision.VisionSubsystem;
 
 public class RobotContainer {
 
   private LogitechDualActionGamepad pilot = new LogitechDualActionGamepad(0);
 
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  public static final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
 
   public RobotContainer() {
