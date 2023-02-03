@@ -4,23 +4,16 @@
 
 package frc.robot.commands;
 
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.drive.DriveSubsystem;
-
+import frc.robot.subsystems.drive.PathType;
 
 public class FullAutoCommand extends SequentialCommandGroup {
 
   public FullAutoCommand() {
-    DriveSubsystem driveSubsystem = RobotContainer.driveSubsystem;
-
-    var path = PathPlanner.loadPath("U Turn Path Copy", new PathConstraints(1, 1));
-    var pathCommand = driveSubsystem.followTrajectoryCommand(path, true);
 
     addCommands(
-      pathCommand,
+      RobotContainer.driveSubsystem.getPathFollowingCommand(PathType.UTurnCopy, true),
       new AutoBalanceCommand()
     );
   }

@@ -4,10 +4,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -15,6 +11,7 @@ import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.FullAutoCommand;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.drive.DriveSubsystem;
+import frc.robot.subsystems.drive.PathType;
 
 public class RobotContainer {
 
@@ -48,8 +45,7 @@ public class RobotContainer {
     pilot.lt.onTrue(new InstantCommand(() -> logButtonPress("LT")));
     pilot.rt.onTrue(new InstantCommand(() -> logButtonPress("RT")));
 
-    PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(1, 1));
-    pilot.back.whileTrue(driveSubsystem.followTrajectoryCommand(testPath, true));
+    pilot.back.whileTrue(driveSubsystem.getPathFollowingCommand(PathType.Test, true));
 
     pilot.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
