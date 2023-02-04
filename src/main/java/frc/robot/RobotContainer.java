@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.AutoBalanceCommand;
+import frc.robot.commands.AutoTargetCommand;
 import frc.robot.commands.FullAutoCommand;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.drive.DriveSubsystem;
@@ -57,7 +58,9 @@ public class RobotContainer {
     pilot.up.whileTrue(new FullAutoCommand());
 
     pilot.right.onTrue(new InstantCommand(() -> logButtonPress("Right")));
-    pilot.down.onTrue(new InstantCommand(() -> logButtonPress("Down")));
+
+    pilot.down.whileTrue(new AutoTargetCommand());
+
     pilot.left.onTrue(new InstantCommand(() -> logButtonPress("Left")));
   }
 
