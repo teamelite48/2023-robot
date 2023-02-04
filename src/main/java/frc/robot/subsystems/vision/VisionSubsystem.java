@@ -16,9 +16,10 @@ public class VisionSubsystem extends SubsystemBase {
   final NetworkTableEntry tid = table.getEntry("tid");
   final NetworkTableEntry tx = table.getEntry("tx");
   final NetworkTableEntry ty = table.getEntry("ty");
+  final NetworkTableEntry ledMode = table.getEntry("ledMode");
 
   public VisionSubsystem() {
-
+    disableLed();
     initShuffleBoard();
   }
 
@@ -40,11 +41,18 @@ public class VisionSubsystem extends SubsystemBase {
     return ty.getDouble(0.0);
   }
 
+  public void enableLed() {
+    ledMode.setNumber(3);
+  }
+
+  public void disableLed() {
+    ledMode.setNumber(1);
+  }
+
   private void initShuffleBoard() {
     var tab = Shuffleboard.getTab("Vision");
     tab.addInteger("Target ID", () -> getTargetId());
     tab.addDouble("X Offset", () -> getXOffset());
     tab.addDouble("Y Offset", () -> getYOffset());
   }
-
 }

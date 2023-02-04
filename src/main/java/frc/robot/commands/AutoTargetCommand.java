@@ -21,7 +21,9 @@ public class AutoTargetCommand extends CommandBase {
 
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    visionSubsystem.enableLed();
+  }
 
   @Override
   public void execute() {
@@ -30,7 +32,9 @@ public class AutoTargetCommand extends CommandBase {
 
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    visionSubsystem.disableLed();
+  }
 
 
   @Override
