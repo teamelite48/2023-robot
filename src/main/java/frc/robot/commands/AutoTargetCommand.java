@@ -16,9 +16,7 @@ public class AutoTargetCommand extends CommandBase {
 
   public AutoTargetCommand() {
     addRequirements(driveSubsystem, visionSubsystem);
-
   }
-
 
   @Override
   public void initialize() {
@@ -27,7 +25,8 @@ public class AutoTargetCommand extends CommandBase {
 
   @Override
   public void execute() {
-    driveSubsystem.drive(0, 0, visionSubsystem.getXOffset() / 32.0 * 0.33, false);
+    var rotation = visionSubsystem.getXOffset() / 27.0 * 0.333;
+    driveSubsystem.autoDrive(0, 0, rotation);
   }
 
 

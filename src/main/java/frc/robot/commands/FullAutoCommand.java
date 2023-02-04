@@ -13,7 +13,7 @@ public class FullAutoCommand extends SequentialCommandGroup {
   public FullAutoCommand() {
 
     addCommands(
-      RobotContainer.driveSubsystem.getPathFollowingCommand(PathType.UTurnCopy, true),
+      RobotContainer.driveSubsystem.getPathFollowingCommand(PathType.UTurn, true),
       new AutoBalanceCommand()
     );
   }

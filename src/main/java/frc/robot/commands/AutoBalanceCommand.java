@@ -10,22 +10,23 @@ import frc.robot.subsystems.drive.DriveSubsystem;
 
 public class AutoBalanceCommand extends CommandBase {
 
-  private final int BALANCED = 0;
-  private final int PITCH_UP = 1;
-  private final int PITCH_DOWN = 2;
+  enum Pitch {
+    Balanced,
+    Up,
+    Down
+  }
 
   private DriveSubsystem driveSubsystem;
 
-  private int lastState;
-  private int currentState;
+  private Pitch previousPitch;
+  private Pitch currentPitch;
   private double speed;
   private double desiredAngle;
-
   private long balancedMillis;
 
   public AutoBalanceCommand() {
     driveSubsystem = RobotContainer.driveSubsystem;
-    addRequirements(RobotContainer.driveSubsystem);
+    addRequirements(driveSubsystem);
   }
 
   @Override
@@ -33,46 +34,36 @@ public class AutoBalanceCommand extends CommandBase {
     driveSubsystem.zeroGyro();
     speed = 0.15;
     desiredAngle = 2.0;
-    lastState = BALANCED;
+    previousPitch = Pitch.Balanced;
     balancedMillis = 0;
   }
 
   @Override
   public void execute() {
 
-    currentState = getState();
+    currentPitch = getCurrentPitch();
 
-    if (currentState != lastState && speed >= 0.0) {
-      speed = speed - 0.02;
+    if (currentPitch != previousPitch && speed >= 0.0) {
+      speed -= 0.02;
     }
 
-    if (currentState == PITCH_UP) {
+    if (currentPitch == Pitch.Up) {
       driveForward();
       balancedMillis = 0;
     }
-    else if (currentState == PITCH_DOWN) {
+    else if (currentPitch == Pitch.Down) {
        driveBackward();
        balancedMillis = 0;
     }
     else {
       stop();
-      balancedMillis = System.currentTimeMillis();
+
+      if (balancedMillis == 0) {
+        balancedMillis = System.currentTimeMillis();
+      }
     }
 
-    lastState = currentState;
-  }
-
-  private int getState() {
-
-    if (driveSubsystem.getPitch() > desiredAngle) {
-      return PITCH_UP;
-    }
-    else if (driveSubsystem.getPitch() < -desiredAngle) {
-      return PITCH_DOWN;
-    }
-    else {
-      return BALANCED;
-    }
+    previousPitch = currentPitch;
   }
 
   @Override
@@ -82,19 +73,32 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return currentState == BALANCED && (System.currentTimeMillis() - balancedMillis) > 2000;
+    var balancedDuration = System.currentTimeMillis() - balancedMillis;
+    return currentPitch == Pitch.Balanced && balancedDuration > 2000;
+  }
+
+  private Pitch getCurrentPitch() {
+
+    if (driveSubsystem.getPitch() > desiredAngle) {
+      return Pitch.Up;
+    }
+    else if (driveSubsystem.getPitch() < -desiredAngle) {
+      return Pitch.Down;
+    }
+    else {
+      return Pitch.Balanced;
+    }
   }
 
   private void driveForward() {
-    driveSubsystem.drive(0, -speed, 0, false);
+    driveSubsystem.autoDrive(0, -speed, 0);
   }
 
   private void driveBackward() {
-    driveSubsystem.drive(0, speed, 0, false);
+    driveSubsystem.autoDrive(0, speed, 0);
   }
 
   private void stop() {
-    driveSubsystem.drive(0, 0, 0, false);
+    driveSubsystem.autoDrive(0, 0, 0);
   }
 }
-

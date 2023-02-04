@@ -4,12 +4,15 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.commands.AutoBalanceCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AutoTargetCommand;
 import frc.robot.commands.FullAutoCommand;
+import frc.robot.commands.RunAutoCommand;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.drive.PathType;
@@ -17,58 +20,42 @@ import frc.robot.subsystems.vision.VisionSubsystem;
 
 public class RobotContainer {
 
-  private LogitechDualActionGamepad pilot = new LogitechDualActionGamepad(0);
-
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
+  private final LogitechDualActionGamepad pilot = new LogitechDualActionGamepad(0);
+  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   public RobotContainer() {
-
-    driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.drive(
-      pilot.getLeftXAxis(),
-      pilot.getLeftYAxis(),
-      pilot.getRightXAxis(),
-      true
-    ), driveSubsystem));
-
     initPilotControls();
+    initAutoChooser();
+  }
+
+  public Command getAutonomousCommand() {
+    return autoChooser.getSelected();
   }
 
   private void initPilotControls() {
 
-    pilot.x.onTrue(new InstantCommand(() -> logButtonPress("X")));
+    driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.manualDrive(
+      pilot.getLeftXAxis(),
+      pilot.getLeftYAxis(),
+      pilot.getRightXAxis()
+    ), driveSubsystem));
 
-    pilot.a.whileTrue(new AutoBalanceCommand());
-
-    //pilot.b.onTrue(new InstantCommand(() -> ));
-    //pilot.y.onTrue(new InstantCommand(() -> ));
-    pilot.lb.onTrue(new InstantCommand(() -> logButtonPress("LB")));
-    pilot.rb.onTrue(new InstantCommand(() -> logButtonPress("RB")));
-    pilot.lt.onTrue(new InstantCommand(() -> logButtonPress("LT")));
-    pilot.rt.onTrue(new InstantCommand(() -> logButtonPress("RT")));
-
-    pilot.back.whileTrue(driveSubsystem.getPathFollowingCommand(PathType.Test, true));
-
+    pilot.back.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
     pilot.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
     pilot.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
     pilot.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
-
-    pilot.up.whileTrue(new FullAutoCommand());
-
-    pilot.right.onTrue(new InstantCommand(() -> logButtonPress("Right")));
-
-    pilot.down.whileTrue(new AutoTargetCommand());
-
-    pilot.left.onTrue(new InstantCommand(() -> logButtonPress("Left")));
   }
 
-  private void logButtonPress(String button) {
-    System.out.println("Button " + button + " pressed");
-  }
+  private void initAutoChooser() {
+    autoChooser.setDefaultOption("Do Nothing", new WaitCommand(3));
+    autoChooser.addOption("Test", driveSubsystem.getPathFollowingCommand(PathType.Test, true));
+    autoChooser.addOption("Auto Target", new AutoTargetCommand());
+    autoChooser.addOption("Full Auto", new FullAutoCommand());
 
-  public Command getAutonomousCommand() {
-    return new InstantCommand(() -> {});
+    SmartDashboard.putData(autoChooser);
   }
 }

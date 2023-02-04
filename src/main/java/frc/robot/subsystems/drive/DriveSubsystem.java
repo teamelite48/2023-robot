@@ -39,6 +39,7 @@ public class DriveSubsystem extends SubsystemBase{
     private final SlewRateLimiter xLimiter = new SlewRateLimiter(SLEW_RATE);
     private final SlewRateLimiter yLimiter = new SlewRateLimiter(SLEW_RATE);
     private final SlewRateLimiter rotationLimiter = new SlewRateLimiter(SLEW_RATE);
+
     private Gear gear = Gear.Low;
 
     private final SwerveModule frontLeft = new SwerveModule(
@@ -88,21 +89,8 @@ public class DriveSubsystem extends SubsystemBase{
         }
     );
 
-
     public void periodic() {
         updateOdometry();
-    }
-
-    private void updateOdometry() {
-        odometry.update(
-            Rotation2d.fromDegrees(gyro.getYaw()),
-            new SwerveModulePosition[] {
-                frontLeft.getPosition(),
-                frontRight.getPosition(),
-                backLeft.getPosition(),
-                backRight.getPosition()
-            }
-        );
     }
 
     public DriveSubsystem() {
@@ -110,16 +98,12 @@ public class DriveSubsystem extends SubsystemBase{
         initShuffleBoard();
     }
 
-    public void drive(double x, double y, double rotation, boolean limitSpeed) {
+    public void manualDrive(double x, double y, double rotation) {
 
-        double speedModifier = 1;
+        double speedModifier = MAX_OUTPUT;
 
-        if(limitSpeed == true) {
-            speedModifier = MAX_OUTPUT;
-
-            if(gear == Gear.Low){
-                speedModifier = speedModifier * 0.5;
-            }
+        if (gear == Gear.Low) {
+            speedModifier *= LOW_GEAR_REDUCTION;
         }
 
         var desiredStates = getDesiredStates(x * speedModifier, y * speedModifier, rotation * speedModifier);
@@ -127,11 +111,10 @@ public class DriveSubsystem extends SubsystemBase{
         setDesiredStates(desiredStates);
     }
 
-    private void setDesiredStates(SwerveModuleState[] desiredStates) {
-        frontLeft.setDesiredState(desiredStates[0]);
-        frontRight.setDesiredState(desiredStates[1]);
-        backLeft.setDesiredState(desiredStates[2]);
-        backRight.setDesiredState(desiredStates[3]);
+    public void autoDrive(double x, double y, double rotation) {
+        var desiredStates = getDesiredStates(x, y, rotation);
+
+        setDesiredStates(desiredStates);
     }
 
     public void setLowGear(){
@@ -150,45 +133,9 @@ public class DriveSubsystem extends SubsystemBase{
         return gyro.getRoll();
     }
 
-    private SwerveModuleState[] getDesiredStates(double x, double y, double rotation) {
-
-        var chassisSpeeds = getChasisSpeeds(x, y, rotation);
-        var swerveModuleStates = kinematics.toSwerveModuleStates(chassisSpeeds);
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, MAX_METERS_PER_SECOND);
-
-        return swerveModuleStates;
-    }
-
-    private ChassisSpeeds getChasisSpeeds(double x, double y, double rotation) {
-        return ChassisSpeeds.fromFieldRelativeSpeeds(
-            -yLimiter.calculate(y) * MAX_METERS_PER_SECOND,
-            -xLimiter.calculate(x) * MAX_METERS_PER_SECOND,
-            -rotationLimiter.calculate(rotation) * MAX_ANGULAR_METERS_PER_SECOND,
-            Rotation2d.fromDegrees(gyro.getYaw())
-        );
-    }
-
-    private void initShuffleBoard() {
-        var driveTab = Shuffleboard.getTab("Drive");
-        driveTab.addDouble("Pitch", () -> getPitch());
-    }
-
-    private void resetOdometry(Pose2d pose) {
-        odometry.resetPosition(
-            Rotation2d.fromDegrees(gyro.getYaw()),
-            new SwerveModulePosition[] {
-                frontLeft.getPosition(),
-                frontRight.getPosition(),
-                backLeft.getPosition(),
-                backRight.getPosition()
-            },
-            pose
-        );
-    }
-
     public Command getPathFollowingCommand(PathType path, boolean isFirstPath) {
 
-        PathPlannerTrajectory trajectory = PathPlanner.loadPath(path.pathName, new PathConstraints(1, 1));
+        PathPlannerTrajectory trajectory = PathPlanner.loadPath(path.pathName, new PathConstraints(2, 2));
 
         return new SequentialCommandGroup(
             new InstantCommand(() -> {
@@ -209,5 +156,60 @@ public class DriveSubsystem extends SubsystemBase{
                 this
             )
         );
+    }
+
+    private SwerveModuleState[] getDesiredStates(double x, double y, double rotation) {
+
+        var chassisSpeeds = getChasisSpeeds(x, y, rotation);
+        var swerveModuleStates = kinematics.toSwerveModuleStates(chassisSpeeds);
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, MAX_METERS_PER_SECOND);
+
+        return swerveModuleStates;
+    }
+
+    private void setDesiredStates(SwerveModuleState[] desiredStates) {
+        frontLeft.setDesiredState(desiredStates[0]);
+        frontRight.setDesiredState(desiredStates[1]);
+        backLeft.setDesiredState(desiredStates[2]);
+        backRight.setDesiredState(desiredStates[3]);
+    }
+
+    private ChassisSpeeds getChasisSpeeds(double x, double y, double rotation) {
+        return ChassisSpeeds.fromFieldRelativeSpeeds(
+            -yLimiter.calculate(y) * MAX_METERS_PER_SECOND,
+            -xLimiter.calculate(x) * MAX_METERS_PER_SECOND,
+            -rotationLimiter.calculate(rotation) * MAX_ANGULAR_METERS_PER_SECOND,
+            Rotation2d.fromDegrees(gyro.getYaw())
+        );
+    }
+
+    private void resetOdometry(Pose2d pose) {
+        odometry.resetPosition(
+            Rotation2d.fromDegrees(gyro.getYaw()),
+            new SwerveModulePosition[] {
+                frontLeft.getPosition(),
+                frontRight.getPosition(),
+                backLeft.getPosition(),
+                backRight.getPosition()
+            },
+            pose
+        );
+    }
+
+    private void updateOdometry() {
+        odometry.update(
+            Rotation2d.fromDegrees(gyro.getYaw()),
+            new SwerveModulePosition[] {
+                frontLeft.getPosition(),
+                frontRight.getPosition(),
+                backLeft.getPosition(),
+                backRight.getPosition()
+            }
+        );
+    }
+
+    private void initShuffleBoard() {
+        var driveTab = Shuffleboard.getTab("Drive");
+        driveTab.addDouble("Pitch", () -> getPitch());
     }
 }

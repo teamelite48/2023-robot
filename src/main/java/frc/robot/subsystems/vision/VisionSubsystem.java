@@ -30,7 +30,6 @@ public class VisionSubsystem extends SubsystemBase {
 
   public long getTargetId() {
     return tid.getInteger(0);
-    //NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDoubleArray(new double[6]);
   }
 
   public double getXOffset() {
