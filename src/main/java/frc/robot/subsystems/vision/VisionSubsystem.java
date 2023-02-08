@@ -13,10 +13,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class VisionSubsystem extends SubsystemBase {
 
   final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+
   final NetworkTableEntry tid = table.getEntry("tid");
   final NetworkTableEntry tx = table.getEntry("tx");
   final NetworkTableEntry ty = table.getEntry("ty");
   final NetworkTableEntry ledMode = table.getEntry("ledMode");
+  final NetworkTableEntry pipeline = table.getEntry("pipeline");
 
   public VisionSubsystem() {
     disableLed();
@@ -46,6 +48,14 @@ public class VisionSubsystem extends SubsystemBase {
 
   public void disableLed() {
     ledMode.setNumber(1);
+  }
+
+  public void enableAprilTagPipeline() {
+    pipeline.setNumber(0);
+  }
+
+  public void enableReflectiveTapePipeline(){
+    pipeline.setNumber(1);
   }
 
   private void initShuffleBoard() {
