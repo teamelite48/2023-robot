@@ -22,9 +22,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.subsystems.drive.DriveConfig.*;
 
 import com.ctre.phoenix.sensors.Pigeon2;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 public class DriveSubsystem extends SubsystemBase{
@@ -133,9 +132,7 @@ public class DriveSubsystem extends SubsystemBase{
         return gyro.getRoll();
     }
 
-    public Command getPathFollowingCommand(PathType path, boolean isFirstPath) {
-
-        PathPlannerTrajectory trajectory = PathPlanner.loadPath(path.pathName, new PathConstraints(2, 2));
+    public Command getFollowPathCommand(PathPlannerTrajectory trajectory, boolean isFirstPath) {
 
         return new SequentialCommandGroup(
             new InstantCommand(() -> {
@@ -155,6 +152,14 @@ public class DriveSubsystem extends SubsystemBase{
                 true,
                 this
             )
+        );
+    }
+
+    public Command getFollowPathWithEventsCommand(PathPlannerTrajectory trajectory) {
+        return new FollowPathWithEvents(
+            getFollowPathCommand(trajectory, true),
+            trajectory.getMarkers(),
+            PathFollowing.EventMap
         );
     }
 

@@ -15,7 +15,7 @@ import frc.robot.commands.FullAutoCommand;
 import frc.robot.commands.RunAutoCommand;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.drive.DriveSubsystem;
-import frc.robot.subsystems.drive.PathType;
+import frc.robot.subsystems.drive.PathFollowing;
 import frc.robot.subsystems.vision.VisionSubsystem;
 
 public class RobotContainer {
@@ -52,9 +52,10 @@ public class RobotContainer {
 
   private void initAutoChooser() {
     autoChooser.setDefaultOption("Do Nothing", new WaitCommand(3));
-    autoChooser.addOption("Test", driveSubsystem.getPathFollowingCommand(PathType.Test, true));
+    autoChooser.addOption("Test", driveSubsystem.getFollowPathCommand(PathFollowing.TestPath, true));
     autoChooser.addOption("Auto Target", new AutoTargetCommand());
     autoChooser.addOption("Full Auto", new FullAutoCommand());
+    autoChooser.addOption("Cone Score 1 Hold 1 Balance", driveSubsystem.getFollowPathWithEventsCommand(PathFollowing.ConeScore1Hold1Balance));
 
     SmartDashboard.putData(autoChooser);
   }

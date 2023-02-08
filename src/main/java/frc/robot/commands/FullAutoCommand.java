@@ -6,14 +6,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.drive.PathType;
+import frc.robot.subsystems.drive.PathFollowing;
 
 public class FullAutoCommand extends SequentialCommandGroup {
 
   public FullAutoCommand() {
 
     addCommands(
-      RobotContainer.driveSubsystem.getPathFollowingCommand(PathType.UTurn, true),
+      RobotContainer.driveSubsystem.getFollowPathCommand(PathFollowing.UTurnPath, true),
       new AutoBalanceCommand()
     );
   }
