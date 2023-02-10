@@ -23,6 +23,8 @@ import static frc.robot.subsystems.drive.DriveConfig.*;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
@@ -88,6 +90,8 @@ public class DriveSubsystem extends SubsystemBase{
         }
     );
 
+    private SwerveAutoBuilder autoBuilder = null;
+
     public void periodic() {
         updateOdometry();
     }
@@ -132,35 +136,54 @@ public class DriveSubsystem extends SubsystemBase{
         return gyro.getRoll();
     }
 
-    public Command getFollowPathCommand(PathPlannerTrajectory trajectory, boolean isFirstPath) {
+    // public Command getFollowPathCommand(PathPlannerTrajectory trajectory, boolean isFirstPath) {
 
-        return new SequentialCommandGroup(
-            new InstantCommand(() -> {
-                if(isFirstPath){
-                    resetOdometry(trajectory.getInitialHolonomicPose());
-                }
-            }),
+    //     return new SequentialCommandGroup(
+    //         new InstantCommand(() -> {
+    //             if(isFirstPath){
+    //                 resetOdometry(trajectory.getInitialHolonomicPose());
+    //             }
+    //         }),
 
-            new PPSwerveControllerCommand(
-                trajectory,
+    //         new PPSwerveControllerCommand(
+    //             trajectory,
+    //             () -> odometry.getPoseMeters(),
+    //             kinematics,
+    //             new PIDController(0, 0, 0),
+    //             new PIDController(0, 0, 0),
+    //             new PIDController(1, 0, 0.1),
+    //             this::setDesiredStates,
+    //             true,
+    //             this
+    //         )
+    //     );
+    // }
+
+    // public Command getFollowPathWithEventsCommand(PathPlannerTrajectory trajectory) {
+    //     return new FollowPathWithEvents(
+    //         getFollowPathCommand(trajectory, true),
+    //         trajectory.getMarkers(),
+    //         PathFollowing.EventMap
+    //     );
+    // }
+
+    public Command getPathPlannerCommand(PathPlannerTrajectory trajectory) {
+
+        if (autoBuilder == null) {
+            autoBuilder = new SwerveAutoBuilder(
                 () -> odometry.getPoseMeters(),
+                this::resetOdometry,
                 kinematics,
-                new PIDController(0, 0, 0),
-                new PIDController(0, 0, 0),
-                new PIDController(1, 0, 0.1),
+                new PIDConstants(5.0, 0.0, 0.0),
+                new PIDConstants(0.5, 0.0, 0.0),
                 this::setDesiredStates,
+                PathFollowing.EventMap,
                 true,
                 this
-            )
-        );
-    }
+            );
+        }
 
-    public Command getFollowPathWithEventsCommand(PathPlannerTrajectory trajectory) {
-        return new FollowPathWithEvents(
-            getFollowPathCommand(trajectory, true),
-            trajectory.getMarkers(),
-            PathFollowing.EventMap
-        );
+        return autoBuilder.fullAuto(trajectory);
     }
 
     private SwerveModuleState[] getDesiredStates(double x, double y, double rotation) {

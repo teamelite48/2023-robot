@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.AutoTargetCommand;
-import frc.robot.commands.FullAutoCommand;
 import frc.robot.commands.RunAutoCommand;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.drive.DriveSubsystem;
@@ -52,10 +52,11 @@ public class RobotContainer {
 
   private void initAutoChooser() {
     autoChooser.setDefaultOption("Do Nothing", new WaitCommand(3));
-    autoChooser.addOption("Test", driveSubsystem.getFollowPathCommand(PathFollowing.TestPath, true));
+    autoChooser.addOption("Test", driveSubsystem.getPathPlannerCommand(PathFollowing.TestPath));
     autoChooser.addOption("Auto Target", new AutoTargetCommand());
-    autoChooser.addOption("Full Auto", new FullAutoCommand());
-    autoChooser.addOption("Cone Score 1 Hold 1 Balance", driveSubsystem.getFollowPathWithEventsCommand(PathFollowing.ConeScore1Hold1Balance));
+    autoChooser.addOption("U Turn Path", driveSubsystem.getPathPlannerCommand(PathFollowing.UTurnPath));
+    autoChooser.addOption("Auto Balance", new AutoBalanceCommand());
+    autoChooser.addOption("U Turn Path Copy", driveSubsystem.getPathPlannerCommand(PathFollowing.UTurnPathCopy));
 
     SmartDashboard.putData(autoChooser);
   }
