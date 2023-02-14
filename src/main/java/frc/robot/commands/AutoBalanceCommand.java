@@ -73,8 +73,13 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    var balancedDuration = System.currentTimeMillis() - balancedMillis;
-    return currentPitch == Pitch.Balanced && balancedDuration > 2000;
+
+    if (currentPitch == Pitch.Balanced) {
+      var balancedDuration = System.currentTimeMillis() - balancedMillis;
+      return balancedDuration > 2000;
+    }
+
+    return false;
   }
 
   private Pitch getCurrentPitch() {
