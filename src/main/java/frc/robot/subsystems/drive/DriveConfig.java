@@ -29,8 +29,8 @@ public class DriveConfig {
     public static final double SLEW_RATE = 2.0;
 
     public static final double WHEEL_DIAMETER = 0.10033;
-    public static final double TRACKWIDTH_METERS = 0.66675;
-    public static final double WHEELBASE_METERS = 0.57785;
+    public static final double TRACKWIDTH_METERS = 0.50165;
+    public static final double WHEELBASE_METERS = 0.74295;
 
     public static final double MAX_METERS_PER_SECOND = 4.4196;
     public static final double MAX_ANGULAR_METERS_PER_SECOND = MAX_METERS_PER_SECOND / Math.hypot(TRACKWIDTH_METERS / 2.0, WHEELBASE_METERS / 2.0);
