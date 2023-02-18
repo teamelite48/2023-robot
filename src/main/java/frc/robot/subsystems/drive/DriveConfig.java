@@ -7,22 +7,22 @@ public class DriveConfig {
     public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 21;
     public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 22;
     public static final int FRONT_LEFT_ANGLE_ENCODER_ID = 31;
-    public static final double FRONT_LEFT_ANGLE_OFFSET_DEGREES = 38.6;
+    public static final double FRONT_LEFT_ANGLE_OFFSET_DEGREES = 99.492;
 
     public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 23;
     public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = 24;
     public static final int FRONT_RIGHT_ANGLE_ENCODER_ID = 33;
-    public static final double FRONT_RIGHT_ANGLE_OFFSET_DEGREES = 188.4;
+    public static final double FRONT_RIGHT_ANGLE_OFFSET_DEGREES = 308.320 + 180;
 
     public static final int BACK_LEFT_DRIVE_MOTOR_ID = 25;
     public static final int BACK_LEFT_ANGLE_MOTOR_ID = 26;
     public static final int BACK_LEFT_ANGLE_ENCODER_ID = 35;
-    public static final double BACK_LEFT_ANGLE_OFFSET_DEGREES = 123.6;
+    public static final double BACK_LEFT_ANGLE_OFFSET_DEGREES = 303.135 + 180;
 
     public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 27;
     public static final int BACK_RIGHT_ANGLE_MOTOR_ID = 28;
     public static final int BACK_RIGHT_ANGLE_ENCODER_ID = 37;
-    public static final double BACK_RIGHT_ANGLE_OFFSET_DEGREES = 204.7;
+    public static final double BACK_RIGHT_ANGLE_OFFSET_DEGREES = 203.994;
 
     public static final double MAX_OUTPUT = 0.5;
     public static final double LOW_GEAR_REDUCTION = 0.5;
