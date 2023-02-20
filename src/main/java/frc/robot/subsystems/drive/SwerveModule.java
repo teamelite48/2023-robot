@@ -28,7 +28,7 @@ public class SwerveModule {
         driveController = new SwerveDriveController(driveMotorId);
         angleController = new SwerveAngleController(angleMotorId, absoluteEncoderId, angleOffsetDegrees);
 
-        initReporting(driveMotorId);
+        initDashboard(driveMotorId);
     }
 
     public void setDesiredState(SwerveModuleState desiredState) {
@@ -70,27 +70,27 @@ public class SwerveModule {
         );
     }
 
-    private void initReporting(int driveMotorId) {
+    private void initDashboard(int driveMotorId) {
 
-        var reportingId = "undefined";
+        var title = "undefined";
 
         switch (driveMotorId) {
             case FRONT_LEFT_DRIVE_MOTOR_ID:
-                reportingId = "Front Left";
+                title = "Front Left";
                 break;
             case FRONT_RIGHT_DRIVE_MOTOR_ID:
-                reportingId = "Front Right";
+                title = "Front Right";
                 break;
             case BACK_LEFT_DRIVE_MOTOR_ID:
-                reportingId = "Back Left";
+                title = "Back Left";
                 break;
             case BACK_RIGHT_DRIVE_MOTOR_ID:
-                reportingId = "Back Right";
+                title = "Back Right";
                 break;
         }
 
         var tab = Shuffleboard.getTab("Swerve Modules");
-        var layout = tab.getLayout(reportingId, BuiltInLayouts.kList);
+        var layout = tab.getLayout(title, BuiltInLayouts.kList);
 
         layout.addDouble("Target Velocity", () -> driveController.getTargetVelocity());
         layout.addDouble("Current Velocity", () -> driveController.getCurrentVelocity());
