@@ -14,6 +14,7 @@ import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.AutoTargetCommand;
 import frc.robot.commands.RunAutoCommand;
 import frc.robot.controls.LogitechDualActionGamepad;
+import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.drive.PathFollowing;
 import frc.robot.subsystems.vision.VisionSubsystem;
@@ -22,6 +23,7 @@ public class RobotContainer {
 
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static final VisionSubsystem visionSubsystem = new VisionSubsystem();
+  public static final ArmSubsystem armSubsystem = new ArmSubsystem();
 
   private final LogitechDualActionGamepad pilot = new LogitechDualActionGamepad(0);
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -48,6 +50,8 @@ public class RobotContainer {
 
     pilot.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
     pilot.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
+    pilot.up.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
+    pilot.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
   }
 
   private void initAutoChooser() {
