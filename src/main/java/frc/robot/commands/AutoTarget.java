@@ -9,12 +9,12 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.vision.VisionSubsystem;
 
-public class AutoTargetCommand extends CommandBase {
+public class AutoTarget extends CommandBase {
 
   private final DriveSubsystem driveSubsystem = RobotContainer.driveSubsystem;
   private final VisionSubsystem visionSubsystem = RobotContainer.visionSubsystem;
 
-  public AutoTargetCommand() {
+  public AutoTarget() {
     addRequirements(driveSubsystem, visionSubsystem);
   }
 

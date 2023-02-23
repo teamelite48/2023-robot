@@ -7,7 +7,7 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.AutoBalanceCommand;
+import frc.robot.commands.AutoBalance;
 
 public class PathFollowing {
 
@@ -17,6 +17,6 @@ public class PathFollowing {
     static public final PathPlannerTrajectory UTurnPathCopy = PathPlanner.loadPath("U Turn Path Copy", new PathConstraints(1, 1));
 
     static public final HashMap<String, Command> EventMap = new HashMap<>() {{
-        put("Auto Balance", new AutoBalanceCommand());
+        put("Auto Balance", new AutoBalance());
     }};
 }

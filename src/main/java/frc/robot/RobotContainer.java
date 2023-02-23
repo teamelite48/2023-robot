@@ -4,15 +4,21 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.AutoBalanceCommand;
-import frc.robot.commands.AutoTargetCommand;
+import frc.robot.commands.AutoBalance;
+import frc.robot.commands.AutoTarget;
 import frc.robot.commands.RunAutoCommand;
+import frc.robot.commands.SetArmModeToPickUp;
+import frc.robot.commands.SetArmModeToScore;
+import frc.robot.commands.SetArmModeToStowed;
+import frc.robot.commands.SetGripperModeToCone;
+import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.drive.DriveSubsystem;
@@ -21,16 +27,35 @@ import frc.robot.subsystems.vision.VisionSubsystem;
 
 public class RobotContainer {
 
+  public enum GripperMode {
+    Cone,
+    Cube
+  }
+
+  public enum ArmMode {
+    PickUp,
+    Score,
+    Stowed
+  }
+
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static final VisionSubsystem visionSubsystem = new VisionSubsystem();
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
 
+  public static GripperMode gripperMode = GripperMode.Cone;
+  public static ArmMode armMode = ArmMode.Stowed;
+
   private final LogitechDualActionGamepad pilot = new LogitechDualActionGamepad(0);
+  private final LogitechDualActionGamepad copilot = new LogitechDualActionGamepad(1);
+
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   public RobotContainer() {
     initPilotControls();
+    initCopilotControls();
+
     initAutoChooser();
+    initDashboard();
   }
 
   public Command getAutonomousCommand() {
@@ -50,18 +75,37 @@ public class RobotContainer {
 
     pilot.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
     pilot.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
-    pilot.up.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
-    pilot.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
+
+  }
+
+  private void initCopilotControls() {
+    copilot.lb.onTrue(new SetGripperModeToCone());
+    copilot.rb.onTrue(new SetGripperModeToCube());
+
+    copilot.up.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
+    copilot.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
+
+    copilot.l3.onTrue(new SetArmModeToPickUp());
+    copilot.r3.onTrue(new SetArmModeToScore());
+    copilot.b.onTrue(new SetArmModeToStowed());
   }
 
   private void initAutoChooser() {
     autoChooser.setDefaultOption("Do Nothing", new WaitCommand(3));
     autoChooser.addOption("Test", driveSubsystem.getPathPlannerCommand(PathFollowing.TestPath));
-    autoChooser.addOption("Auto Target", new AutoTargetCommand());
+    autoChooser.addOption("Auto Target", new AutoTarget());
     autoChooser.addOption("U Turn Path", driveSubsystem.getPathPlannerCommand(PathFollowing.UTurnPath));
-    autoChooser.addOption("Auto Balance", new AutoBalanceCommand());
+    autoChooser.addOption("Auto Balance", new AutoBalance());
     autoChooser.addOption("U Turn Path Copy", driveSubsystem.getPathPlannerCommand(PathFollowing.UTurnPathCopy));
 
     SmartDashboard.putData(autoChooser);
+  }
+
+  private void initDashboard() {
+
+    var tab = Shuffleboard.getTab("Robot");
+
+    tab.addString("Gripper Mode", () -> gripperMode.toString());
+    tab.addString("Arm Mode", () -> armMode.toString());
   }
 }

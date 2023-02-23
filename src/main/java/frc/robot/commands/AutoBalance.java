@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.drive.DriveSubsystem;
 
-public class AutoBalanceCommand extends CommandBase {
+public class AutoBalance extends CommandBase {
 
   enum Pitch {
     Balanced,
@@ -24,7 +24,7 @@ public class AutoBalanceCommand extends CommandBase {
   private double desiredAngle;
   private long balancedMillis;
 
-  public AutoBalanceCommand() {
+  public AutoBalance() {
     driveSubsystem = RobotContainer.driveSubsystem;
     addRequirements(driveSubsystem);
   }
