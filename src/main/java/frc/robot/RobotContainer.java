@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoTarget;
+import frc.robot.commands.PrepareArmToPickUp;
+import frc.robot.commands.PrepareArmToScore;
 import frc.robot.commands.RunAutoCommand;
-import frc.robot.commands.SetArmModeToPickUp;
-import frc.robot.commands.SetArmModeToScore;
-import frc.robot.commands.SetArmModeToStowed;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
+import frc.robot.commands.StowArm;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.drive.DriveSubsystem;
@@ -32,18 +32,11 @@ public class RobotContainer {
     Cube
   }
 
-  public enum ArmMode {
-    PickUp,
-    Score,
-    Stowed
-  }
-
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static final VisionSubsystem visionSubsystem = new VisionSubsystem();
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
 
   public static GripperMode gripperMode = GripperMode.Cone;
-  public static ArmMode armMode = ArmMode.Stowed;
 
   private final LogitechDualActionGamepad pilot = new LogitechDualActionGamepad(0);
   private final LogitechDualActionGamepad copilot = new LogitechDualActionGamepad(1);
@@ -53,7 +46,6 @@ public class RobotContainer {
   public RobotContainer() {
     initPilotControls();
     initCopilotControls();
-
     initAutoChooser();
     initDashboard();
   }
@@ -85,9 +77,9 @@ public class RobotContainer {
     copilot.up.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
     copilot.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
 
-    copilot.l3.onTrue(new SetArmModeToPickUp());
-    copilot.r3.onTrue(new SetArmModeToScore());
-    copilot.b.onTrue(new SetArmModeToStowed());
+    copilot.l3.onTrue(new PrepareArmToPickUp());
+    copilot.r3.onTrue(new PrepareArmToScore());
+    copilot.b.onTrue(new StowArm());
   }
 
   private void initAutoChooser() {
@@ -106,6 +98,6 @@ public class RobotContainer {
     var tab = Shuffleboard.getTab("Robot");
 
     tab.addString("Gripper Mode", () -> gripperMode.toString());
-    tab.addString("Arm Mode", () -> armMode.toString());
+
   }
 }

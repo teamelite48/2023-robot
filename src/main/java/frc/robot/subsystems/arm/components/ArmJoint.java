@@ -8,8 +8,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 import static frc.robot.subsystems.arm.ArmConfig.*;
 
@@ -22,7 +20,6 @@ public class ArmJoint {
     private double targetAngle = 0;
 
     public ArmJoint(
-        String jointName,
         int canId,
         double encoderReduction,
         double offsetDegrees,
@@ -60,30 +57,24 @@ public class ArmJoint {
         pidController.setI(0.0);
         pidController.setD(0.1);
         pidController.setFeedbackDevice(absoluteEncoder);
-
-        initDashboard(jointName);
     }
 
-    public void setAngle(double targetAngle) {
+    public void setTargetAngle(double targetAngle) {
         this.targetAngle = targetAngle;
         this.pidController.setReference(this.targetAngle, CANSparkMax.ControlType.kPosition);
     }
 
-    public double getAngle() {
+
+    public double getTargetAngle() {
+        return this.targetAngle;
+    }
+
+    public double getCurrentAngle() {
         if (RobotBase.isSimulation() == true) {
             return this.targetAngle;
         }
         else {
             return this.absoluteEncoder.getPosition();
         }
-    }
-
-    private void initDashboard(String jointName) {
-
-        var tab = Shuffleboard.getTab("Arm");
-        var layout = tab.getLayout(jointName, BuiltInLayouts.kList);
-
-        layout.addDouble("Target Angle", () -> this.targetAngle);
-        layout.addDouble("Current Angle", () -> this.getAngle());
     }
 }
