@@ -19,6 +19,7 @@ import frc.robot.commands.RunAutoCommand;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.commands.StowArm;
+import frc.robot.controls.DualShock4Controller;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.drive.DriveSubsystem;
