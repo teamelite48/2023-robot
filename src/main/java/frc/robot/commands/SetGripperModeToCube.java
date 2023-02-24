@@ -7,16 +7,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.RobotContainer.GripperMode;
+import frc.robot.subsystems.gripper.GripperSubsystem;
+import frc.robot.subsystems.gripper.GripperSubsystem.GripperMode;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+
 public class SetGripperModeToCube extends ParallelCommandGroup {
+
+  private final GripperSubsystem gripperSubsystem = RobotContainer.gripperSubsystem;
 
   public SetGripperModeToCube() {
     addCommands(
-      new InstantCommand(() -> RobotContainer.gripperMode = GripperMode.Cube)
+      new InstantCommand(() -> gripperSubsystem.setMode(GripperMode.Cube))
     );
   }
 }

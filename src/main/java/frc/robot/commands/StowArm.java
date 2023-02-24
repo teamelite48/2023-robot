@@ -17,12 +17,12 @@ public class StowArm extends SequentialCommandGroup {
 
   public StowArm() {
 
-    // var armSubsystem = RobotContainer.armSubsystem;
+    var armSubsystem = RobotContainer.armSubsystem;
 
-    // addCommands(
-    //   new InstantCommand(() -> armSubsystem.setArmState(ArmState.Tansitioning), armSubsystem),
-    //   new WaitCommand(3),
-    //   new InstantCommand(() -> armSubsystem.setArmState(ArmState.Stowed), armSubsystem)
-    // );
+    addCommands(
+      new InstantCommand(() -> armSubsystem.setArmState(ArmState.Tansitioning), armSubsystem),
+      new WaitCommand(1),
+      new InstantCommand(() -> armSubsystem.setArmState(ArmState.Stowed), armSubsystem)
+    );
   }
 }

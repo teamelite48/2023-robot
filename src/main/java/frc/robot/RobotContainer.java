@@ -19,25 +19,23 @@ import frc.robot.commands.RunAutoCommand;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.commands.StowArm;
-import frc.robot.controls.DualShock4Controller;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.drive.PathFollowing;
+import frc.robot.subsystems.gripper.GripperSubsystem;
 import frc.robot.subsystems.vision.VisionSubsystem;
 
 public class RobotContainer {
 
-  public enum GripperMode {
-    Cone,
-    Cube
-  }
+
 
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static final VisionSubsystem visionSubsystem = new VisionSubsystem();
-  // public static final ArmSubsystem armSubsystem = new ArmSubsystem();
+  public static final ArmSubsystem armSubsystem = new ArmSubsystem();
+  public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
 
-  public static GripperMode gripperMode = GripperMode.Cone;
+
 
   private final LogitechDualActionGamepad pilot = new LogitechDualActionGamepad(0);
   private final LogitechDualActionGamepad copilot = new LogitechDualActionGamepad(1);
@@ -48,7 +46,7 @@ public class RobotContainer {
     initPilotControls();
     initCopilotControls();
     initAutoChooser();
-    initDashboard();
+
   }
 
   public Command getAutonomousCommand() {
@@ -71,15 +69,24 @@ public class RobotContainer {
   }
 
   private void initCopilotControls() {
+
     copilot.lb.onTrue(new SetGripperModeToCone());
     copilot.rb.onTrue(new SetGripperModeToCube());
 
-    // copilot.up.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
-    // copilot.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
+    copilot.up.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
+    copilot.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
 
-    // copilot.l3.onTrue(new PrepareArmToPickUp());
-    // copilot.r3.onTrue(new PrepareArmToScore());
-    // copilot.b.onTrue(new StowArm());
+    copilot.l3.onTrue(new PrepareArmToPickUp());
+    copilot.r3.onTrue(new PrepareArmToScore());
+    copilot.b.onTrue(new StowArm());
+
+    copilot.lt
+      .whileTrue(new InstantCommand(() -> gripperSubsystem.intake()))
+      .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
+
+    copilot.rt
+      .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
+      .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
   }
 
   private void initAutoChooser() {
@@ -93,11 +100,5 @@ public class RobotContainer {
     SmartDashboard.putData(autoChooser);
   }
 
-  private void initDashboard() {
 
-    var tab = Shuffleboard.getTab("Robot");
-
-    tab.addString("Gripper Mode", () -> gripperMode.toString());
-
-  }
 }

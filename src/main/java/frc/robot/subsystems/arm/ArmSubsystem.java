@@ -76,6 +76,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   private void initDashboard() {
+
     var tab = Shuffleboard.getTab("Arm");
 
     var shoulderLayout = tab.getLayout("Shoulder", BuiltInLayouts.kList);

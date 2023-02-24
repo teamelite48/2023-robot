@@ -7,14 +7,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.RobotContainer.GripperMode;
+import frc.robot.subsystems.gripper.GripperSubsystem;
+import frc.robot.subsystems.gripper.GripperSubsystem.GripperMode;
 
 
 public class SetGripperModeToCone extends ParallelCommandGroup {
 
+  private final GripperSubsystem gripperSubsystem = RobotContainer.gripperSubsystem;
+
   public SetGripperModeToCone() {
     addCommands(
-      new InstantCommand(() -> RobotContainer.gripperMode = GripperMode.Cone)
+      new InstantCommand(() -> gripperSubsystem.setMode(GripperMode.Cone))
     );
   }
 }

@@ -15,12 +15,12 @@ public class PrepareArmToPickUp extends SequentialCommandGroup {
 
   public PrepareArmToPickUp() {
 
-    // var armSubsystem = RobotContainer.armSubsystem;
+    var armSubsystem = RobotContainer.armSubsystem;
 
-    // addCommands(
-    //   new InstantCommand(() -> armSubsystem.setArmState(ArmState.Tansitioning), armSubsystem),
-    //   new WaitCommand(3),
-    //   new InstantCommand(() -> armSubsystem.setArmState(ArmState.ReadyToPickUp), armSubsystem)
-    // );
+    addCommands(
+      new InstantCommand(() -> armSubsystem.setArmState(ArmState.Tansitioning), armSubsystem),
+      new WaitCommand(1),
+      new InstantCommand(() -> armSubsystem.setArmState(ArmState.ReadyToPickUp), armSubsystem)
+    );
   }
 }
