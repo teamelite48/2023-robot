@@ -14,12 +14,12 @@ public class PrepareArmToScore extends SequentialCommandGroup {
 
   public PrepareArmToScore() {
 
-    var armSubsystem = RobotContainer.armSubsystem;
+    // var armSubsystem = RobotContainer.armSubsystem;
 
-    addCommands(
-      new InstantCommand(() -> armSubsystem.setArmState(ArmState.Tansitioning), armSubsystem),
-      new WaitCommand(3),
-      new InstantCommand(() -> armSubsystem.setArmState(ArmState.ReadyToScore), armSubsystem)
-    );
+    // addCommands(
+    //   new InstantCommand(() -> armSubsystem.setArmState(ArmState.Tansitioning), armSubsystem),
+    //   new WaitCommand(3),
+    //   new InstantCommand(() -> armSubsystem.setArmState(ArmState.ReadyToScore), armSubsystem)
+    // );
   }
 }

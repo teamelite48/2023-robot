@@ -34,7 +34,7 @@ public class RobotContainer {
 
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static final VisionSubsystem visionSubsystem = new VisionSubsystem();
-  public static final ArmSubsystem armSubsystem = new ArmSubsystem();
+  // public static final ArmSubsystem armSubsystem = new ArmSubsystem();
 
   public static GripperMode gripperMode = GripperMode.Cone;
 
@@ -67,19 +67,18 @@ public class RobotContainer {
 
     pilot.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
     pilot.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
-
   }
 
   private void initCopilotControls() {
     copilot.lb.onTrue(new SetGripperModeToCone());
     copilot.rb.onTrue(new SetGripperModeToCube());
 
-    copilot.up.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
-    copilot.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
+    // copilot.up.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
+    // copilot.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
 
-    copilot.l3.onTrue(new PrepareArmToPickUp());
-    copilot.r3.onTrue(new PrepareArmToScore());
-    copilot.b.onTrue(new StowArm());
+    // copilot.l3.onTrue(new PrepareArmToPickUp());
+    // copilot.r3.onTrue(new PrepareArmToScore());
+    // copilot.b.onTrue(new StowArm());
   }
 
   private void initAutoChooser() {

@@ -17,7 +17,7 @@ public class DriveConfig {
     public static final int BACK_LEFT_DRIVE_MOTOR_ID = 25;
     public static final int BACK_LEFT_ANGLE_MOTOR_ID = 26;
     public static final int BACK_LEFT_ANGLE_ENCODER_ID = 35;
-    public static final double BACK_LEFT_ANGLE_OFFSET_DEGREES = 303.135 + 180;
+    public static final double BACK_LEFT_ANGLE_OFFSET_DEGREES = 241.4 + 180.0;
 
     public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 27;
     public static final int BACK_RIGHT_ANGLE_MOTOR_ID = 28;
