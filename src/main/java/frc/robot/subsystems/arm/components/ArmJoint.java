@@ -59,6 +59,9 @@ public class ArmJoint {
         pidController.setFeedbackDevice(absoluteEncoder);
     }
 
+    public void simulate() {
+    }
+
     public void setTargetAngle(double targetAngle) {
         this.targetAngle = targetAngle;
         this.pidController.setReference(this.targetAngle, CANSparkMax.ControlType.kPosition);

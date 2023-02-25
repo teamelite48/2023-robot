@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,15 +12,14 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoTarget;
-import frc.robot.commands.PrepareArmToPickUp;
-import frc.robot.commands.PrepareArmToScore;
+import frc.robot.commands.ReadyArm;
 import frc.robot.commands.RunAutoCommand;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.commands.StowArm;
 import frc.robot.controls.LogitechDualActionGamepad;
+import frc.robot.subsystems.arm.ArmPreset;
 import frc.robot.subsystems.arm.ArmSubsystem;
-import frc.robot.subsystems.arm.ArmSubsystem.ArmState;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.drive.PathFollowing;
 import frc.robot.subsystems.gripper.GripperSubsystem;
@@ -29,14 +27,10 @@ import frc.robot.subsystems.vision.VisionSubsystem;
 
 public class RobotContainer {
 
-
-
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static final VisionSubsystem visionSubsystem = new VisionSubsystem();
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
   public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
-
-
 
   private final LogitechDualActionGamepad pilot = new LogitechDualActionGamepad(0);
   private final LogitechDualActionGamepad copilot = new LogitechDualActionGamepad(1);
@@ -47,7 +41,6 @@ public class RobotContainer {
     initPilotControls();
     initCopilotControls();
     initAutoChooser();
-
   }
 
   public Command getAutonomousCommand() {
@@ -62,9 +55,9 @@ public class RobotContainer {
       pilot.getRightXAxis()
     ), driveSubsystem));
 
-    pilot.a.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.PickUpLow)));
-    pilot.x.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.PickUpMid)));
-    pilot.y.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.PickUpHigh)));
+    pilot.a.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
+    pilot.x.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
+    pilot.y.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH));
     pilot.b.onTrue(new StowArm());
 
     pilot.back.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
@@ -82,13 +75,9 @@ public class RobotContainer {
     copilot.up.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
     copilot.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
 
-    copilot.a.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.ScoreLow)));
-    copilot.x.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.ScoreMid)));
-    copilot.y.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.ScoreHigh)));
-
-    copilot.r3.onTrue(new PrepareArmToScore());
-
-
+    copilot.a.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
+    copilot.x.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
+    copilot.y.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
     copilot.b.onTrue(new StowArm());
 
     copilot.lt
@@ -110,6 +99,4 @@ public class RobotContainer {
 
     SmartDashboard.putData(autoChooser);
   }
-
-
 }

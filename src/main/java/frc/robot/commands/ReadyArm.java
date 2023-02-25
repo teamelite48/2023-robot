@@ -8,23 +8,31 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.arm.ArmPosition;
 import frc.robot.subsystems.arm.ArmPreset;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.ArmSubsystem.ArmState;
+import frc.robot.subsystems.gripper.GripperSubsystem;
+import frc.robot.subsystems.gripper.GripperSubsystem.GripperMode;
 
-public class StowArm extends SequentialCommandGroup {
+
+public class ReadyArm extends SequentialCommandGroup {
 
   private final ArmSubsystem armSubsystem = RobotContainer.armSubsystem;
+  private final GripperSubsystem gripperSubsystem = RobotContainer.gripperSubsystem;
 
-  public StowArm() {
+  public ReadyArm(ArmPosition conePosition, ArmPosition cubePosition) {
+
     addCommands(
       new ConditionalCommand(
-        new SequentialCommandGroup(
-          new MoveArmTo(ArmPreset.DROP_ZONE),
-          new MoveArmTo(ArmPreset.STOWED)
-        ),
+        new MoveArmTo(ArmPreset.DROP_ZONE),
         new InstantCommand(),
-        () -> armSubsystem.getArmState() == ArmState.Ready
+        () -> armSubsystem.getArmState() == ArmState.Stowed
+      ),
+      new ConditionalCommand(
+        new MoveArmTo(conePosition),
+        new MoveArmTo(cubePosition),
+        () -> gripperSubsystem.getMode() == GripperMode.Cone
       )
     );
   }
