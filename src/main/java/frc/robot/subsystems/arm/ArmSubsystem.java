@@ -13,8 +13,12 @@ import static frc.robot.subsystems.arm.ArmConfig.*;
 public class ArmSubsystem extends SubsystemBase {
 
   public enum ArmState {
-    ReadyToPickUp,
-    ReadyToScore,
+    PickUpLow,
+    PickUpMid,
+    PickUpHigh,
+    ScoreLow,
+    ScoreMid,
+    ScoreHigh,
     Stowed,
     Tansitioning
   }

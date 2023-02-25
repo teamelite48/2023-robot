@@ -21,6 +21,7 @@ import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.commands.StowArm;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.arm.ArmSubsystem.ArmState;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.drive.PathFollowing;
 import frc.robot.subsystems.gripper.GripperSubsystem;
@@ -61,6 +62,11 @@ public class RobotContainer {
       pilot.getRightXAxis()
     ), driveSubsystem));
 
+    pilot.a.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.PickUpLow)));
+    pilot.x.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.PickUpMid)));
+    pilot.y.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.PickUpHigh)));
+    pilot.b.onTrue(new StowArm());
+
     pilot.back.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
     pilot.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
@@ -76,8 +82,13 @@ public class RobotContainer {
     copilot.up.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
     copilot.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
 
-    copilot.l3.onTrue(new PrepareArmToPickUp());
+    copilot.a.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.ScoreLow)));
+    copilot.x.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.ScoreMid)));
+    copilot.y.onTrue(new InstantCommand(() -> armSubsystem.setArmState(ArmState.ScoreHigh)));
+
     copilot.r3.onTrue(new PrepareArmToScore());
+
+
     copilot.b.onTrue(new StowArm());
 
     copilot.lt

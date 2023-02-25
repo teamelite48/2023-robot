@@ -19,8 +19,8 @@ public class PrepareArmToPickUp extends SequentialCommandGroup {
 
     addCommands(
       new InstantCommand(() -> armSubsystem.setArmState(ArmState.Tansitioning), armSubsystem),
-      new WaitCommand(1),
-      new InstantCommand(() -> armSubsystem.setArmState(ArmState.ReadyToPickUp), armSubsystem)
+      new WaitCommand(1)
+      // new InstantCommand(() -> armSubsystem.setArmState(ArmState.ReadyToPickUp), armSubsystem)
     );
   }
 }
