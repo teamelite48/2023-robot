@@ -58,6 +58,14 @@ public class RobotContainer {
     pilot.lb.onTrue(new SetGripperModeToCone());
     pilot.rb.onTrue(new SetGripperModeToCube());
 
+    pilot.lt
+      .whileTrue(new InstantCommand(() -> gripperSubsystem.intake()))
+      .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
+
+    pilot.rt
+      .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
+      .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
+
     pilot.a.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
     pilot.x.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
     pilot.y.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH));

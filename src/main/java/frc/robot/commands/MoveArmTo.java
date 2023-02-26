@@ -15,18 +15,18 @@ import frc.robot.subsystems.arm.ArmSubsystem.ArmState;
 public class MoveArmTo extends CommandBase {
 
   private final ArmSubsystem armSubsystem = RobotContainer.armSubsystem;
-  private final ArmPosition armPosition;
+  private final ArmPosition desiredArmPosition;
   private final double threshold = 0.01;
 
-  public MoveArmTo(ArmPosition armPosition) {
-    this.armPosition = armPosition;
+  public MoveArmTo(ArmPosition desiredArmPosition) {
+    this.desiredArmPosition = desiredArmPosition;
     addRequirements(armSubsystem);
   }
 
   @Override
   public void initialize() {
     this.armSubsystem.setArmState(ArmState.Tansitioning);
-    this.armSubsystem.setPosition(this.armPosition.x, this.armPosition.y, this.armPosition.wristDegrees);
+    this.armSubsystem.setPosition(this.desiredArmPosition.x, this.desiredArmPosition.y, this.desiredArmPosition.wristDegrees);
   }
 
   @Override
@@ -39,17 +39,17 @@ public class MoveArmTo extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     if (interrupted == false) {
-      this.armSubsystem.setArmState(armPosition.endState);
+      this.armSubsystem.setArmState(desiredArmPosition.endState);
     }
   }
 
   @Override
   public boolean isFinished() {
 
-    Translation2d armPosition = this.armSubsystem.getPosition();
+    Translation2d currentArmPosition = this.armSubsystem.getPosition();
 
-    double xError = Math.abs(this.armPosition.x - armPosition.getX());
-    double yError = Math.abs(this.armPosition.y - armPosition.getY());
+    double xError = Math.abs(this.desiredArmPosition.x - currentArmPosition.getX());
+    double yError = Math.abs(this.desiredArmPosition.y - currentArmPosition.getY());
 
     if (xError < threshold && yError < threshold) {
       return true;
