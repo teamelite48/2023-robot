@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.arm.ArmPosition;
@@ -26,8 +25,8 @@ public class ReadyArm extends SequentialCommandGroup {
     addCommands(
       new ConditionalCommand(
         new MoveArmTo(ArmPreset.DROP_ZONE),
-        new InstantCommand(),
-        () -> armSubsystem.getArmState() == ArmState.Stowed
+        new DoNothing(),
+        () -> armSubsystem.getArmState() != ArmState.Ready
       ),
       new ConditionalCommand(
         new MoveArmTo(conePosition),

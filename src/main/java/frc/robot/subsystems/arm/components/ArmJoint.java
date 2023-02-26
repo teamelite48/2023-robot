@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.wpilibj.RobotBase;
+import frc.robot.Robot;
 
 import static frc.robot.subsystems.arm.ArmConfig.*;
 
@@ -17,7 +18,8 @@ public class ArmJoint {
     private final SparkMaxAbsoluteEncoder absoluteEncoder;
     private final SparkMaxPIDController pidController;
 
-    private double targetAngle = 0;
+    private double targetAngle;
+    private double currentAngle;
 
     public ArmJoint(
         int canId,
@@ -26,8 +28,14 @@ public class ArmJoint {
         boolean motorInverted,
         boolean encoderInverted,
         float forwardLimitDegrees,
-        float reverseLimitDegrees
+        float reverseLimitDegrees,
+        double simulationAngle
     ) {
+
+        if (Robot.isSimulation()) {
+            targetAngle = simulationAngle;
+            currentAngle = simulationAngle;
+        }
 
         motorController = new CANSparkMax(canId, MotorType.kBrushless);
 
@@ -60,6 +68,14 @@ public class ArmJoint {
     }
 
     public void simulate() {
+        if (Robot.isSimulation()) {
+            double error = this.getTargetAngle() - this.getCurrentAngle();
+
+            if (Math.abs(error) > 0.5) {
+                double delta = error / Math.abs(error);
+                this.currentAngle += delta;
+            }
+        }
     }
 
     public void setTargetAngle(double targetAngle) {
@@ -73,8 +89,8 @@ public class ArmJoint {
     }
 
     public double getCurrentAngle() {
-        if (RobotBase.isSimulation() == true) {
-            return this.targetAngle;
+        if (RobotBase.isSimulation()) {
+            return this.currentAngle;
         }
         else {
             return this.absoluteEncoder.getPosition();
