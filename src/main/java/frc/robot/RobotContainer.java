@@ -50,9 +50,9 @@ public class RobotContainer {
   private void initPilotControls() {
 
     driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.manualDrive(
-      pilot.getLeftXAxis(),
-      pilot.getLeftYAxis(),
-      pilot.getRightXAxis()
+      copilot.getLeftXAxis(),
+      copilot.getLeftYAxis(),
+      copilot.getRightXAxis()
     ), driveSubsystem));
 
     pilot.lb.onTrue(new SetGripperModeToCone());
@@ -79,6 +79,12 @@ public class RobotContainer {
   }
 
   private void initCopilotControls() {
+
+    armSubsystem.setDefaultCommand(new RunCommand(() -> armSubsystem.manualPosition(
+      -pilot.getLeftYAxis(),
+      -pilot.getRightYAxis()),
+      armSubsystem
+    ));
 
     copilot.lb.onTrue(new SetGripperModeToCone());
     copilot.rb.onTrue(new SetGripperModeToCube());

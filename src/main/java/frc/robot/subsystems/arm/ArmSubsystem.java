@@ -24,6 +24,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   private ArmState armState = ArmState.Stowed;
   private Translation2d position;
+  private double wristDegrees = 90;
 
   private final ArmJoint shoulderJoint = new ArmJoint(
     SHOULDER_MOTOR_ID,
@@ -91,7 +92,19 @@ public class ArmSubsystem extends SubsystemBase {
     return this.armState;
   }
 
+  public void manualPosition(double leftYAxis, double rightYAxis) {
+
+    if (this.armState != ArmState.Ready) return;
+
+    var x = leftYAxis / 10;
+    var y = rightYAxis / 10;
+
+    setPosition(this.position.getX() + x, this.position.getY() + y, this.wristDegrees);
+  }
+
   public void setPosition(double x, double y, double wristDegrees) {
+
+    this.wristDegrees = wristDegrees;
 
     var a = ArmConfig.L1_LENGTH;
     var b = ArmConfig.L2_LENGTH;
@@ -113,7 +126,7 @@ public class ArmSubsystem extends SubsystemBase {
     var gamma = lawOfCosines(r, a, b);
     var theta2 = -Math.PI + gamma;
 
-    var theta3 = -theta2 - theta1 + Math.toRadians(wristDegrees);
+    var theta3 = -theta2 - theta1 + Math.toRadians(this.wristDegrees);
 
     shoulderJoint.setTargetAngle(Math.toDegrees(theta1));
     elbowJoint.setTargetAngle(Math.toDegrees(theta2));
