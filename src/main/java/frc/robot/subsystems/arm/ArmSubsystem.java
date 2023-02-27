@@ -96,18 +96,43 @@ public class ArmSubsystem extends SubsystemBase {
 
     if (this.armState != ArmState.Ready) return;
 
-    var x = leftYAxis / 10;
-    var y = rightYAxis / 10;
+    var desiredXPos = this.position.getX() + (leftYAxis * ArmConfig.MAX_METERS_PER_SECOND);
+    var desiredYPos = this.position.getY() + (rightYAxis * ArmConfig.MAX_METERS_PER_SECOND);
 
-    setPosition(this.position.getX() + x, this.position.getY() + y, this.wristDegrees);
+    if (isPositionAllowed(desiredXPos, desiredYPos)) {
+      setPosition(desiredXPos, desiredYPos, this.wristDegrees);
+    }
+  }
+
+  public boolean isPositionAllowed(double x, double y) {
+
+    if (x < 0.73 || y < -ArmConfig.SHOULDER_METERS_FROM_GROUND) {
+      return false;
+    }
+
+    var yPosUpperBound = Math.sqrt(Math.pow(ArmConfig.MAX_RADIUS, 2) - Math.pow(x, 2));
+
+    if (y > yPosUpperBound) {
+      return false;
+    }
+
+    var xPosUpperBound = Math.sqrt(Math.pow(ArmConfig.MAX_RADIUS, 2) - Math.pow(y, 2));
+
+    if (x > xPosUpperBound) {
+      return false;
+    }
+
+    return true;
   }
 
   public void setPosition(double x, double y, double wristDegrees) {
 
+    if (isPositionAllowed(x, y) == false) return;
+
     this.wristDegrees = wristDegrees;
 
-    var a = ArmConfig.L1_LENGTH;
-    var b = ArmConfig.L2_LENGTH;
+    var a = ArmConfig.L1_METERS;
+    var b = ArmConfig.L2_METERS;
 
     var r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 
@@ -135,7 +160,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void updatePosition() {
 
-    double l1 = ArmConfig.L1_LENGTH;
+    double l1 = ArmConfig.L1_METERS;
 		double theta1 = Math.toRadians(shoulderJoint.getCurrentAngle());
 
 		Translation2d elbowPosition = new Translation2d(
@@ -143,7 +168,7 @@ public class ArmSubsystem extends SubsystemBase {
 			l1 * Math.sin(theta1)
 		);
 
-    double l2 = ArmConfig.L2_LENGTH;
+    double l2 = ArmConfig.L2_METERS;
 		double theta2 = Math.toRadians(elbowJoint.getCurrentAngle());
 
 		Translation2d effectorPosition = new Translation2d(
