@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.arm.components.ArmJoint;
+
 import static frc.robot.subsystems.arm.ArmConfig.*;
 
 import java.text.DecimalFormat;
@@ -28,34 +29,40 @@ public class ArmSubsystem extends SubsystemBase {
 
   private final ArmJoint shoulderJoint = new ArmJoint(
     SHOULDER_MOTOR_ID,
+    SHOULDER_MOTOR_CURRENT_LIMIT,
     SHOULDER_ENCODER_REDUCTION,
     SHOULDER_ENCODER_OFFSET,
     SHOULDER_MOTOR_INVERTED,
     SHOULDER_ENCODER_INVERTED,
     SHOULDER_REVERSE_LIMIT_DEGREES,
     SHOULDER_FORWARD_LIMIT_DEGREES,
+    SHOULDER_PID,
     90.0
   );
 
   private final ArmJoint elbowJoint = new ArmJoint(
     ELBOW_MOTOR_ID,
+    ELBOW_MOTOR_CURRENT_LIMIT,
     ELBOW_ENCODER_REDUCTION,
     ELBOW_ENCODER_OFFSET,
     ELBOW_MOTOR_INVERTED,
     ELBOW_ENCODER_INVERTED,
     ELBOW_REVERSE_LIMIT_DEGREES,
     ELBOW_FORWARD_LIMIT_DEGREES,
+    ELBOW_PID,
     -165.0
   );
 
   private final ArmJoint wristJoint = new ArmJoint(
     WRIST_MOTOR_ID,
+    WRIST_MOTOR_CURRENT_LIMIT,
     WRIST_ENCODER_REDUCTION,
     WRIST_ENCODER_OFFSET,
     WRIST_MOTOR_INVERTED,
     WRIST_ENCODER_INVERTED,
     WRIST_REVERSE_LIMIT_DEGREES,
     WRIST_FORWARD_LIMIT_DEGREES,
+    WRIST_PID,
     120.0
   );
 
@@ -74,6 +81,22 @@ public class ArmSubsystem extends SubsystemBase {
       elbowJoint.simulate();
       wristJoint.simulate();
     }
+  }
+
+  public void increaseShoulderAngle() {
+    shoulderJoint.setTargetAngle(shoulderJoint.getCurrentAngle() + 1);
+  }
+
+  public void decreaseShoulderAngle() {
+    shoulderJoint.setTargetAngle(shoulderJoint.getCurrentAngle() - 1);
+  }
+
+  public void increaseElbowAngle() {
+    elbowJoint.setTargetAngle(elbowJoint.getCurrentAngle() + 1);
+  }
+
+  public void decreaseElbowAngle() {
+    elbowJoint.setTargetAngle(elbowJoint.getCurrentAngle() - 1);
   }
 
   public void increaseWristAngle() {

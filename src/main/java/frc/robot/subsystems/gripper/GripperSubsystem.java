@@ -24,6 +24,7 @@ public class GripperSubsystem extends SubsystemBase {
 
   public GripperSubsystem() {
     motorController = new CANSparkMax(GRIPPER_MOTOR_ID, MotorType.kBrushless);
+    motorController.setSmartCurrentLimit(GRIPPER_MOTOR_CURRENT_LIMIT);
 
     initDashboard();
   }

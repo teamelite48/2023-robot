@@ -9,15 +9,21 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.gripper.GripperSubsystem;
 import frc.robot.subsystems.gripper.GripperSubsystem.GripperMode;
+import frc.robot.subsystems.led.LedSubsystem;
+import frc.robot.subsystems.vision.VisionSubsystem;
 
 
 public class SetGripperModeToCone extends ParallelCommandGroup {
 
   private final GripperSubsystem gripperSubsystem = RobotContainer.gripperSubsystem;
+  private final VisionSubsystem visionSubsystem = RobotContainer.visionSubsystem;
+  private final LedSubsystem ledSubsystem = RobotContainer.ledSubsystem;
 
   public SetGripperModeToCone() {
     addCommands(
-      new InstantCommand(() -> gripperSubsystem.setMode(GripperMode.Cone))
+      new InstantCommand(() -> gripperSubsystem.setMode(GripperMode.Cone)),
+      new InstantCommand(() -> visionSubsystem.enableReflectiveTapePipeline()),
+      new InstantCommand(() -> ledSubsystem.setLedToYellow())
     );
   }
 }

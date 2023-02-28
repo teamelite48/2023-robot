@@ -23,6 +23,7 @@ import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.drive.PathFollowing;
 import frc.robot.subsystems.gripper.GripperSubsystem;
+import frc.robot.subsystems.led.LedSubsystem;
 import frc.robot.subsystems.vision.VisionSubsystem;
 
 public class RobotContainer {
@@ -31,15 +32,19 @@ public class RobotContainer {
   public static final VisionSubsystem visionSubsystem = new VisionSubsystem();
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
   public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
+  public static final LedSubsystem ledSubsystem = new LedSubsystem();
 
-  private final LogitechDualActionGamepad pilot = new LogitechDualActionGamepad(0);
-  private final LogitechDualActionGamepad copilot = new LogitechDualActionGamepad(1);
+  private final LogitechDualActionGamepad pilotController = new LogitechDualActionGamepad(0);
+  private final LogitechDualActionGamepad copilotController = new LogitechDualActionGamepad(1);
+  private final LogitechDualActionGamepad testController = new LogitechDualActionGamepad(2);
 
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   public RobotContainer() {
-    initPilotControls();
-    initCopilotControls();
+    initPilotController();
+    initCopilotController();
+    initTestController();
+
     initAutoChooser();
   }
 
@@ -47,63 +52,70 @@ public class RobotContainer {
     return autoChooser.getSelected();
   }
 
-  private void initPilotControls() {
+  private void initPilotController() {
 
     driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.manualDrive(
-      pilot.getLeftXAxis(),
-      pilot.getLeftYAxis(),
-      pilot.getRightXAxis()
+      pilotController.getLeftXAxis(),
+      pilotController.getLeftYAxis(),
+      pilotController.getRightXAxis()
     ), driveSubsystem));
 
-    pilot.lb.onTrue(new SetGripperModeToCone());
-    pilot.rb.onTrue(new SetGripperModeToCube());
+    pilotController.lb.onTrue(new SetGripperModeToCone());
+    pilotController.rb.onTrue(new SetGripperModeToCube());
 
-    pilot.lt
+    pilotController.lt
       .whileTrue(new InstantCommand(() -> gripperSubsystem.intake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
-    pilot.rt
+    pilotController.rt
       .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
-    pilot.a.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
-    pilot.x.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
-    pilot.y.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH));
-    pilot.b.onTrue(new StowArm());
+    pilotController.a.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
+    pilotController.x.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
+    pilotController.y.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH));
+    pilotController.b.onTrue(new StowArm());
 
-    pilot.back.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
-    pilot.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
+    pilotController.back.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
+    pilotController.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
-    pilot.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
-    pilot.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
+    pilotController.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
+    pilotController.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
   }
 
-  private void initCopilotControls() {
+  private void initCopilotController() {
 
     armSubsystem.setDefaultCommand(new RunCommand(() -> armSubsystem.manualPosition(
-      -copilot.getLeftYAxis(),
-      -copilot.getRightYAxis()),
+      -copilotController.getLeftYAxis(),
+      -copilotController.getRightYAxis()),
       armSubsystem
     ));
 
-    copilot.lb.onTrue(new SetGripperModeToCone());
-    copilot.rb.onTrue(new SetGripperModeToCube());
+    copilotController.lb.onTrue(new SetGripperModeToCone());
+    copilotController.rb.onTrue(new SetGripperModeToCube());
 
-    copilot.up.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
-    copilot.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
+    copilotController.a.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
+    copilotController.x.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
+    copilotController.y.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
+    copilotController.b.onTrue(new StowArm());
 
-    copilot.a.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
-    copilot.x.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
-    copilot.y.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
-    copilot.b.onTrue(new StowArm());
-
-    copilot.lt
+    copilotController.lt
       .whileTrue(new InstantCommand(() -> gripperSubsystem.intake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
-    copilot.rt
+    copilotController.rt
       .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
+  }
+
+
+  private void initTestController() {
+    testController.up.whileTrue(new RunCommand(() -> armSubsystem.increaseShoulderAngle()));
+    testController.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseShoulderAngle()));
+    testController.rb.whileTrue(new RunCommand(() -> armSubsystem.increaseElbowAngle()));
+    testController.lb.whileTrue(new RunCommand(() -> armSubsystem.decreaseElbowAngle()));
+    testController.rt.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
+    testController.lt.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
   }
 
   private void initAutoChooser() {

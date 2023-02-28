@@ -1,5 +1,7 @@
 package frc.robot.subsystems.arm.components;
 
+import static frc.robot.subsystems.arm.ArmConfig.*;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -9,8 +11,7 @@ import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Robot;
-
-import static frc.robot.subsystems.arm.ArmConfig.*;
+import frc.robot.subsystems.arm.ArmJointPID;
 
 public class ArmJoint {
 
@@ -23,12 +24,14 @@ public class ArmJoint {
 
     public ArmJoint(
         int canId,
+        int currentLimit,
         double encoderReduction,
         double offsetDegrees,
         boolean motorInverted,
         boolean encoderInverted,
         float forwardLimitDegrees,
         float reverseLimitDegrees,
+        ArmJointPID pid,
         double simulationAngle
     ) {
 
@@ -40,7 +43,7 @@ public class ArmJoint {
         motorController = new CANSparkMax(canId, MotorType.kBrushless);
 
         motorController.enableVoltageCompensation(12.0); // TODO: combine with nominal voltage in drive config
-        motorController.setSmartCurrentLimit((int) JOINT_MOTOR_CURRENT_LIMIT);
+        motorController.setSmartCurrentLimit(currentLimit);
 
         motorController.setInverted(motorInverted);
         motorController.setIdleMode(MOTOR_IDLE_MODE);
@@ -61,10 +64,11 @@ public class ArmJoint {
         absoluteEncoder.setInverted(encoderInverted);
 
         pidController = motorController.getPIDController();
-        pidController.setP(5.0);
-        pidController.setI(0.0);
-        pidController.setD(0.1);
+        pidController.setP(pid.p);
+        pidController.setI(pid.i);
+        pidController.setD(pid.d);
         pidController.setFeedbackDevice(absoluteEncoder);
+        pidController.setOutputRange(pid.minOutput, pid.maxOutput);
     }
 
     public void simulate() {

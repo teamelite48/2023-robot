@@ -9,15 +9,21 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.gripper.GripperSubsystem;
 import frc.robot.subsystems.gripper.GripperSubsystem.GripperMode;
+import frc.robot.subsystems.led.LedSubsystem;
+import frc.robot.subsystems.vision.VisionSubsystem;
 
 
 public class SetGripperModeToCube extends ParallelCommandGroup {
 
   private final GripperSubsystem gripperSubsystem = RobotContainer.gripperSubsystem;
+  private final VisionSubsystem visionSubsystem = RobotContainer.visionSubsystem;
+  private final LedSubsystem ledSubsystem = RobotContainer.ledSubsystem;
 
   public SetGripperModeToCube() {
     addCommands(
-      new InstantCommand(() -> gripperSubsystem.setMode(GripperMode.Cube))
+      new InstantCommand(() -> gripperSubsystem.setMode(GripperMode.Cube)),
+      new InstantCommand(() -> visionSubsystem.enableAprilTagPipeline()),
+      new InstantCommand(() -> ledSubsystem.setLedToPurple())
     );
   }
 }
