@@ -16,7 +16,7 @@ public class MoveArmTo extends CommandBase {
 
   private final ArmSubsystem armSubsystem = RobotContainer.armSubsystem;
   private final ArmPosition desiredArmPosition;
-  private final double threshold = 0.01;
+  private final double threshold = 0.001;
 
   public MoveArmTo(ArmPosition desiredArmPosition) {
     this.desiredArmPosition = desiredArmPosition;
@@ -25,7 +25,7 @@ public class MoveArmTo extends CommandBase {
 
   @Override
   public void initialize() {
-    this.armSubsystem.setArmState(ArmState.Tansitioning);
+    this.armSubsystem.setArmState(ArmState.Transitioning);
     this.armSubsystem.setPosition(this.desiredArmPosition.x, this.desiredArmPosition.y, this.desiredArmPosition.wristDegrees);
   }
 

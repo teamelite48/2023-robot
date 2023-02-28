@@ -17,7 +17,7 @@ import frc.robot.commands.RunAutoCommand;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.commands.StowArm;
-import frc.robot.controls.LogitechDualActionGamepad;
+import frc.robot.controls.DualShock4Controller;
 import frc.robot.subsystems.arm.ArmConfig;
 import frc.robot.subsystems.arm.ArmPreset;
 import frc.robot.subsystems.arm.ArmSubsystem;
@@ -35,9 +35,9 @@ public class RobotContainer {
   public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
   public static final LedSubsystem ledSubsystem = new LedSubsystem();
 
-  private final LogitechDualActionGamepad pilotController = new LogitechDualActionGamepad(0);
-  private final LogitechDualActionGamepad copilotController = new LogitechDualActionGamepad(1);
-  private final LogitechDualActionGamepad testController = new LogitechDualActionGamepad(2);
+  private final DualShock4Controller pilotController = new DualShock4Controller(0);
+  private final DualShock4Controller copilotController = new DualShock4Controller(1);
+  private final DualShock4Controller testController = new DualShock4Controller(2);
 
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -61,24 +61,24 @@ public class RobotContainer {
       pilotController.getRightXAxis()
     ), driveSubsystem));
 
-    pilotController.lb.onTrue(new SetGripperModeToCone());
-    pilotController.rb.onTrue(new SetGripperModeToCube());
+    pilotController.l1.onTrue(new SetGripperModeToCone());
+    pilotController.r1.onTrue(new SetGripperModeToCube());
 
-    pilotController.lt
+    pilotController.l2
       .whileTrue(new InstantCommand(() -> gripperSubsystem.intake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
-    pilotController.rt
+    pilotController.r2
       .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
-    pilotController.a.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
-    pilotController.x.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
-    pilotController.y.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH));
-    pilotController.b.onTrue(new StowArm());
+    pilotController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
+    pilotController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
+    pilotController.triangle.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH));
+    pilotController.circle.onTrue(new StowArm());
 
-    pilotController.back.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
-    pilotController.start.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
+    pilotController.share.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
+    pilotController.options.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
     pilotController.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
     pilotController.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
@@ -92,19 +92,19 @@ public class RobotContainer {
       armSubsystem
     ));
 
-    copilotController.lb.onTrue(new SetGripperModeToCone());
-    copilotController.rb.onTrue(new SetGripperModeToCube());
+    copilotController.l1.onTrue(new SetGripperModeToCone());
+    copilotController.r1.onTrue(new SetGripperModeToCube());
 
-    copilotController.a.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
-    copilotController.x.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
-    copilotController.y.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
-    copilotController.b.onTrue(new StowArm());
+    copilotController.cross.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
+    copilotController.square.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
+    copilotController.triangle.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
+    copilotController.circle.onTrue(new StowArm());
 
-    copilotController.lt
+    copilotController.l2
       .whileTrue(new InstantCommand(() -> gripperSubsystem.intake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
-    copilotController.rt
+    copilotController.r2
       .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
   }
@@ -117,16 +117,16 @@ public class RobotContainer {
     testController.down.onTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(-ArmConfig.JOINT_MOTOR_TEST_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(0)));
 
-    testController.lb.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.JOINT_MOTOR_TEST_SPEED)))
+    testController.l1.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.JOINT_MOTOR_TEST_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
 
-    testController.rb.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(-ArmConfig.JOINT_MOTOR_TEST_SPEED)))
+    testController.r1.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(-ArmConfig.JOINT_MOTOR_TEST_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
 
-    testController.lt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.JOINT_MOTOR_TEST_SPEED)))
+    testController.l2.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.JOINT_MOTOR_TEST_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
 
-    testController.rt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.JOINT_MOTOR_TEST_SPEED)))
+    testController.r2.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.JOINT_MOTOR_TEST_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
   }
 

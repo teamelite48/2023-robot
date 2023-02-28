@@ -6,18 +6,21 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class DualShock4Controller {
 
-    public Trigger x;
-    public Trigger a;
-    public Trigger b;
-    public Trigger y;
-    public Trigger lb;
-    public Trigger rb;
-    public Trigger lt;
-    public Trigger rt;
-    public Trigger back;
-    public Trigger start;
+    public Trigger square;
+    public Trigger cross;
+    public Trigger circle;
+    public Trigger triangle;
+    public Trigger l1;
+    public Trigger r1;
+    public Trigger l2;
+    public Trigger r2;
+    public Trigger share;
+    public Trigger options;
     public Trigger l3;
     public Trigger r3;
+
+    public Trigger ps;
+    public Trigger touchpad;
 
     public Trigger up;
     public Trigger right;
@@ -33,18 +36,21 @@ public class DualShock4Controller {
 
         hid = new GenericHID(port);
 
-        x = new JoystickButton(hid, 1);
-        a = new JoystickButton(hid, 2);
-        b = new JoystickButton(hid, 3);
-        y = new JoystickButton(hid, 4);
-        lb = new JoystickButton(hid, 5);
-        rb = new JoystickButton(hid, 6);
-        lt = new JoystickButton(hid, 7);
-        rt = new JoystickButton(hid, 8);
-        back = new JoystickButton(hid, 9);
-        start = new JoystickButton(hid, 10);
+        square = new JoystickButton(hid, 1);
+        cross = new JoystickButton(hid, 2);
+        circle = new JoystickButton(hid, 3);
+        triangle = new JoystickButton(hid, 4);
+        l1 = new JoystickButton(hid, 5);
+        r1 = new JoystickButton(hid, 6);
+        l2 = new JoystickButton(hid, 7);
+        r2 = new JoystickButton(hid, 8);
+        share = new JoystickButton(hid, 9);
+        options = new JoystickButton(hid, 10);
         l3 = new JoystickButton(hid, 11);
         r3 = new JoystickButton(hid, 12);
+
+        ps = new JoystickButton(hid, 13);
+        touchpad = new JoystickButton(hid, 14);
 
         up = new Trigger(() -> hid.getPOV() == 0);
         right = new Trigger(() -> hid.getPOV() == 90);
@@ -62,7 +68,7 @@ public class DualShock4Controller {
         return modifyAxis(hid.getRawAxis(2));
     }
     public double getRightYAxis() {
-         return modifyAxis(hid.getRawAxis(3));
+         return modifyAxis(hid.getRawAxis(5));
     }
 
     private double modifyAxis(Double value) {

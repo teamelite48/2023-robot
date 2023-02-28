@@ -20,7 +20,7 @@ public class ArmSubsystem extends SubsystemBase {
   public enum ArmState {
     Ready,
     Stowed,
-    Tansitioning
+    Transitioning
   }
 
   private ArmState armState = ArmState.Stowed;
@@ -137,8 +137,6 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setPosition(double x, double y, double wristDegrees) {
-
-    if (isPositionAllowed(x, y) == false) return;
 
     this.wristDegrees = wristDegrees;
 

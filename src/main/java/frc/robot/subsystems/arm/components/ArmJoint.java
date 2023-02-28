@@ -75,8 +75,8 @@ public class ArmJoint {
         if (Robot.isSimulation()) {
             double error = this.getTargetAngle() - this.getCurrentAngle();
 
-            if (Math.abs(error) > 0.001) {
-                double delta = error / 10;
+            if (Math.abs(error) > 0.01) {
+                double delta = error / 10.0;
                 this.currentAngle += delta;
             }
         }
