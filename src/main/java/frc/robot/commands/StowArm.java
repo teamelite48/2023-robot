@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.arm.ArmPreset;
@@ -23,7 +22,7 @@ public class StowArm extends SequentialCommandGroup {
           new MoveArmTo(ArmPreset.DROP_ZONE),
           new MoveArmTo(ArmPreset.STOWED)
         ),
-        new InstantCommand(),
+        new DoNothing(),
         () -> armSubsystem.getArmState() == ArmState.Ready
       )
     );

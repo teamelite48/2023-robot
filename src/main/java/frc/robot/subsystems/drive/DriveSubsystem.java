@@ -183,7 +183,7 @@ public class DriveSubsystem extends SubsystemBase{
 
     private SwerveModuleState[] getDesiredStates(double x, double y, double rotation) {
 
-        var chassisSpeeds = getChasisSpeeds(x, y, rotation);
+        var chassisSpeeds = getChassisSpeeds(x, y, rotation);
         var swerveModuleStates = kinematics.toSwerveModuleStates(chassisSpeeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, MAX_METERS_PER_SECOND);
 
@@ -197,7 +197,7 @@ public class DriveSubsystem extends SubsystemBase{
         backRight.setDesiredState(desiredStates[3]);
     }
 
-    private ChassisSpeeds getChasisSpeeds(double x, double y, double rotation) {
+    private ChassisSpeeds getChassisSpeeds(double x, double y, double rotation) {
         return ChassisSpeeds.fromFieldRelativeSpeeds(
             -yLimiter.calculate(y) * MAX_METERS_PER_SECOND,
             -xLimiter.calculate(x) * MAX_METERS_PER_SECOND,
