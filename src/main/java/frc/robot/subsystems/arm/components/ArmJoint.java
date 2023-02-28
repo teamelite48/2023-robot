@@ -87,9 +87,12 @@ public class ArmJoint {
         this.pidController.setReference(this.targetAngle, CANSparkMax.ControlType.kPosition);
     }
 
-
     public double getTargetAngle() {
         return this.targetAngle;
+    }
+
+    public void setMotorSpeed(double speed) {
+        motorController.set(speed);
     }
 
     public double getCurrentAngle() {

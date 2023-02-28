@@ -18,6 +18,7 @@ import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.commands.StowArm;
 import frc.robot.controls.LogitechDualActionGamepad;
+import frc.robot.subsystems.arm.ArmConfig;
 import frc.robot.subsystems.arm.ArmPreset;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.drive.DriveSubsystem;
@@ -110,12 +111,23 @@ public class RobotContainer {
 
 
   private void initTestController() {
-    testController.up.whileTrue(new RunCommand(() -> armSubsystem.increaseShoulderAngle()));
-    testController.down.whileTrue(new RunCommand(() -> armSubsystem.decreaseShoulderAngle()));
-    testController.rb.whileTrue(new RunCommand(() -> armSubsystem.increaseElbowAngle()));
-    testController.lb.whileTrue(new RunCommand(() -> armSubsystem.decreaseElbowAngle()));
-    testController.rt.whileTrue(new RunCommand(() -> armSubsystem.increaseWristAngle()));
-    testController.lt.whileTrue(new RunCommand(() -> armSubsystem.decreaseWristAngle()));
+    testController.up.onTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(ArmConfig.JOINT_MOTOR_TEST_SPEED)))
+      .onFalse(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(0)));
+
+    testController.down.onTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(-ArmConfig.JOINT_MOTOR_TEST_SPEED)))
+      .onFalse(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(0)));
+
+    testController.lb.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.JOINT_MOTOR_TEST_SPEED)))
+      .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
+
+    testController.rb.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(-ArmConfig.JOINT_MOTOR_TEST_SPEED)))
+      .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
+
+    testController.lt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.JOINT_MOTOR_TEST_SPEED)))
+      .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
+
+    testController.rt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.JOINT_MOTOR_TEST_SPEED)))
+      .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
   }
 
   private void initAutoChooser() {

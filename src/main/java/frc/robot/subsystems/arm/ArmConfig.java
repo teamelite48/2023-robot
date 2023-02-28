@@ -4,6 +4,8 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 public class ArmConfig {
 
+    public static final double JOINT_MOTOR_TEST_SPEED = 0.1;
+
     public static final double L1_METERS = 0.9525;
     public static final double L2_METERS = 0.81838079;
     public static final double MAX_RADIUS = L1_METERS + L2_METERS;

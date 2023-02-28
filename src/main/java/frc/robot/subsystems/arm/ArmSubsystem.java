@@ -83,28 +83,16 @@ public class ArmSubsystem extends SubsystemBase {
     }
   }
 
-  public void increaseShoulderAngle() {
-    shoulderJoint.setTargetAngle(shoulderJoint.getCurrentAngle() + 1);
+  public void setShoulderMotorSpeed(double speed) {
+    shoulderJoint.setMotorSpeed(speed);
   }
 
-  public void decreaseShoulderAngle() {
-    shoulderJoint.setTargetAngle(shoulderJoint.getCurrentAngle() - 1);
+  public void setElbowMotorSpeed(double speed) {
+    elbowJoint.setMotorSpeed(speed);
   }
 
-  public void increaseElbowAngle() {
-    elbowJoint.setTargetAngle(elbowJoint.getCurrentAngle() + 1);
-  }
-
-  public void decreaseElbowAngle() {
-    elbowJoint.setTargetAngle(elbowJoint.getCurrentAngle() - 1);
-  }
-
-  public void increaseWristAngle() {
-    wristJoint.setTargetAngle(wristJoint.getCurrentAngle() + 1);
-  }
-
-  public void decreaseWristAngle() {
-    wristJoint.setTargetAngle(wristJoint.getCurrentAngle() - 1);
+  public void setWristMotorSpeed(double speed) {
+    wristJoint.setMotorSpeed(speed);
   }
 
   public void setArmState(ArmState armState) {
