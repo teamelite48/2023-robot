@@ -12,7 +12,7 @@ import static frc.robot.subsystems.drive.DriveConfig.*;
 
 public class SwerveAngleController {
 
-    private final CANSparkMax motor;
+    private final CANSparkMax motorController;
     private final SparkMaxPIDController pidController;
     private final RelativeEncoder motorEncoder;
     private final CANCoder absoluteEncoder;
@@ -29,25 +29,25 @@ public class SwerveAngleController {
         absoluteEncoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 100, 250);
         absoluteEncoder.configMagnetOffset(-offsetDegrees);
 
-        motor = new CANSparkMax(motorId, MotorType.kBrushless);
+        motorController = new CANSparkMax(motorId, MotorType.kBrushless);
 
-        motor.enableVoltageCompensation(NOMINAL_VOLTAGE);
-        motor.setSmartCurrentLimit((int) ANGLE_MOTOR_CURRENT_LIMIT);
+        motorController.enableVoltageCompensation(NOMINAL_VOLTAGE);
+        motorController.setSmartCurrentLimit((int) ANGLE_MOTOR_CURRENT_LIMIT);
 
-        motor.setInverted(ANGLE_MOTOR_INVERTED);
+        motorController.setInverted(ANGLE_MOTOR_INVERTED);
 
-        motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus0, 100);
-        motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus1, 20);
-        motor.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus2, 20);
+        motorController.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus0, 100);
+        motorController.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus1, 20);
+        motorController.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus2, 20);
 
-        motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        motorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
-        motorEncoder = motor.getEncoder();
+        motorEncoder = motorController.getEncoder();
         motorEncoder.setPositionConversionFactor(ANGLE_POSITION_TO_RADIANS_CONVERSION_FACTOR);
         motorEncoder.setVelocityConversionFactor(ANGLE_POSITION_TO_RADIANS_CONVERSION_FACTOR / 60.0);
         motorEncoder.setPosition(getAbsoluteAngle());
 
-        pidController = motor.getPIDController();
+        pidController = motorController.getPIDController();
         pidController.setP(1.0);
         pidController.setI(0.0);
         pidController.setD(0.1);

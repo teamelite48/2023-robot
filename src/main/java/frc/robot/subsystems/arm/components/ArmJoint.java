@@ -84,7 +84,7 @@ public class ArmJoint {
 
     public void setTargetAngle(double targetAngle) {
         this.targetAngle = targetAngle;
-        this.pidController.setReference(this.targetAngle, CANSparkMax.ControlType.kPosition);
+        // this.pidController.setReference(this.targetAngle, CANSparkMax.ControlType.kPosition);
     }
 
     public double getTargetAngle() {
