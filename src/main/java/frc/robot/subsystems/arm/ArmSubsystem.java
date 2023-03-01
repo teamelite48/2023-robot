@@ -79,6 +79,10 @@ public class ArmSubsystem extends SubsystemBase {
 
     updatePosition();
 
+    shoulderJoint.periodic();
+    elbowJoint.periodic();
+    wristJoint.periodic();
+
     if (Robot.isSimulation()) {
       shoulderJoint.simulate();
       elbowJoint.simulate();
@@ -212,15 +216,18 @@ public class ArmSubsystem extends SubsystemBase {
     shoulderLayout.addDouble("Target Angle", () -> shoulderJoint.getTargetAngle());
     shoulderLayout.addDouble("Current Angle", () -> shoulderJoint.getAbsoulteAngle());
     shoulderLayout.addDouble("Relative Angle", () -> shoulderJoint.getRelativeAngle());
+    shoulderLayout.addBoolean("Initialized", () -> shoulderJoint.areEncodersInitilized());
 
     var elbowLayout = tab.getLayout("Elbow", BuiltInLayouts.kList);
     elbowLayout.addDouble("Target Angle", () -> elbowJoint.getTargetAngle());
     elbowLayout.addDouble("Absolute Angle", () -> elbowJoint.getAbsoulteAngle());
     elbowLayout.addDouble("Relative Angle", () -> elbowJoint.getRelativeAngle());
+    elbowLayout.addBoolean("Initialized", () -> elbowJoint.areEncodersInitilized());
 
     var wristLayout = tab.getLayout("Wrist", BuiltInLayouts.kList);
     wristLayout.addDouble("Target Angle", () -> wristJoint.getTargetAngle());
     wristLayout.addDouble("Current Angle", () -> wristJoint.getAbsoulteAngle());
     wristLayout.addDouble("Relative Angle", () -> wristJoint.getRelativeAngle());
+    wristLayout.addBoolean("Initialized", () -> wristJoint.areEncodersInitilized());
   }
 }

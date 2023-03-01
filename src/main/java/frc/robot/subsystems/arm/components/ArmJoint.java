@@ -21,6 +21,7 @@ public class ArmJoint {
     private final SparkMaxPIDController pidController;
     private final RelativeEncoder relativeEncoder;
 
+    private boolean areEncodersInitialized = false;
     private double targetAngle;
     private double currentAngle;
 
@@ -39,6 +40,7 @@ public class ArmJoint {
     ) {
 
         if (Robot.isSimulation()) {
+            areEncodersInitialized = true;
             targetAngle = simulationStartAngle;
             currentAngle = simulationStartAngle;
         }
@@ -70,7 +72,8 @@ public class ArmJoint {
 
         relativeEncoder = motorController.getEncoder();
         relativeEncoder.setPositionConversionFactor(relativeEncoderPositionConversionFactor);
-        relativeEncoder.setPosition(absoluteEncoder.getPosition());
+
+        seedRelativeEncoderWithAbsoluteAngle();
 
         pidController = motorController.getPIDController();
         pidController.setP(pidParams.P);
@@ -78,6 +81,20 @@ public class ArmJoint {
         pidController.setD(pidParams.D);
         pidController.setFeedbackDevice(relativeEncoder);
         pidController.setOutputRange(pidParams.MIN_OUTPUT, pidParams.MAX_OUTPUT);
+    }
+
+    public void periodic() {
+        if (areEncodersInitialized == false) {
+            seedRelativeEncoderWithAbsoluteAngle();
+        }
+    }
+
+    public void seedRelativeEncoderWithAbsoluteAngle() {
+        relativeEncoder.setPosition(absoluteEncoder.getPosition());
+
+        if ((getAbsoulteAngle() - getRelativeAngle()) < 0.001) {
+            areEncodersInitialized = true;
+        }
     }
 
     public void simulate() {
@@ -92,6 +109,11 @@ public class ArmJoint {
     }
 
     public void setTargetAngle(double targetAngle) {
+
+        if (areEncodersInitialized == false) {
+            return;
+        }
+
         this.targetAngle = targetAngle;
         this.pidController.setReference(this.targetAngle, CANSparkMax.ControlType.kPosition);
     }
@@ -120,5 +142,9 @@ public class ArmJoint {
         else {
             return this.relativeEncoder.getPosition();
         }
+    }
+
+    public boolean areEncodersInitilized() {
+        return areEncodersInitialized;
     }
 }
