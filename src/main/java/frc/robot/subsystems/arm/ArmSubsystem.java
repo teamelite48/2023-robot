@@ -43,7 +43,7 @@ public class ArmSubsystem extends SubsystemBase {
   private final ArmJoint elbowJoint = new ArmJoint(
     ELBOW_MOTOR_ID,
     ELBOW_MOTOR_CURRENT_LIMIT,
-    ELBOW_ENCODER_REDUCTION,
+    ELBOW_RELATIVE_ENCODER_REDUCTION,
     ELBOW_ENCODER_OFFSET,
     ELBOW_MOTOR_INVERTED,
     ELBOW_ENCODER_INVERTED,
@@ -170,7 +170,7 @@ public class ArmSubsystem extends SubsystemBase {
   public void updatePosition() {
 
     double l1 = ArmConfig.L1_METERS;
-		double theta1 = Math.toRadians(shoulderJoint.getCurrentAngle());
+		double theta1 = Math.toRadians(shoulderJoint.getAbsoulteAngle());
 
 		Translation2d elbowPosition = new Translation2d(
 			l1 * Math.cos(theta1),
@@ -178,7 +178,7 @@ public class ArmSubsystem extends SubsystemBase {
 		);
 
     double l2 = ArmConfig.L2_METERS;
-		double theta2 = Math.toRadians(elbowJoint.getCurrentAngle());
+		double theta2 = Math.toRadians(elbowJoint.getAbsoulteAngle());
 
 		Translation2d effectorPosition = new Translation2d(
 			elbowPosition.getX() + (l2 * Math.cos(theta1 + theta2)),
@@ -207,14 +207,15 @@ public class ArmSubsystem extends SubsystemBase {
 
     var shoulderLayout = tab.getLayout("Shoulder", BuiltInLayouts.kList);
     shoulderLayout.addDouble("Target Angle", () -> shoulderJoint.getTargetAngle());
-    shoulderLayout.addDouble("Current Angle", () -> shoulderJoint.getCurrentAngle());
+    shoulderLayout.addDouble("Current Angle", () -> shoulderJoint.getAbsoulteAngle());
 
     var elbowLayout = tab.getLayout("Elbow", BuiltInLayouts.kList);
     elbowLayout.addDouble("Target Angle", () -> elbowJoint.getTargetAngle());
-    elbowLayout.addDouble("Current Angle", () -> elbowJoint.getCurrentAngle());
+    elbowLayout.addDouble("Absolute Angle", () -> elbowJoint.getAbsoulteAngle());
+    elbowLayout.addDouble("Relative Angle", () -> elbowJoint.getRelativeAngle());
 
     var wristLayout = tab.getLayout("Wrist", BuiltInLayouts.kList);
     wristLayout.addDouble("Target Angle", () -> wristJoint.getTargetAngle());
-    wristLayout.addDouble("Current Angle", () -> wristJoint.getCurrentAngle());
+    wristLayout.addDouble("Current Angle", () -> wristJoint.getAbsoulteAngle());
   }
 }

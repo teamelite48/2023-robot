@@ -4,7 +4,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 public class ArmConfig {
 
-    public static final double JOINT_MOTOR_TEST_SPEED = 0.1;
+    public static final double JOINT_MOTOR_TEST_SPEED = -0.05;
 
     public static final double L1_METERS = 0.9525;
     public static final double L2_METERS = 0.81838079;
@@ -27,11 +27,12 @@ public class ArmConfig {
     public static final float SHOULDER_REVERSE_LIMIT_DEGREES = 145;
     public static final ArmJointPID SHOULDER_PID = new ArmJointPID(1.0, 0.0, 0.1, -0.1, 0.1);
 
-    public static final int ELBOW_MOTOR_ID = 12;
+    public static final int ELBOW_MOTOR_ID = 4; // 12
     public static final int ELBOW_MOTOR_CURRENT_LIMIT = 30;
-    public static final boolean ELBOW_MOTOR_INVERTED = false;
-    public static final double ELBOW_ENCODER_REDUCTION = 360.0;
-    public static final double ELBOW_ENCODER_OFFSET = 0;
+    public static final boolean ELBOW_MOTOR_INVERTED = true;
+    public static final double ELBOW_ABSOULTE_ENCODER_REDUCTION = 360.0;
+    public static final double ELBOW_RELATIVE_ENCODER_REDUCTION = 360.0 / 5.0;
+    public static final double ELBOW_ENCODER_OFFSET = 190.0;
     public static final boolean ELBOW_ENCODER_INVERTED = false;
     public static final float ELBOW_FORWARD_LIMIT_DEGREES = 90;
     public static final float ELBOW_REVERSE_LIMIT_DEGREES = -90;
