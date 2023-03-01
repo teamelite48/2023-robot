@@ -30,40 +30,43 @@ public class ArmSubsystem extends SubsystemBase {
   private final ArmJoint shoulderJoint = new ArmJoint(
     SHOULDER_MOTOR_ID,
     SHOULDER_MOTOR_CURRENT_LIMIT,
-    SHOULDER_ENCODER_REDUCTION,
-    SHOULDER_ENCODER_OFFSET,
     SHOULDER_MOTOR_INVERTED,
-    SHOULDER_ENCODER_INVERTED,
-    SHOULDER_REVERSE_LIMIT_DEGREES,
-    SHOULDER_FORWARD_LIMIT_DEGREES,
+    SHOULDER_ABSOULTE_ENCODER_POSITION_CONVERSION_FACTOR,
+    SHOULDER_ABSOLUTE_ENCODER_OFFSET,
+    SHOULDER_ABSOULTE_ENCODER_INVERTED,
+    SHOULDER_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR,
+    SHOULDER_FORWARD_LIMIT,
+    SHOULDER_REVERSE_LIMIT,
     SHOULDER_PID,
-    90.0
+    SHOULDER_SIMULATION_START_ANGLE
   );
 
   private final ArmJoint elbowJoint = new ArmJoint(
     ELBOW_MOTOR_ID,
     ELBOW_MOTOR_CURRENT_LIMIT,
-    ELBOW_RELATIVE_ENCODER_REDUCTION,
-    ELBOW_ENCODER_OFFSET,
     ELBOW_MOTOR_INVERTED,
-    ELBOW_ENCODER_INVERTED,
-    ELBOW_REVERSE_LIMIT_DEGREES,
-    ELBOW_FORWARD_LIMIT_DEGREES,
+    ELBOW_ABSOULTE_ENCODER_POSITION_CONVERSION_FACTOR,
+    ELBOW_ABSOULTE_ENCODER_OFFSET,
+    ELBOW_ABSOULTE_ENCODER_INVERTED,
+    ELBOW_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR,
+    ELBOW_FORWARD_LIMIT,
+    ELBOW_REVERSE_LIMIT,
     ELBOW_PID,
-    -165.0
+    ELBOW_SIMULATION_START_ANGLE
   );
 
   private final ArmJoint wristJoint = new ArmJoint(
     WRIST_MOTOR_ID,
     WRIST_MOTOR_CURRENT_LIMIT,
-    WRIST_ENCODER_REDUCTION,
-    WRIST_ENCODER_OFFSET,
     WRIST_MOTOR_INVERTED,
-    WRIST_ENCODER_INVERTED,
-    WRIST_REVERSE_LIMIT_DEGREES,
-    WRIST_FORWARD_LIMIT_DEGREES,
+    WRIST_ABSOLUTE_ENCODER_POSITION_CONVERSION_FACTOR,
+    WRIST_ABSOLUTE_ENCODER_OFFSET,
+    WRIST_ABSOULTE_ENCODER_INVERTED,
+    WRIST_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR,
+    WRIST_FORWARD_LIMIT,
+    WRIST_REVERSE_LIMIT,
     WRIST_PID,
-    120.0
+    WRIST_SIMULATION_START_ANGLE
   );
 
   public ArmSubsystem() {
@@ -170,7 +173,7 @@ public class ArmSubsystem extends SubsystemBase {
   public void updatePosition() {
 
     double l1 = ArmConfig.L1_METERS;
-		double theta1 = Math.toRadians(shoulderJoint.getAbsoulteAngle());
+		double theta1 = Math.toRadians(shoulderJoint.getRelativeAngle());
 
 		Translation2d elbowPosition = new Translation2d(
 			l1 * Math.cos(theta1),
@@ -178,7 +181,7 @@ public class ArmSubsystem extends SubsystemBase {
 		);
 
     double l2 = ArmConfig.L2_METERS;
-		double theta2 = Math.toRadians(elbowJoint.getAbsoulteAngle());
+		double theta2 = Math.toRadians(elbowJoint.getRelativeAngle());
 
 		Translation2d effectorPosition = new Translation2d(
 			elbowPosition.getX() + (l2 * Math.cos(theta1 + theta2)),
@@ -208,6 +211,7 @@ public class ArmSubsystem extends SubsystemBase {
     var shoulderLayout = tab.getLayout("Shoulder", BuiltInLayouts.kList);
     shoulderLayout.addDouble("Target Angle", () -> shoulderJoint.getTargetAngle());
     shoulderLayout.addDouble("Current Angle", () -> shoulderJoint.getAbsoulteAngle());
+    shoulderLayout.addDouble("Relative Angle", () -> shoulderJoint.getRelativeAngle());
 
     var elbowLayout = tab.getLayout("Elbow", BuiltInLayouts.kList);
     elbowLayout.addDouble("Target Angle", () -> elbowJoint.getTargetAngle());
@@ -217,5 +221,6 @@ public class ArmSubsystem extends SubsystemBase {
     var wristLayout = tab.getLayout("Wrist", BuiltInLayouts.kList);
     wristLayout.addDouble("Target Angle", () -> wristJoint.getTargetAngle());
     wristLayout.addDouble("Current Angle", () -> wristJoint.getAbsoulteAngle());
+    wristLayout.addDouble("Relative Angle", () -> wristJoint.getRelativeAngle());
   }
 }

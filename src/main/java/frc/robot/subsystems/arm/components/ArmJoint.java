@@ -12,7 +12,7 @@ import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Robot;
-import frc.robot.subsystems.arm.ArmJointPID;
+import frc.robot.subsystems.arm.PIDParameters;
 
 public class ArmJoint {
 
@@ -25,29 +25,30 @@ public class ArmJoint {
     private double currentAngle;
 
     public ArmJoint(
-        int canId,
-        int currentLimit,
-        double encoderReduction,
-        double offsetDegrees,
-        boolean motorInverted,
-        boolean encoderInverted,
-        float forwardLimitDegrees,
-        float reverseLimitDegrees,
-        ArmJointPID pid,
-        double simulationAngle
+        int motorId,
+        int motorCurrentLimit,
+        boolean isMotorInverted,
+        double absoluteEncoderPositionConversionFactor,
+        double absoluteEncoderOffset,
+        boolean isAbsoluteEncoderInverted,
+        double relativeEncoderPositionConversionFactor,
+        float forwardLimit,
+        float reverseLimit,
+        PIDParameters pidParams,
+        double simulationStartAngle
     ) {
 
         if (Robot.isSimulation()) {
-            targetAngle = simulationAngle;
-            currentAngle = simulationAngle;
+            targetAngle = simulationStartAngle;
+            currentAngle = simulationStartAngle;
         }
 
-        motorController = new CANSparkMax(canId, MotorType.kBrushless);
+        motorController = new CANSparkMax(motorId, MotorType.kBrushless);
 
-        motorController.enableVoltageCompensation(12.0); // TODO: combine with nominal voltage in drive config
-        motorController.setSmartCurrentLimit(currentLimit);
+        motorController.enableVoltageCompensation(NOMINAL_VOLTAGE); // TODO: combine with nominal voltage in drive config
+        motorController.setSmartCurrentLimit(motorCurrentLimit);
 
-        motorController.setInverted(true);
+        motorController.setInverted(isMotorInverted);
 
         motorController.setIdleMode(MOTOR_IDLE_MODE);
 
@@ -55,33 +56,33 @@ public class ArmJoint {
         motorController.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus1, 20);
         motorController.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus2, 20);
 
-        motorController.setSoftLimit(SoftLimitDirection.kForward, forwardLimitDegrees);
-        motorController.enableSoftLimit(SoftLimitDirection.kForward, false);
+        motorController.setSoftLimit(SoftLimitDirection.kForward, forwardLimit);
+        motorController.enableSoftLimit(SoftLimitDirection.kForward, true);
 
-        motorController.setSoftLimit(SoftLimitDirection.kReverse, reverseLimitDegrees);
-        motorController.enableSoftLimit(SoftLimitDirection.kReverse, false);
+        motorController.setSoftLimit(SoftLimitDirection.kReverse, reverseLimit);
+        motorController.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
         absoluteEncoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
-        absoluteEncoder.setPositionConversionFactor(360.0);
-        absoluteEncoder.setZeroOffset(130.0);
+        absoluteEncoder.setPositionConversionFactor(absoluteEncoderPositionConversionFactor);
+        absoluteEncoder.setZeroOffset(absoluteEncoderOffset);
 
-        absoluteEncoder.setInverted(true);
+        absoluteEncoder.setInverted(isAbsoluteEncoderInverted);
 
         relativeEncoder = motorController.getEncoder();
-        relativeEncoder.setPositionConversionFactor(encoderReduction);
+        relativeEncoder.setPositionConversionFactor(relativeEncoderPositionConversionFactor);
         relativeEncoder.setPosition(absoluteEncoder.getPosition());
 
         pidController = motorController.getPIDController();
-        pidController.setP(0.);
-        pidController.setI(0.0);
-        pidController.setD(0.0);
+        pidController.setP(pidParams.P);
+        pidController.setI(pidParams.I);
+        pidController.setD(pidParams.D);
         pidController.setFeedbackDevice(relativeEncoder);
-        pidController.setOutputRange(pid.minOutput, pid.maxOutput);
+        pidController.setOutputRange(pidParams.MIN_OUTPUT, pidParams.MAX_OUTPUT);
     }
 
     public void simulate() {
         if (Robot.isSimulation()) {
-            double error = this.getTargetAngle() - this.getAbsoulteAngle();
+            double error = this.getTargetAngle() - this.getRelativeAngle();
 
             if (Math.abs(error) > 0.01) {
                 double delta = error / 10.0;
@@ -105,7 +106,7 @@ public class ArmJoint {
 
     public double getAbsoulteAngle() {
         if (RobotBase.isSimulation()) {
-            return this.currentAngle;
+            return Math.abs(this.currentAngle);
         }
         else {
             return this.absoluteEncoder.getPosition();
@@ -113,6 +114,11 @@ public class ArmJoint {
     }
 
     public double getRelativeAngle() {
-        return this.relativeEncoder.getPosition();
+        if (RobotBase.isSimulation()) {
+            return this.currentAngle;
+        }
+        else {
+            return this.relativeEncoder.getPosition();
+        }
     }
 }

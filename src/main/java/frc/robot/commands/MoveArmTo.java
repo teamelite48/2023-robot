@@ -16,7 +16,7 @@ public class MoveArmTo extends CommandBase {
 
   private final ArmSubsystem armSubsystem = RobotContainer.armSubsystem;
   private final ArmPosition desiredArmPosition;
-  private final double threshold = 0.001;
+  private final double threshold = 0.01;
 
   public MoveArmTo(ArmPosition desiredArmPosition) {
     this.desiredArmPosition = desiredArmPosition;
