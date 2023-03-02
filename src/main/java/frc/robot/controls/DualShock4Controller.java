@@ -29,7 +29,7 @@ public class DualShock4Controller {
 
 
     private GenericHID hid;
-    private double deadBand = 0.01;
+    private double deadBand = 0.03;
     private boolean squareInputs = true;
 
     public DualShock4Controller(int port) {

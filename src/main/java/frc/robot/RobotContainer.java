@@ -118,17 +118,17 @@ public class RobotContainer {
     testController.down.whileTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(-ArmConfig.SHOULDER_TEST_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(0)));
 
-    testController.l1.whileTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.ELBOW_TEST_SPEED)))
-      .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
+    // testController.l1.whileTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.ELBOW_TEST_SPEED)))
+    //   .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
 
-    testController.r1.whileTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(-ArmConfig.WRIST_TEST_SPEED)))
-      .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
+    // testController.r1.whileTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(-ArmConfig.WRIST_TEST_SPEED)))
+    //   .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
 
-    testController.l2.whileTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_TEST_SPEED)))
-      .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
+    // testController.l2.whileTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_TEST_SPEED)))
+    //   .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
 
-    testController.r2.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.WRIST_TEST_SPEED)))
-      .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
+    // testController.r2.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.WRIST_TEST_SPEED)))
+    //   .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
   }
 
   private void initAutoChooser() {

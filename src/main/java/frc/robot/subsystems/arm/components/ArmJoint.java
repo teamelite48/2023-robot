@@ -66,6 +66,7 @@ public class ArmJoint {
 
         absoluteEncoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
         absoluteEncoder.setPositionConversionFactor(absoluteEncoderPositionConversionFactor);
+
         absoluteEncoder.setZeroOffset(absoluteEncoderOffset);
 
         absoluteEncoder.setInverted(isAbsoluteEncoderInverted);

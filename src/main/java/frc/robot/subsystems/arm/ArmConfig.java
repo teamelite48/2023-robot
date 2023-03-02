@@ -22,14 +22,14 @@ public class ArmConfig {
     public static final int SHOULDER_MOTOR_CURRENT_LIMIT = 30;
     public static final boolean SHOULDER_MOTOR_INVERTED = false;
     public static final double SHOULDER_ABSOULTE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / (52.0 / 15.0);
-    public static final double SHOULDER_ABSOLUTE_ENCODER_OFFSET = 0;
+    public static final double SHOULDER_ABSOLUTE_ENCODER_OFFSET = 74.0;
     public static final boolean SHOULDER_ABSOULTE_ENCODER_INVERTED = false;
     public static final double SHOULDER_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR = 360 / (485.33 / 1.0);
-    public static final float SHOULDER_FORWARD_LIMIT = 35.0f;
-    public static final float SHOULDER_REVERSE_LIMIT = 145.0f;
-    public static final PIDParameters SHOULDER_PID = new PIDParameters(0.1, 0.0, 0.0, -0.1, 0.1);
+    public static final float SHOULDER_FORWARD_LIMIT = 145.0f;
+    public static final float SHOULDER_REVERSE_LIMIT = 35.0f;
+    public static final PIDParameters SHOULDER_PID = new PIDParameters(0.5, 0.0, 0.0, -0.2, 0.2);
     public static final double SHOULDER_SIMULATION_START_ANGLE = 90.0;
-    public static final double SHOULDER_TEST_SPEED = 0.05;
+    public static final double SHOULDER_TEST_SPEED = 0.3;
 
 
     public static final int ELBOW_MOTOR_ID = 12;

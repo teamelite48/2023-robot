@@ -214,7 +214,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     var shoulderLayout = tab.getLayout("Shoulder", BuiltInLayouts.kList);
     shoulderLayout.addDouble("Target Angle", () -> shoulderJoint.getTargetAngle());
-    shoulderLayout.addDouble("Current Angle", () -> shoulderJoint.getAbsoulteAngle());
+    shoulderLayout.addDouble("Absolute Angle", () -> shoulderJoint.getAbsoulteAngle());
     shoulderLayout.addDouble("Relative Angle", () -> shoulderJoint.getRelativeAngle());
     shoulderLayout.addBoolean("Initialized", () -> shoulderJoint.areEncodersInitilized());
 
@@ -226,7 +226,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     var wristLayout = tab.getLayout("Wrist", BuiltInLayouts.kList);
     wristLayout.addDouble("Target Angle", () -> wristJoint.getTargetAngle());
-    wristLayout.addDouble("Current Angle", () -> wristJoint.getAbsoulteAngle());
+    wristLayout.addDouble("Absolute Angle", () -> wristJoint.getAbsoulteAngle());
     wristLayout.addDouble("Relative Angle", () -> wristJoint.getRelativeAngle());
     wristLayout.addBoolean("Initialized", () -> wristJoint.areEncodersInitilized());
   }
