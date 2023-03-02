@@ -25,7 +25,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   private ArmState armState = ArmState.Stowed;
   private Translation2d position;
-  private double wristDegrees = 90;
+  private double wristDegrees = 0.0;
 
   private final ArmJoint shoulderJoint = new ArmJoint(
     SHOULDER_MOTOR_ID,
@@ -35,6 +35,7 @@ public class ArmSubsystem extends SubsystemBase {
     SHOULDER_ABSOLUTE_ENCODER_OFFSET,
     SHOULDER_ABSOULTE_ENCODER_INVERTED,
     SHOULDER_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR,
+    SHOULDER_ANGLE_STARTS_NEGATIVE,
     SHOULDER_FORWARD_LIMIT,
     SHOULDER_REVERSE_LIMIT,
     SHOULDER_PID,
@@ -49,6 +50,7 @@ public class ArmSubsystem extends SubsystemBase {
     ELBOW_ABSOULTE_ENCODER_OFFSET,
     ELBOW_ABSOULTE_ENCODER_INVERTED,
     ELBOW_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR,
+    ELBOW_ANGLE_STARTS_NEGATIVE,
     ELBOW_FORWARD_LIMIT,
     ELBOW_REVERSE_LIMIT,
     ELBOW_PID,
@@ -63,6 +65,7 @@ public class ArmSubsystem extends SubsystemBase {
     WRIST_ABSOLUTE_ENCODER_OFFSET,
     WRIST_ABSOULTE_ENCODER_INVERTED,
     WRIST_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR,
+    WRIST_ANGLE_STARTS_NEGATIVE,
     WRIST_FORWARD_LIMIT,
     WRIST_REVERSE_LIMIT,
     WRIST_PID,

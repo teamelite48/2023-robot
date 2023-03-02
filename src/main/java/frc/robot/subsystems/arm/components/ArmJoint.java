@@ -24,6 +24,7 @@ public class ArmJoint {
     private boolean areEncodersInitialized = false;
     private double targetAngle;
     private double currentAngle;
+    private boolean isStartAngleNegative;
 
     public ArmJoint(
         int motorId,
@@ -33,11 +34,14 @@ public class ArmJoint {
         double absoluteEncoderOffset,
         boolean isAbsoluteEncoderInverted,
         double relativeEncoderPositionConversionFactor,
+        boolean isStartAngleNegative,
         float forwardLimit,
         float reverseLimit,
         PIDParameters pidParams,
         double simulationStartAngle
     ) {
+
+        this.isStartAngleNegative = isStartAngleNegative;
 
         if (Robot.isSimulation()) {
             areEncodersInitialized = true;
@@ -91,9 +95,16 @@ public class ArmJoint {
     }
 
     public void seedRelativeEncoderWithAbsoluteAngle() {
-        relativeEncoder.setPosition(absoluteEncoder.getPosition());
 
-        if ((getAbsoulteAngle() - getRelativeAngle()) < 0.001) {
+        var startPosition = absoluteEncoder.getPosition();
+
+        if (isStartAngleNegative == true) {
+            startPosition *= -1;
+        }
+
+        relativeEncoder.setPosition(startPosition);
+
+        if ((getAbsoulteAngle() - Math.abs(getRelativeAngle())) < 0.001) {
             areEncodersInitialized = true;
         }
     }

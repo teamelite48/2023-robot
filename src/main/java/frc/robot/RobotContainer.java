@@ -112,10 +112,10 @@ public class RobotContainer {
 
   private void initTestController() {
 
-    testController.up.whileTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(ArmConfig.SHOULDER_TEST_SPEED)))
+    testController.up.whileTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(ArmConfig.SHOULDER_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(0)));
 
-    testController.down.whileTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(-ArmConfig.SHOULDER_TEST_SPEED)))
+    testController.down.whileTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(-ArmConfig.SHOULDER_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(0)));
 
     // testController.l1.whileTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.ELBOW_TEST_SPEED)))
