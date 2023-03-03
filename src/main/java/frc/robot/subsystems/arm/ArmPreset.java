@@ -6,7 +6,7 @@ public class ArmPreset {
 
     public static final ArmPosition STOWED = new ArmPosition(0.2, 0.16, 90, ArmState.Stowed);
 
-    public static final ArmPosition DROP_ZONE = new ArmPosition(0.73, 0.16, 90, ArmState.Ready);
+    public static final ArmPosition DROP_ZONE = new ArmPosition(0.73, 0.16, 0, ArmState.Ready);
 
     public static final ArmPosition PICK_UP_CONE_LOW= new ArmPosition(0.73, -0.23, 45, ArmState.Ready);
     public static final ArmPosition PICK_UP_CONE_MID = new ArmPosition(0.86, 0.71, 45, ArmState.Ready);

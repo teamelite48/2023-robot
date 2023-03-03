@@ -11,6 +11,8 @@ public class ArmConfig {
     public static final double MAX_RADIUS = L1_METERS + L2_METERS;
     public static final double SHOULDER_METERS_FROM_GROUND =  0.35034722;
     public static final double MAX_METERS_PER_SECOND = 0.0762;
+    public static final double MIN_X_POS_IN_METERS = 0.73;
+    public static final double MIN_Y_POS_IN_METERS = -0.2;
 
     public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kBrake;
     public static final int ABSOULTE_ENCODER_TICKS_PER_ROTATION = 8192;
