@@ -101,11 +101,11 @@ public class RobotContainer {
     // copilotController.circle.onTrue(new StowArm());
 
     copilotController.l2
-      .whileTrue(new InstantCommand(() -> gripperSubsystem.intake()))
+      .onTrue(new InstantCommand(() -> gripperSubsystem.intake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
     copilotController.r2
-      .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
+      .onTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
   }
 
