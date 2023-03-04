@@ -112,6 +112,13 @@ public class RobotContainer {
 
   private void initTestController() {
 
+    armSubsystem.setDefaultCommand(new RunCommand(() -> armSubsystem.manualPosition(
+      -testController.getLeftYAxis(),
+      -testController.getRightYAxis()),
+      armSubsystem
+    ));
+
+
     testController.up.onTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(ArmConfig.SHOULDER_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(0)));
 
@@ -124,7 +131,10 @@ public class RobotContainer {
     testController.r1.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.ELBOW_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
 
-    testController.cross.onTrue(new ReadyArm(ArmPreset.DROP_ZONE, ArmPreset.DROP_ZONE));
+
+    testController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CONE_LOW));
+    testController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CONE_MID));
+    testController.triangle.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CONE_HIGH));
     testController.circle.onTrue(new StowArm());
 
     // testController.l2.whileTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_TEST_SPEED)))

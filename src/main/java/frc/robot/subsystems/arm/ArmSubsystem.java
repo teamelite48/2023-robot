@@ -118,8 +118,8 @@ public class ArmSubsystem extends SubsystemBase {
     if (this.armState != ArmState.Ready) return;
     if ((Math.abs(leftYAxis) > 0.0 || Math.abs(rightYAxis) > 0.0) == false) return;
 
-    var desiredXPos = this.position.getX() + (leftYAxis * (ArmConfig.MAX_METERS_PER_SECOND / 50.0));
-    var desiredYPos = this.position.getY() + (rightYAxis * (ArmConfig.MAX_METERS_PER_SECOND / 50.0));
+    var desiredXPos = this.position.getX() + (leftYAxis * ArmConfig.MAX_MANUAL_SPEED);
+    var desiredYPos = this.position.getY() + (rightYAxis * ArmConfig.MAX_MANUAL_SPEED);
 
     if (isPositionAllowed(desiredXPos, desiredYPos)) {
       setPosition(desiredXPos, desiredYPos, this.wristDegrees);
