@@ -173,7 +173,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     double theta3 = -theta2 - theta1 + Math.toRadians(this.wristDegrees);
 
-    double theta2WithOffset = applyOffsetToTheta2();
+    double theta2WithOffset = applyOffsetToTheta2(theta1, theta2);
 
     shoulderJoint.setTargetAngle(Math.toDegrees(theta1));
     elbowJoint.setTargetAngle(Math.toDegrees(theta2WithOffset));
@@ -206,11 +206,7 @@ public class ArmSubsystem extends SubsystemBase {
     return this.position;
   }
 
-  private double applyOffsetToTheta2() {
-
-    double theta1 = Math.toRadians(shoulderJoint.getRelativeAngle());
-    double theta2 = Math.toRadians(elbowJoint.getRelativeAngle());
-
+  private double applyOffsetToTheta2(double theta1, double theta2) {
     return theta2 + (theta1 - Math.toRadians(90.0));
   }
 
