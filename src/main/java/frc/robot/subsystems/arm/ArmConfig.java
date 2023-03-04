@@ -14,6 +14,7 @@ public class ArmConfig {
     public static final double MIN_Y_POS_IN_METERS = -0.3;
 
     public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kCoast;
+
     public static final int ABSOULTE_ENCODER_TICKS_PER_ROTATION = 8192;
     public static final int RELATIVE_ENCODER_TICKS_PER_ROTATION = 42;
 
@@ -25,7 +26,7 @@ public class ArmConfig {
     public static final double SHOULDER_ABSOULTE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / (52.0 / 15.0);
     public static final double SHOULDER_ABSOLUTE_ENCODER_OFFSET = 72.346;
     public static final boolean SHOULDER_ABSOULTE_ENCODER_INVERTED = false;
-    public static final double SHOULDER_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / ((485.0 + (1.0/3.0)) / 1.0);
+    public static final double SHOULDER_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / (60.0 * (70.0 / 24.0) * (52.0 / 15.0));
     public static final boolean SHOULDER_ANGLE_STARTS_NEGATIVE = false;
     public static final float SHOULDER_FORWARD_LIMIT = 145.0f;
     public static final float SHOULDER_REVERSE_LIMIT = 35.0f;

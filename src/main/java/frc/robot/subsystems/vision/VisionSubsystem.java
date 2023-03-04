@@ -59,8 +59,14 @@ public class VisionSubsystem extends SubsystemBase {
 
   private void initShuffleBoard() {
     var tab = Shuffleboard.getTab("Vision");
-    tab.addInteger("Target ID", () -> getTargetId());
-    tab.addDouble("X Offset", () -> getXOffset());
-    tab.addDouble("Y Offset", () -> getYOffset());
+
+    tab.addInteger("Target ID", () -> getTargetId())
+      .withPosition(0, 0);
+
+    tab.addDouble("X Offset", () -> getXOffset())
+      .withPosition(1, 0);
+
+    tab.addDouble("Y Offset", () -> getYOffset())
+      .withPosition(2, 0);
   }
 }

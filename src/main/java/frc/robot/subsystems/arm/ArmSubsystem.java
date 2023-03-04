@@ -5,8 +5,8 @@
 package frc.robot.subsystems.arm;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.arm.components.ArmJoint;
@@ -173,10 +173,10 @@ public class ArmSubsystem extends SubsystemBase {
 
     double theta3 = -theta2 - theta1 + Math.toRadians(this.wristDegrees);
 
-    double theta2Offset = Math.toDegrees(theta1) - 90.0;
+    double theta2WithOffset = applyOffsetToTheta2();
 
     shoulderJoint.setTargetAngle(Math.toDegrees(theta1));
-    elbowJoint.setTargetAngle(Math.toDegrees(theta2) + theta2Offset);
+    elbowJoint.setTargetAngle(Math.toDegrees(theta2WithOffset));
     // wristJoint.setTargetAngle(Math.toDegrees(theta3));
   }
 
@@ -191,14 +191,12 @@ public class ArmSubsystem extends SubsystemBase {
 		);
 
     double l2 = ArmConfig.L2_METERS;
-		double theta2 = Math.toRadians(elbowJoint.getRelativeAngle());
 
-
-    double theta2Offset = Math.toRadians(90.0) - theta1;
+    double theta2WithoutOffset = removeOffsetFromTheta2();
 
 		Translation2d effectorPosition = new Translation2d(
-			elbowPosition.getX() + (l2 * Math.cos(theta1 + theta2 + theta2Offset)),
-			elbowPosition.getY() + (l2 * Math.sin(theta1 + theta2 + theta2Offset))
+			elbowPosition.getX() + (l2 * Math.cos(theta1 + theta2WithoutOffset)),
+			elbowPosition.getY() + (l2 * Math.sin(theta1 + theta2WithoutOffset))
 		);
 
     this.position = effectorPosition;
@@ -206,6 +204,22 @@ public class ArmSubsystem extends SubsystemBase {
 
   public Translation2d getPosition() {
     return this.position;
+  }
+
+  private double applyOffsetToTheta2() {
+
+    double theta1 = Math.toRadians(shoulderJoint.getRelativeAngle());
+    double theta2 = Math.toRadians(elbowJoint.getRelativeAngle());
+
+    return theta2 + (theta1 - Math.toRadians(90.0));
+  }
+
+  private double removeOffsetFromTheta2() {
+
+    double theta1 = Math.toRadians(shoulderJoint.getRelativeAngle());
+    double theta2 = Math.toRadians(elbowJoint.getRelativeAngle());
+
+    return theta2 + (Math.toRadians(90.0) - theta1);
   }
 
   private double lawOfCosines(double a, double b, double c) {
@@ -218,26 +232,36 @@ public class ArmSubsystem extends SubsystemBase {
 
     var tab = Shuffleboard.getTab("Arm");
 
-    tab.addString("State", () -> this.armState.toString());
-    tab.addString("Position", () -> "(" + df.format(this.position.getX()) + ", " + df.format(this.position.getY()) + ")");
+    tab.addString("State", () -> this.armState.toString())
+      .withPosition(0, 0)
+      .withSize(2, 1);
 
-    var shoulderLayout = tab.getLayout("Shoulder", BuiltInLayouts.kList);
-    shoulderLayout.addDouble("Target Angle", () -> shoulderJoint.getTargetAngle());
-    shoulderLayout.addDouble("Absolute Angle", () -> shoulderJoint.getAbsoulteAngle());
-    shoulderLayout.addDouble("Relative Angle", () -> shoulderJoint.getRelativeAngle());
-    shoulderLayout.addBoolean("Initialized", () -> shoulderJoint.areEncodersInitilized());
+    tab.addString("X Position", () -> df.format(this.position.getX()))
+      .withPosition(0, 1);
 
-    var elbowLayout = tab.getLayout("Elbow", BuiltInLayouts.kList);
-    elbowLayout.addDouble("Target Angle", () -> elbowJoint.getTargetAngle());
-    elbowLayout.addDouble("Absolute Angle", () -> elbowJoint.getAbsoulteAngle());
-    elbowLayout.addDouble("Relative Angle", () -> elbowJoint.getRelativeAngle());
-    elbowLayout.addBoolean("Initialized", () -> elbowJoint.areEncodersInitilized());
-    elbowLayout.addDouble("Offset Angle", () -> elbowJoint.getRelativeAngle() + (90.0 - shoulderJoint.getRelativeAngle()));
+    tab.addString("Y Position", () -> df.format(this.position.getY()))
+      .withPosition(1, 1);
 
-    var wristLayout = tab.getLayout("Wrist", BuiltInLayouts.kList);
-    wristLayout.addDouble("Target Angle", () -> wristJoint.getTargetAngle());
-    wristLayout.addDouble("Absolute Angle", () -> wristJoint.getAbsoulteAngle());
-    wristLayout.addDouble("Relative Angle", () -> wristJoint.getRelativeAngle());
-    wristLayout.addBoolean("Initialized", () -> wristJoint.areEncodersInitilized());
+    addJointToDashboardTab(tab, "J1", shoulderJoint, 2);
+    addJointToDashboardTab(tab, "J2", elbowJoint, 3);
+    addJointToDashboardTab(tab, "J3", wristJoint, 4);
+
+    tab.addDouble("J2 Without Offset", () -> Math.toDegrees(removeOffsetFromTheta2()))
+      .withPosition(3, 4);
+  }
+
+  private void addJointToDashboardTab(ShuffleboardTab tab, String jointName, ArmJoint armJoint, int column) {
+
+    tab.addBoolean(jointName + " Initialized", () -> armJoint.areEncodersInitilized())
+      .withPosition(column, 0);
+
+    tab.addDouble(jointName + " Absolute Angle", () -> armJoint.getAbsoulteAngle())
+      .withPosition(column, 1);
+
+    tab.addDouble(jointName + " Relative Angle", () -> armJoint.getRelativeAngle())
+      .withPosition(column, 2);
+
+    tab.addDouble(jointName + " Target Angle", () -> armJoint.getTargetAngle())
+      .withPosition(column, 3);
   }
 }
