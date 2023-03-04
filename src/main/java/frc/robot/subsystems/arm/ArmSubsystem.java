@@ -177,7 +177,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     shoulderJoint.setTargetAngle(Math.toDegrees(theta1));
     elbowJoint.setTargetAngle(Math.toDegrees(theta2WithOffset));
-    // wristJoint.setTargetAngle(Math.toDegrees(theta3));
+    wristJoint.setTargetAngle(Math.toDegrees(theta3));
   }
 
   public void updatePosition() {

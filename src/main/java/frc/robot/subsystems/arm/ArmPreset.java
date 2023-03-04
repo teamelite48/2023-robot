@@ -4,13 +4,13 @@ import frc.robot.subsystems.arm.ArmSubsystem.ArmState;
 
 public class ArmPreset {
 
-    public static final ArmPosition STOWED = new ArmPosition(0.30, 0.16, 0.0, ArmState.Stowed);
+    public static final ArmPosition STOWED = new ArmPosition(0.30, 0.16, 90.0, ArmState.Stowed);
 
     public static final ArmPosition DROP_ZONE = new ArmPosition(0.98, 0.16, 0.0, ArmState.Ready);
 
     public static final ArmPosition PICK_UP_CONE_LOW= new ArmPosition(0.98, -0.1, 45, ArmState.Ready);
     public static final ArmPosition PICK_UP_CONE_MID = new ArmPosition(0.98, 0.71, 45, ArmState.Ready);
-    public static final ArmPosition PICK_UP_CONE_HIGH = new ArmPosition(1.16, 0.97, 45, ArmState.Ready);
+    public static final ArmPosition PICK_UP_CONE_HIGH = new ArmPosition(1.16, 0.97, 90, ArmState.Ready);
 
     public static final ArmPosition PICK_UP_CUBE_LOW = new ArmPosition(0, 0, 0, ArmState.Ready);
     public static final ArmPosition PICK_UP_CUBE_MID = new ArmPosition(0, 0, 0, ArmState.Ready);

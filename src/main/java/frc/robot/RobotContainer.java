@@ -72,11 +72,6 @@ public class RobotContainer {
       .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
-    // pilotController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
-    // pilotController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
-    // pilotController.triangle.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH));
-    // pilotController.circle.onTrue(new StowArm());
-
     pilotController.share.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
     pilotController.options.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
@@ -86,19 +81,8 @@ public class RobotContainer {
 
   private void initCopilotController() {
 
-    // armSubsystem.setDefaultCommand(new RunCommand(() -> armSubsystem.manualPosition(
-    //   -copilotController.getLeftYAxis(),
-    //   -copilotController.getRightYAxis()),
-    //   armSubsystem
-    // ));
-
     copilotController.l1.onTrue(new SetGripperModeToCone());
     copilotController.r1.onTrue(new SetGripperModeToCube());
-
-    // copilotController.cross.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
-    // copilotController.square.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
-    // copilotController.triangle.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
-    // copilotController.circle.onTrue(new StowArm());
 
     copilotController.l2
       .onTrue(new InstantCommand(() -> gripperSubsystem.intake()))
@@ -132,16 +116,16 @@ public class RobotContainer {
       .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
 
 
-    testController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CONE_LOW));
+    // testController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CONE_LOW));
     testController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CONE_MID));
     testController.triangle.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CONE_HIGH));
     testController.circle.onTrue(new StowArm());
 
-    // testController.l2.whileTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_TEST_SPEED)))
-    //   .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
+    testController.l2.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.WRIST_MAX_SPEED)))
+      .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
 
-    // testController.r2.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.WRIST_TEST_SPEED)))
-    //   .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
+    testController.r2.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_MAX_SPEED)))
+      .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
   }
 
   private void initAutoChooser() {
