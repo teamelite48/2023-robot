@@ -9,12 +9,11 @@ public class ArmConfig {
     public static final double L1_METERS = 0.9525;
     public static final double L2_METERS = 0.81838079;
     public static final double MAX_RADIUS = L1_METERS + L2_METERS;
-    public static final double SHOULDER_METERS_FROM_GROUND =  0.35034722;
     public static final double MAX_METERS_PER_SECOND = 0.0762;
-    public static final double MIN_X_POS_IN_METERS = 0.73;
-    public static final double MIN_Y_POS_IN_METERS = -0.2;
+    public static final double MIN_X_POS_IN_METERS = 0.85;
+    public static final double MIN_Y_POS_IN_METERS = -0.3;
 
-    public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kBrake;
+    public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kCoast;
     public static final int ABSOULTE_ENCODER_TICKS_PER_ROTATION = 8192;
     public static final int RELATIVE_ENCODER_TICKS_PER_ROTATION = 42;
 
@@ -26,7 +25,7 @@ public class ArmConfig {
     public static final double SHOULDER_ABSOULTE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / (52.0 / 15.0);
     public static final double SHOULDER_ABSOLUTE_ENCODER_OFFSET = 72.346;
     public static final boolean SHOULDER_ABSOULTE_ENCODER_INVERTED = false;
-    public static final double SHOULDER_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR = 360 / (485.33 / 1.0);
+    public static final double SHOULDER_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / ((485.0 + (1.0/3.0)) / 1.0);
     public static final boolean SHOULDER_ANGLE_STARTS_NEGATIVE = false;
     public static final float SHOULDER_FORWARD_LIMIT = 145.0f;
     public static final float SHOULDER_REVERSE_LIMIT = 35.0f;
@@ -39,7 +38,7 @@ public class ArmConfig {
     public static final int ELBOW_MOTOR_CURRENT_LIMIT = 30;
     public static final boolean ELBOW_MOTOR_INVERTED = false;
     public static final double ELBOW_ABSOULTE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0;
-    public static final double ELBOW_ABSOULTE_ENCODER_OFFSET = 223.0;
+    public static final double ELBOW_ABSOULTE_ENCODER_OFFSET = 223.52993392944336;
     public static final boolean ELBOW_ABSOULTE_ENCODER_INVERTED = true;
     public static final double ELBOW_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / (219.89 / 1.0); // 42.0 / 5.0 ???
     public static final boolean ELBOW_ANGLE_STARTS_NEGATIVE = true;

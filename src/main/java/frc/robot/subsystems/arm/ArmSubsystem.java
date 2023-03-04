@@ -118,8 +118,8 @@ public class ArmSubsystem extends SubsystemBase {
     if (this.armState != ArmState.Ready) return;
     if ((Math.abs(leftYAxis) > 0.0 || Math.abs(rightYAxis) > 0.0) == false) return;
 
-    var desiredXPos = this.position.getX() + (leftYAxis * ArmConfig.MAX_METERS_PER_SECOND);
-    var desiredYPos = this.position.getY() + (rightYAxis * ArmConfig.MAX_METERS_PER_SECOND);
+    var desiredXPos = this.position.getX() + (leftYAxis * (ArmConfig.MAX_METERS_PER_SECOND / 50.0));
+    var desiredYPos = this.position.getY() + (rightYAxis * (ArmConfig.MAX_METERS_PER_SECOND / 50.0));
 
     if (isPositionAllowed(desiredXPos, desiredYPos)) {
       setPosition(desiredXPos, desiredYPos, this.wristDegrees);
@@ -173,10 +173,10 @@ public class ArmSubsystem extends SubsystemBase {
 
     double theta3 = -theta2 - theta1 + Math.toRadians(this.wristDegrees);
 
-    double theta2Offset = theta1 - 90.0;
+    double theta2Offset = Math.toDegrees(theta1) - 90.0;
 
     shoulderJoint.setTargetAngle(Math.toDegrees(theta1));
-    elbowJoint.setTargetAngle(Math.toDegrees(theta2 + theta2Offset));
+    elbowJoint.setTargetAngle(Math.toDegrees(theta2) + theta2Offset);
     // wristJoint.setTargetAngle(Math.toDegrees(theta3));
   }
 
@@ -192,7 +192,9 @@ public class ArmSubsystem extends SubsystemBase {
 
     double l2 = ArmConfig.L2_METERS;
 		double theta2 = Math.toRadians(elbowJoint.getRelativeAngle());
-    double theta2Offset = 90.0 - theta1;
+
+
+    double theta2Offset = Math.toRadians(90.0) - theta1;
 
 		Translation2d effectorPosition = new Translation2d(
 			elbowPosition.getX() + (l2 * Math.cos(theta1 + theta2 + theta2Offset)),
@@ -230,6 +232,7 @@ public class ArmSubsystem extends SubsystemBase {
     elbowLayout.addDouble("Absolute Angle", () -> elbowJoint.getAbsoulteAngle());
     elbowLayout.addDouble("Relative Angle", () -> elbowJoint.getRelativeAngle());
     elbowLayout.addBoolean("Initialized", () -> elbowJoint.areEncodersInitilized());
+    elbowLayout.addDouble("Offset Angle", () -> elbowJoint.getRelativeAngle() + (90.0 - shoulderJoint.getRelativeAngle()));
 
     var wristLayout = tab.getLayout("Wrist", BuiltInLayouts.kList);
     wristLayout.addDouble("Target Angle", () -> wristJoint.getTargetAngle());
