@@ -18,6 +18,7 @@ import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.commands.StowArm;
 import frc.robot.controls.DualShock4Controller;
+import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.arm.ArmConfig;
 import frc.robot.subsystems.arm.ArmPreset;
 import frc.robot.subsystems.arm.ArmSubsystem;
@@ -37,7 +38,7 @@ public class RobotContainer {
 
   private final DualShock4Controller pilotController = new DualShock4Controller(0);
   private final DualShock4Controller copilotController = new DualShock4Controller(1);
-  private final DualShock4Controller testController = new DualShock4Controller(2);
+  private final LogitechDualActionGamepad testController = new LogitechDualActionGamepad(2);
 
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -118,16 +119,16 @@ public class RobotContainer {
     testController.down.onTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(-ArmConfig.SHOULDER_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(0)));
 
-    testController.l1.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(-ArmConfig.ELBOW_MAX_SPEED)))
+    testController.lb.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(-ArmConfig.ELBOW_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
 
-    testController.r1.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.ELBOW_MAX_SPEED)))
+    testController.rb.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.ELBOW_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
 
-    testController.l2.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.WRIST_MAX_SPEED)))
+    testController.lt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.WRIST_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
 
-    testController.r2.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_MAX_SPEED)))
+    testController.rt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
   }
 
