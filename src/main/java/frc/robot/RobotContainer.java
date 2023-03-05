@@ -77,9 +77,20 @@ public class RobotContainer {
 
     pilotController.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
     pilotController.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
+
+    pilotController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
+    pilotController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
+    pilotController.triangle.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH));
+    pilotController.circle.onTrue(new StowArm());
   }
 
   private void initCopilotController() {
+
+    armSubsystem.setDefaultCommand(new RunCommand(() -> armSubsystem.manualPosition(
+      -copilotController.getLeftYAxis(),
+      -copilotController.getRightYAxis()),
+      armSubsystem
+    ));
 
     copilotController.l1.onTrue(new SetGripperModeToCone());
     copilotController.r1.onTrue(new SetGripperModeToCube());
@@ -91,17 +102,15 @@ public class RobotContainer {
     copilotController.r2
       .onTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
+
+    copilotController.cross.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
+    copilotController.square.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
+    copilotController.triangle.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
+    copilotController.circle.onTrue(new StowArm());
   }
 
 
   private void initTestController() {
-
-    armSubsystem.setDefaultCommand(new RunCommand(() -> armSubsystem.manualPosition(
-      -testController.getLeftYAxis(),
-      -testController.getRightYAxis()),
-      armSubsystem
-    ));
-
 
     testController.up.onTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(ArmConfig.SHOULDER_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(0)));
@@ -114,12 +123,6 @@ public class RobotContainer {
 
     testController.r1.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.ELBOW_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
-
-
-    testController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CONE_LOW));
-    testController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CONE_MID));
-    testController.triangle.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CONE_HIGH));
-    testController.circle.onTrue(new StowArm());
 
     testController.l2.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.WRIST_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));

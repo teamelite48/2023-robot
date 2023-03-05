@@ -128,9 +128,9 @@ public class ArmSubsystem extends SubsystemBase {
 
   public boolean isPositionAllowed(double x, double y) {
 
-    if (x < ArmConfig.MIN_X_POS_IN_METERS || y < ArmConfig.MIN_Y_POS_IN_METERS) {
-      return false;
-    }
+    // if (x < ArmConfig.MIN_X_POS_IN_METERS || y < ArmConfig.MIN_Y_POS_IN_METERS) {
+    //   return false;
+    // }
 
     var yPosUpperBound = Math.sqrt(Math.pow(ArmConfig.MAX_RADIUS, 2) - Math.pow(x, 2));
 

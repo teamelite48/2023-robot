@@ -33,14 +33,6 @@ public class GripperSubsystem extends SubsystemBase {
   public void periodic() {
   }
 
-  private void initDashboard() {
-
-    var tab = Shuffleboard.getTab("Gripper");
-
-    tab.addString("Mode", () -> getMode().toString());
-    tab.addDouble("Speed", () -> motorController.get());
-  }
-
   public void intake() {
     if (gripperMode == GripperMode.Cone) {
       motorController.set(GRIPPER_MOTOR_SPEED);
@@ -69,5 +61,14 @@ public class GripperSubsystem extends SubsystemBase {
 
   public void stop() {
     motorController.set(0);
+  }
+
+    private void initDashboard() {
+
+    var tab = Shuffleboard.getTab("Gripper");
+
+    tab.addString("Mode", () -> getMode().toString());
+    tab.addDouble("Speed", () -> motorController.get());
+    tab.addDouble("Current", () -> motorController.getOutputCurrent());
   }
 }
