@@ -116,7 +116,7 @@ public class RobotContainer {
       .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
 
 
-    // testController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CONE_LOW));
+    testController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CONE_LOW));
     testController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CONE_MID));
     testController.triangle.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CONE_HIGH));
     testController.circle.onTrue(new StowArm());
