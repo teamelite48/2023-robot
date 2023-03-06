@@ -73,7 +73,7 @@ public class RobotContainer {
       .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
-    pilotController.share.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
+    pilotController.share.whileTrue(new AutoBalance());
     pilotController.options.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
     pilotController.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
@@ -110,7 +110,6 @@ public class RobotContainer {
     copilotController.circle.onTrue(new StowArm());
   }
 
-
   private void initTestController() {
 
     testController.up.onTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(ArmConfig.SHOULDER_MAX_SPEED)))
@@ -137,7 +136,6 @@ public class RobotContainer {
     autoChooser.addOption("Test", driveSubsystem.getPathPlannerCommand(PathFollowing.TestPath));
     autoChooser.addOption("Auto Target", new AutoTarget());
     autoChooser.addOption("U Turn Path", driveSubsystem.getPathPlannerCommand(PathFollowing.UTurnPath));
-    autoChooser.addOption("Auto Balance", new AutoBalance());
     autoChooser.addOption("U Turn Path Copy", driveSubsystem.getPathPlannerCommand(PathFollowing.UTurnPathCopy));
 
     SmartDashboard.putData(autoChooser);
