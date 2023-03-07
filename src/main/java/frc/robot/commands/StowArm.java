@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.arm.ArmPreset;
 import frc.robot.subsystems.arm.ArmSubsystem;
-import frc.robot.subsystems.arm.ArmSubsystem.ArmState;
 
 public class StowArm extends SequentialCommandGroup {
 
@@ -17,18 +16,14 @@ public class StowArm extends SequentialCommandGroup {
 
   public StowArm() {
     addCommands(
-      new ConditionalCommand(
-        new SequentialCommandGroup(
+      new SequentialCommandGroup(
           new ConditionalCommand(
             new MoveArmTo(ArmPreset.LOW_DROP_ZONE),
             new MoveArmTo(ArmPreset.MID_DROP_ZONE),
             () -> RobotContainer.armSubsystem.getPosition().getY() <  ArmPreset.SCORE_CUBE_MID.y
           ),
           new MoveArmTo(ArmPreset.STOWED)
-        ),
-        new DoNothing(),
-        () -> armSubsystem.getArmState() != ArmState.InsideFramePerimeter
-      )
+        )
     );
   }
 }

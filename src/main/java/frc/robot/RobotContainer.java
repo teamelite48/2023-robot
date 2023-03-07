@@ -106,7 +106,7 @@ public class RobotContainer {
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
     copilotController.cross.onTrue(new ReadyArm(DropZone.Low, ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
-    copilotController.square.onTrue(new ReadyArm(DropZone.Mid, ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
+    copilotController.square.onTrue(new ReadyArm(DropZone.Low, ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
     copilotController.triangle.onTrue(new ReadyArm(DropZone.Mid, ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
     copilotController.circle.onTrue(new StowArm());
   }
