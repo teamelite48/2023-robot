@@ -10,34 +10,23 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.arm.ArmPosition;
 import frc.robot.subsystems.arm.ArmPreset;
 import frc.robot.subsystems.arm.ArmSubsystem;
-import frc.robot.subsystems.arm.ArmPreset.DropZone;
-import frc.robot.subsystems.arm.ArmSubsystem.ArmState;
-import frc.robot.subsystems.gripper.GripperSubsystem;
-import frc.robot.subsystems.gripper.GripperSubsystem.GripperMode;
 
 
 public class ReadyArm extends SequentialCommandGroup {
 
-  private final ArmSubsystem armSubsystem = RobotContainer.armSubsystem;
-  private final GripperSubsystem gripperSubsystem = RobotContainer.gripperSubsystem;
+  ArmSubsystem armSubsystem = RobotContainer.armSubsystem;
 
-  public ReadyArm(DropZone dropZone, ArmPosition conePosition, ArmPosition cubePosition) {
+  public ReadyArm(ArmPosition conePosition, ArmPosition cubePosition) {
 
     addCommands(
       new ConditionalCommand(
-        new ConditionalCommand(
-          new MoveArmTo(ArmPreset.LOW_DROP_ZONE),
-          new MoveArmTo(ArmPreset.MID_DROP_ZONE),
-          () -> dropZone == DropZone.Low
-        ),
-        new DoNothing(),
-        () -> armSubsystem.getArmState() != ArmState.OutsideFramePerimeter
-      ),
-      new ConditionalCommand(
-        new MoveArmTo(conePosition),
-        new MoveArmTo(cubePosition),
-        () -> gripperSubsystem.getMode() == GripperMode.Cone
+        new ReadyArmFromInsideFramePerimeter(conePosition, cubePosition),
+        new ReadyArmFromOutsideFramePerimeter(conePosition, cubePosition),
+        () -> isArmInsideFramePerimeter()
       )
     );
+  }
+  private boolean isArmInsideFramePerimeter() {
+    return armSubsystem.getPosition().getX() < ArmPreset.FRAME_X_BOUNDARY;
   }
 }

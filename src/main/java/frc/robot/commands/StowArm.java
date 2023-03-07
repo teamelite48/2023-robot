@@ -19,8 +19,8 @@ public class StowArm extends SequentialCommandGroup {
       new SequentialCommandGroup(
           new ConditionalCommand(
             new MoveArmTo(ArmPreset.LOW_DROP_ZONE),
-            new MoveArmTo(ArmPreset.MID_DROP_ZONE),
-            () -> RobotContainer.armSubsystem.getPosition().getY() <  ArmPreset.SCORE_CUBE_MID.y
+            new MoveArmTo(ArmPreset.HIGH_DROP_ZONE),
+            () -> armSubsystem.getPosition().getY() <  ArmPreset.SCORE_CUBE_MID.y
           ),
           new MoveArmTo(ArmPreset.STOWED)
         )

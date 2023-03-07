@@ -4,15 +4,12 @@ import frc.robot.subsystems.arm.ArmSubsystem.ArmState;
 
 public class ArmPreset {
 
-    public enum DropZone {
-        Low,
-        Mid
-    }
+    public static final double FRAME_X_BOUNDARY = 0.6;
 
     public static final ArmPosition STOWED = new ArmPosition(0.28, 0.1, 0.0, ArmState.InsideFramePerimeter);
 
     public static final ArmPosition LOW_DROP_ZONE = new ArmPosition(0.8, 0.1, 45.0, ArmState.OutsideFramePerimeter);
-    public static final ArmPosition MID_DROP_ZONE = new ArmPosition(0.8, 0.45, 45.0, ArmState.OutsideFramePerimeter);
+    public static final ArmPosition HIGH_DROP_ZONE = new ArmPosition(0.8, 0.45, 45.0, ArmState.OutsideFramePerimeter);
 
     public static final ArmPosition PICK_UP_CONE_LOW = new ArmPosition(0.8, 0.06, -135.0, ArmState.OutsideFramePerimeter);
     public static final ArmPosition PICK_UP_CONE_MID = new ArmPosition(0.39, 0.14, -20.0, ArmState.InsideFramePerimeter);
