@@ -19,11 +19,15 @@ public class StowArm extends SequentialCommandGroup {
     addCommands(
       new ConditionalCommand(
         new SequentialCommandGroup(
-          new MoveArmTo(ArmPreset.DROP_ZONE),
+          new ConditionalCommand(
+            new MoveArmTo(ArmPreset.LOW_DROP_ZONE),
+            new MoveArmTo(ArmPreset.MID_DROP_ZONE),
+            () -> RobotContainer.armSubsystem.getPosition().getY() <  ArmPreset.SCORE_CUBE_MID.y
+          ),
           new MoveArmTo(ArmPreset.STOWED)
         ),
         new DoNothing(),
-        () -> armSubsystem.getArmState() == ArmState.Ready
+        () -> armSubsystem.getArmState() != ArmState.InsideFramePerimeter
       )
     );
   }

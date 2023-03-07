@@ -22,6 +22,7 @@ import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.arm.ArmConfig;
 import frc.robot.subsystems.arm.ArmPreset;
 import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.arm.ArmPreset.DropZone;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.drive.PathFollowing;
 import frc.robot.subsystems.gripper.GripperSubsystem;
@@ -79,9 +80,9 @@ public class RobotContainer {
     pilotController.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
     pilotController.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
 
-    pilotController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
-    pilotController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
-    pilotController.triangle.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH));
+    pilotController.cross.onTrue(new ReadyArm(DropZone.Low, ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
+    pilotController.square.onTrue(new ReadyArm(DropZone.Mid, ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
+    pilotController.triangle.onTrue(new ReadyArm(DropZone.Mid, ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH));
     pilotController.circle.onTrue(new StowArm());
   }
 
@@ -104,9 +105,9 @@ public class RobotContainer {
       .onTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
-    copilotController.cross.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
-    copilotController.square.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
-    copilotController.triangle.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
+    copilotController.cross.onTrue(new ReadyArm(DropZone.Low, ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
+    copilotController.square.onTrue(new ReadyArm(DropZone.Mid, ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
+    copilotController.triangle.onTrue(new ReadyArm(DropZone.Mid, ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
     copilotController.circle.onTrue(new StowArm());
   }
 

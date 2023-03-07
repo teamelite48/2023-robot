@@ -17,6 +17,7 @@ import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.commands.StowArm;
 
 import frc.robot.subsystems.arm.ArmPreset;
+import frc.robot.subsystems.arm.ArmPreset.DropZone;
 
 public class PathFollowing {
 
@@ -26,9 +27,9 @@ public class PathFollowing {
 
         put("Cone Mode", new SetGripperModeToCone());
         put("Cube Mode", new SetGripperModeToCube());
-        put("Pick Up Low", new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
+        put("Pick Up Low", new ReadyArm(DropZone.Low, ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
         put("Intake", new InstantCommand(() -> RobotContainer.gripperSubsystem.intake()));
-        put("Score Mid", new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
+        put("Score Mid", new ReadyArm(DropZone.Mid, ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
         put("Outtake", new InstantCommand(() -> RobotContainer.gripperSubsystem.outtake()));
         put("Stop Intake", new InstantCommand(() -> RobotContainer.gripperSubsystem.stop()));
         put("Stow Arm", new StowArm());

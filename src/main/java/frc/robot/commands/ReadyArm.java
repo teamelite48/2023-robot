@@ -10,6 +10,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.arm.ArmPosition;
 import frc.robot.subsystems.arm.ArmPreset;
 import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.arm.ArmPreset.DropZone;
 import frc.robot.subsystems.arm.ArmSubsystem.ArmState;
 import frc.robot.subsystems.gripper.GripperSubsystem;
 import frc.robot.subsystems.gripper.GripperSubsystem.GripperMode;
@@ -20,13 +21,17 @@ public class ReadyArm extends SequentialCommandGroup {
   private final ArmSubsystem armSubsystem = RobotContainer.armSubsystem;
   private final GripperSubsystem gripperSubsystem = RobotContainer.gripperSubsystem;
 
-  public ReadyArm(ArmPosition conePosition, ArmPosition cubePosition) {
+  public ReadyArm(DropZone dropZone, ArmPosition conePosition, ArmPosition cubePosition) {
 
     addCommands(
       new ConditionalCommand(
-        new MoveArmTo(ArmPreset.DROP_ZONE),
+        new ConditionalCommand(
+          new MoveArmTo(ArmPreset.LOW_DROP_ZONE),
+          new MoveArmTo(ArmPreset.MID_DROP_ZONE),
+          () -> dropZone == DropZone.Low
+        ),
         new DoNothing(),
-        () -> armSubsystem.getArmState() != ArmState.Ready
+        () -> armSubsystem.getArmState() != ArmState.OutsideFramePerimeter
       ),
       new ConditionalCommand(
         new MoveArmTo(conePosition),
