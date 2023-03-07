@@ -14,6 +14,7 @@ public class LedSubsystem extends SubsystemBase {
   PWMSparkMax motorController = new PWMSparkMax(BLINKIN_PWM_PORT);
 
   enum LedState {
+    Confetti,
     Green,
     OceanRainbow,
     Purple,
@@ -32,29 +33,34 @@ public class LedSubsystem extends SubsystemBase {
   public void periodic() {
   }
 
+  public void setLedToConfetti() {
+    currentState = LedState.Confetti;
+    motorController.set(-0.87);
+  }
+
   public void setLedToGreen() {
     currentState = LedState.Green;
-    motorController.setVoltage(0.77);
+    motorController.set(0.77);
   }
 
   public void setLedToRed() {
     currentState = LedState.Red;
-    motorController.setVoltage(0.61);
+    motorController.set(0.61);
   }
 
   public void setLedToYellow() {
     currentState = LedState.Yellow;
-    motorController.setVoltage(0.69);
+    motorController.set(0.69);
   }
 
   public void setLedToPurple() {
     currentState = LedState.Purple;
-    motorController.setVoltage(0.91);
+    motorController.set(0.91);
   }
 
   public void setLedToOceanRainbow() {
     currentState = LedState.OceanRainbow;
-    motorController.setVoltage(-0.95);
+    motorController.set(-0.95);
   }
 
   private void initDashBoard() {

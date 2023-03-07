@@ -32,7 +32,7 @@ public class AutoBalance extends CommandBase {
   @Override
   public void initialize() {
     driveSubsystem.zeroGyro();
-    speed = 0.15;
+    speed = 0.10;
     desiredAngle = 2.0;
     previousPitch = null;
     balancedMillis = 0;
