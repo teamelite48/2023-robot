@@ -30,7 +30,7 @@ public class ArmConfig {
     public static final boolean SHOULDER_ANGLE_STARTS_NEGATIVE = false;
     public static final float SHOULDER_FORWARD_LIMIT = 145.0f;
     public static final float SHOULDER_REVERSE_LIMIT = 35.0f;
-    public static final double SHOULDER_MAX_SPEED = 0.4;
+    public static final double SHOULDER_MAX_SPEED = 0.5;
     public static final PIDParameters SHOULDER_PID = new PIDParameters(0.5, 0.0, 0.0, -SHOULDER_MAX_SPEED, SHOULDER_MAX_SPEED);
     public static final double SHOULDER_SIMULATION_START_ANGLE = 90.0;
 
