@@ -14,6 +14,8 @@ public class AutoTarget extends CommandBase {
   private final DriveSubsystem driveSubsystem = RobotContainer.driveSubsystem;
   private final VisionSubsystem visionSubsystem = RobotContainer.visionSubsystem;
 
+  private final double proportionOfError = 1.0 / 3.0;
+
   public AutoTarget() {
     addRequirements(driveSubsystem, visionSubsystem);
   }
@@ -25,8 +27,8 @@ public class AutoTarget extends CommandBase {
 
   @Override
   public void execute() {
-    var rotation = visionSubsystem.getXOffset() / 27.0 * 0.333;
-    driveSubsystem.autoDrive(0, 0, rotation);
+    var x = visionSubsystem.getXError() * proportionOfError;
+    driveSubsystem.autoDrive(x, 0, 0);
   }
 
 

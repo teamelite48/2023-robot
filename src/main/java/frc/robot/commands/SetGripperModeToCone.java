@@ -21,8 +21,8 @@ public class SetGripperModeToCone extends ParallelCommandGroup {
 
   public SetGripperModeToCone() {
     addCommands(
-      new InstantCommand(() -> gripperSubsystem.setMode(GripperMode.Cone)),
       new InstantCommand(() -> visionSubsystem.enableReflectiveTapePipeline()),
+      new InstantCommand(() -> gripperSubsystem.setMode(GripperMode.Cone)),
       new InstantCommand(() -> ledSubsystem.setLedToYellow())
     );
   }

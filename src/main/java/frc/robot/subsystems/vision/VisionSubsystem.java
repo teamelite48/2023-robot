@@ -33,12 +33,8 @@ public class VisionSubsystem extends SubsystemBase {
     return tid.getInteger(0);
   }
 
-  public double getXOffset() {
-    return tx.getDouble(0.0);
-  }
-
-  public double getYOffset() {
-    return ty.getDouble(0.0);
+  public double getXError() {
+    return (getXOffset() + VisionConfig.CAMERA_OFFSET) / VisionConfig.VISION_RANGE_DEGREES;
   }
 
   public void enableLed() {
@@ -57,6 +53,14 @@ public class VisionSubsystem extends SubsystemBase {
     pipeline.setNumber(1);
   }
 
+  private double getXOffset() {
+    return tx.getDouble(0.0);
+  }
+
+  private double getYOffset() {
+    return ty.getDouble(0.0);
+  }
+
   private void initShuffleBoard() {
     var tab = Shuffleboard.getTab("Vision");
 
@@ -68,5 +72,8 @@ public class VisionSubsystem extends SubsystemBase {
 
     tab.addDouble("Y Offset", () -> getYOffset())
       .withPosition(2, 0);
+
+    tab.addDouble("X Error", () -> getXError())
+      .withPosition(3, 0);
   }
 }

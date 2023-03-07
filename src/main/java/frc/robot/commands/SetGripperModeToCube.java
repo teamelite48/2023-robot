@@ -21,8 +21,8 @@ public class SetGripperModeToCube extends ParallelCommandGroup {
 
   public SetGripperModeToCube() {
     addCommands(
-      new InstantCommand(() -> gripperSubsystem.setMode(GripperMode.Cube)),
       new InstantCommand(() -> visionSubsystem.enableAprilTagPipeline()),
+      new InstantCommand(() -> gripperSubsystem.setMode(GripperMode.Cube)),
       new InstantCommand(() -> ledSubsystem.setLedToPurple())
     );
   }
