@@ -18,12 +18,11 @@ import java.text.DecimalFormat;
 public class ArmSubsystem extends SubsystemBase {
 
   public enum ArmState {
-    OutsideFramePerimeter,
-    InsideFramePerimeter,
+    Ready,
     Transitioning
   }
 
-  private ArmState armState = ArmState.InsideFramePerimeter;
+  private ArmState armState = ArmState.Ready;
   private Translation2d position;
   private double wristDegrees = 0.0;
 
@@ -115,7 +114,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void manualPosition(double leftYAxis, double rightYAxis) {
 
-    if (this.armState != ArmState.OutsideFramePerimeter) return;
+    if (this.armState != ArmState.Ready) return;
     if ((Math.abs(leftYAxis) > 0.0 || Math.abs(rightYAxis) > 0.0) == false) return;
 
     var desiredXPos = this.position.getX() + (leftYAxis * ArmConfig.MAX_MANUAL_SPEED);
@@ -128,9 +127,10 @@ public class ArmSubsystem extends SubsystemBase {
 
   public boolean isPositionAllowed(double x, double y) {
 
-    if (x < ArmConfig.MIN_X_POS_IN_METERS || y < ArmConfig.MIN_Y_POS_IN_METERS) {
-      return false;
-    }
+    // TOOD: uncomment this
+    // if (x < ArmConfig.MIN_X_POS_IN_METERS || y < ArmConfig.MIN_Y_POS_IN_METERS) {
+    //   return false;
+    // }
 
     var yPosUpperBound = Math.sqrt(Math.pow(ArmConfig.MAX_RADIUS, 2) - Math.pow(x, 2));
 

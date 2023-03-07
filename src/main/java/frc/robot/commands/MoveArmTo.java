@@ -39,7 +39,7 @@ public class MoveArmTo extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     if (interrupted == false) {
-      this.armSubsystem.setArmState(desiredArmPosition.endState);
+      this.armSubsystem.setArmState(ArmState.Ready);
     }
   }
 
