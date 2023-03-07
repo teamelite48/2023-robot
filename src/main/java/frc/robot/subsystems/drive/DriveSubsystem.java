@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.subsystems.drive.DriveConfig.*;
 
+import java.util.List;
+
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
@@ -132,6 +134,25 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     public Command getPathPlannerCommand(PathPlannerTrajectory trajectory) {
+
+        if (autoBuilder == null) {
+            autoBuilder = new SwerveAutoBuilder(
+                () -> odometry.getPoseMeters(),
+                this::resetOdometry,
+                kinematics,
+                new PIDConstants(5.0, 0.0, 0.0),
+                new PIDConstants(0.5, 0.0, 0.0),
+                this::setDesiredStates,
+                PathFollowing.EventMap,
+                true,
+                this
+            );
+        }
+
+        return autoBuilder.fullAuto(trajectory);
+    }
+
+    public Command getPathPlannerGroupCommand(List<PathPlannerTrajectory> trajectory) {
 
         if (autoBuilder == null) {
             autoBuilder = new SwerveAutoBuilder(

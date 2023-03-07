@@ -138,6 +138,7 @@ public class RobotContainer {
     autoChooser.setDefaultOption("Do Nothing", new WaitCommand(3));
     autoChooser.addOption("Auto Target", new AutoTarget());
     autoChooser.addOption("Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeHoldCubeBalance));
+    autoChooser.addOption("Test", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.Test));
 
     SmartDashboard.putData(autoChooser);
   }
