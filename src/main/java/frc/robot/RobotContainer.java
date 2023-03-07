@@ -129,14 +129,14 @@ public class RobotContainer {
 
     testController.rt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_MAX_SPEED)))
       .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
+
+    testController.back.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
   }
 
   private void initAutoChooser() {
     autoChooser.setDefaultOption("Do Nothing", new WaitCommand(3));
-    autoChooser.addOption("Test", driveSubsystem.getPathPlannerCommand(PathFollowing.TestPath));
     autoChooser.addOption("Auto Target", new AutoTarget());
-    autoChooser.addOption("U Turn Path", driveSubsystem.getPathPlannerCommand(PathFollowing.UTurnPath));
-    autoChooser.addOption("U Turn Path Copy", driveSubsystem.getPathPlannerCommand(PathFollowing.UTurnPathCopy));
+    autoChooser.addOption("Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeHoldCubeBalance));
 
     SmartDashboard.putData(autoChooser);
   }

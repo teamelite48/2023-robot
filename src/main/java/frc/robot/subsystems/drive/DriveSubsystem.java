@@ -131,37 +131,6 @@ public class DriveSubsystem extends SubsystemBase{
         return gyro.getRoll();
     }
 
-    // public Command getFollowPathCommand(PathPlannerTrajectory trajectory, boolean isFirstPath) {
-
-    //     return new SequentialCommandGroup(
-    //         new InstantCommand(() -> {
-    //             if(isFirstPath){
-    //                 resetOdometry(trajectory.getInitialHolonomicPose());
-    //             }
-    //         }),
-
-    //         new PPSwerveControllerCommand(
-    //             trajectory,
-    //             () -> odometry.getPoseMeters(),
-    //             kinematics,
-    //             new PIDController(0, 0, 0),
-    //             new PIDController(0, 0, 0),
-    //             new PIDController(1, 0, 0.1),
-    //             this::setDesiredStates,
-    //             true,
-    //             this
-    //         )
-    //     );
-    // }
-
-    // public Command getFollowPathWithEventsCommand(PathPlannerTrajectory trajectory) {
-    //     return new FollowPathWithEvents(
-    //         getFollowPathCommand(trajectory, true),
-    //         trajectory.getMarkers(),
-    //         PathFollowing.EventMap
-    //     );
-    // }
-
     public Command getPathPlannerCommand(PathPlannerTrajectory trajectory) {
 
         if (autoBuilder == null) {
