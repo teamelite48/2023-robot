@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -48,6 +51,7 @@ public class RobotContainer {
     initTestController();
 
     initAutoChooser();
+    initCamera();
   }
 
   public Command getAutonomousCommand() {
@@ -140,5 +144,15 @@ public class RobotContainer {
     autoChooser.addOption("Test", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.Test));
 
     SmartDashboard.putData(autoChooser);
+  }
+
+  private void initCamera(){
+
+    if (RobotBase.isSimulation()) return;
+
+    UsbCamera camera = CameraServer.startAutomaticCapture();
+    camera.setResolution(160, 120);
+    camera.setFPS(20);
+    camera.setExposureAuto();
   }
 }
