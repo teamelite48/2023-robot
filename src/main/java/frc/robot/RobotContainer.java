@@ -19,7 +19,6 @@ import frc.robot.commands.ReadyArm;
 import frc.robot.commands.RunAutoCommand;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
-import frc.robot.commands.StowArm;
 import frc.robot.controls.DualShock4Controller;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.arm.ArmConfig;
@@ -87,8 +86,7 @@ public class RobotContainer {
     pilotController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW));
     pilotController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
     pilotController.triangle.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH));
-    pilotController.circle.onTrue(new StowArm());
-  }
+    pilotController.circle.onTrue(new ReadyArm(ArmPreset.STOWED, ArmPreset.STOWED));  }
 
   private void initCopilotController() {
 
@@ -114,7 +112,7 @@ public class RobotContainer {
     copilotController.cross.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
     copilotController.square.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID));
     copilotController.triangle.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
-    copilotController.circle.onTrue(new StowArm());
+    copilotController.circle.onTrue(new ReadyArm(ArmPreset.STOWED, ArmPreset.STOWED));
   }
 
   private void initTestController() {

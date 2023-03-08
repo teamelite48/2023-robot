@@ -23,6 +23,10 @@ public class ReadyArmFromInsideFramePerimeter extends SequentialCommandGroup {
   ArmPosition cubePosition;
 
   public ReadyArmFromInsideFramePerimeter(ArmPosition conePosition, ArmPosition cubePosition) {
+
+    this.conePosition = conePosition;
+    this.cubePosition = cubePosition;
+
     addCommands(
       new ConditionalCommand(
         whenCommandedToMoveInsideFramePerimeter(),
