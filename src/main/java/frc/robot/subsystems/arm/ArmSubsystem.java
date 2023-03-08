@@ -34,11 +34,10 @@ public class ArmSubsystem extends SubsystemBase {
     SHOULDER_ABSOLUTE_ENCODER_OFFSET,
     SHOULDER_ABSOULTE_ENCODER_INVERTED,
     SHOULDER_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR,
-    SHOULDER_ANGLE_STARTS_NEGATIVE,
     SHOULDER_FORWARD_LIMIT,
     SHOULDER_REVERSE_LIMIT,
     SHOULDER_PID,
-    SHOULDER_SIMULATION_START_ANGLE
+    SHOULDER_START_ANGLE
   );
 
   private final ArmJoint elbowJoint = new ArmJoint(
@@ -49,11 +48,10 @@ public class ArmSubsystem extends SubsystemBase {
     ELBOW_ABSOULTE_ENCODER_OFFSET,
     ELBOW_ABSOULTE_ENCODER_INVERTED,
     ELBOW_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR,
-    ELBOW_ANGLE_STARTS_NEGATIVE,
     ELBOW_FORWARD_LIMIT,
     ELBOW_REVERSE_LIMIT,
     ELBOW_PID,
-    ELBOW_SIMULATION_START_ANGLE
+    ELBOW_START_ANGLE
   );
 
   private final ArmJoint wristJoint = new ArmJoint(
@@ -64,11 +62,10 @@ public class ArmSubsystem extends SubsystemBase {
     WRIST_ABSOLUTE_ENCODER_OFFSET,
     WRIST_ABSOULTE_ENCODER_INVERTED,
     WRIST_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR,
-    WRIST_ANGLE_STARTS_NEGATIVE,
     WRIST_FORWARD_LIMIT,
     WRIST_REVERSE_LIMIT,
     WRIST_PID,
-    WRIST_SIMULATION_START_ANGLE
+    WRIST_START_ANGLE
   );
 
   public ArmSubsystem() {
@@ -206,6 +203,10 @@ public class ArmSubsystem extends SubsystemBase {
     return this.position;
   }
 
+  public boolean areAllRelativeEncodersInitialized() {
+    return shoulderJoint.isRelativeEncoderInitilized() && elbowJoint.isRelativeEncoderInitilized() && wristJoint.isRelativeEncoderInitilized();
+  }
+
   private double applyOffsetToTheta2(double theta1, double theta2) {
     return theta2 + (theta1 - Math.toRadians(90.0));
   }
@@ -248,7 +249,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   private void addJointToDashboardTab(ShuffleboardTab tab, String jointName, ArmJoint armJoint, int column) {
 
-    tab.addBoolean(jointName + " Initialized", () -> armJoint.areEncodersInitilized())
+    tab.addBoolean(jointName + " Initialized", () -> armJoint.isRelativeEncoderInitilized())
       .withPosition(column, 0);
 
     tab.addDouble(jointName + " Absolute Angle", () -> armJoint.getAbsoulteAngle())

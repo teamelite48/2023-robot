@@ -21,10 +21,10 @@ public class ArmJoint {
     private final SparkMaxPIDController pidController;
     private final RelativeEncoder relativeEncoder;
 
-    private boolean areEncodersInitialized = false;
+    private boolean isRelativeEncoderInitialized = false;
     private double targetAngle;
     private double currentAngle;
-    private boolean isStartAngleNegative;
+    private double startAngle;
 
     public ArmJoint(
         int motorId,
@@ -34,19 +34,18 @@ public class ArmJoint {
         double absoluteEncoderOffset,
         boolean isAbsoluteEncoderInverted,
         double relativeEncoderPositionConversionFactor,
-        boolean isStartAngleNegative,
         float forwardLimit,
         float reverseLimit,
         PIDParameters pidParams,
-        double simulationStartAngle
+        double startAngle
     ) {
 
-        this.isStartAngleNegative = isStartAngleNegative;
+        this.startAngle = startAngle;
 
         if (Robot.isSimulation()) {
-            areEncodersInitialized = true;
-            targetAngle = simulationStartAngle;
-            currentAngle = simulationStartAngle;
+            isRelativeEncoderInitialized = true;
+            targetAngle = startAngle;
+            currentAngle = startAngle;
         }
 
         motorController = new CANSparkMax(motorId, MotorType.kBrushless);
@@ -70,15 +69,14 @@ public class ArmJoint {
 
         absoluteEncoder = motorController.getAbsoluteEncoder(Type.kDutyCycle);
         absoluteEncoder.setPositionConversionFactor(absoluteEncoderPositionConversionFactor);
+        absoluteEncoder.setInverted(isAbsoluteEncoderInverted);
 
         absoluteEncoder.setZeroOffset(absoluteEncoderOffset);
-
-        absoluteEncoder.setInverted(isAbsoluteEncoderInverted);
 
         relativeEncoder = motorController.getEncoder();
         relativeEncoder.setPositionConversionFactor(relativeEncoderPositionConversionFactor);
 
-        seedRelativeEncoderWithAbsoluteAngle();
+        initRelativeEncoder();
 
         pidController = motorController.getPIDController();
         pidController.setP(pidParams.P);
@@ -89,23 +87,24 @@ public class ArmJoint {
     }
 
     public void periodic() {
-        if (areEncodersInitialized == false) {
-            seedRelativeEncoderWithAbsoluteAngle();
+
+        if (isRelativeEncoderInitialized == false) {
+            initRelativeEncoder();
         }
     }
 
-    public void seedRelativeEncoderWithAbsoluteAngle() {
+    public void initRelativeEncoder() {
 
         var startPosition = absoluteEncoder.getPosition();
 
-        if (isStartAngleNegative == true) {
+        if (startAngle < 0.0 == true) {
             startPosition *= -1;
         }
 
         relativeEncoder.setPosition(startPosition);
 
-        if ((getAbsoulteAngle() - Math.abs(getRelativeAngle())) < 0.001) {
-            areEncodersInitialized = true;
+        if ((startAngle - getRelativeAngle()) < 5) {
+            isRelativeEncoderInitialized = true;
         }
     }
 
@@ -122,7 +121,7 @@ public class ArmJoint {
 
     public void setTargetAngle(double targetAngle) {
 
-        if (areEncodersInitialized == false) {
+        if (isRelativeEncoderInitialized == false) {
             return;
         }
 
@@ -156,7 +155,7 @@ public class ArmJoint {
         }
     }
 
-    public boolean areEncodersInitilized() {
-        return areEncodersInitialized;
+    public boolean isRelativeEncoderInitilized() {
+        return isRelativeEncoderInitialized;
     }
 }
