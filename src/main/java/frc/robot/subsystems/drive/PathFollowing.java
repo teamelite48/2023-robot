@@ -23,7 +23,9 @@ import frc.robot.subsystems.arm.ArmPreset;
 public class PathFollowing {
 
     static public final PathPlannerTrajectory ScoreConeHoldCubeBalance = PathPlanner.loadPath("Score Cone Hold Cube Balance", new PathConstraints(2, 2));
-    static public final List<PathPlannerTrajectory> Test = PathPlanner.loadPathGroup("Test", new PathConstraints(1, 1), new PathConstraints(3, 3));
+    static public final List<PathPlannerTrajectory> BarrierScoreConeBalance = PathPlanner.loadPathGroup("Barrier Score Cone High Balance", new PathConstraints(1, 1), new PathConstraints(2.5, 2.5), new PathConstraints(2, 2));
+    
+    //static public final List<PathPlannerTrajectory> Test = PathPlanner.loadPathGroup("Test", new PathConstraints(1, 1), new PathConstraints(3, 3));
 
     static public final HashMap<String, Command> EventMap = new HashMap<>() {{
 
@@ -35,13 +37,14 @@ public class PathFollowing {
         put("Score High", new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
         put("Outtake", new SequentialCommandGroup(
             new InstantCommand(() -> RobotContainer.gripperSubsystem.outtake()),
-            new WaitCommand(1),
+            new WaitCommand(.75),
             new InstantCommand(() -> RobotContainer.gripperSubsystem.stop())
         ));
         put("Stop Intake", new InstantCommand(() -> RobotContainer.gripperSubsystem.stop()));
         put("Stow Arm", new StowArm());
         put("Auto Balance", new AutoBalance());
 
+        put("Wait 0.5", new WaitCommand(0.5));
         put("Wait 1", new WaitCommand(1));
         put("Wait 2", new WaitCommand(2));
         put("Wait 3", new WaitCommand(3));
