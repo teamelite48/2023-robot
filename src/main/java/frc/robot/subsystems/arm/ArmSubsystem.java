@@ -124,10 +124,9 @@ public class ArmSubsystem extends SubsystemBase {
 
   public boolean isPositionAllowed(double x, double y) {
 
-    // TOOD: uncomment this
-    // if (x < ArmConfig.MIN_X_POS_IN_METERS || y < ArmConfig.MIN_Y_POS_IN_METERS) {
-    //   return false;
-    // }
+    if (x < ArmConfig.MIN_X_POS_IN_METERS || y < ArmConfig.MIN_Y_POS_IN_METERS) {
+      return false;
+    }
 
     var yPosUpperBound = Math.sqrt(Math.pow(ArmConfig.MAX_RADIUS, 2) - Math.pow(x, 2));
 
@@ -201,10 +200,6 @@ public class ArmSubsystem extends SubsystemBase {
 
   public Translation2d getPosition() {
     return this.position;
-  }
-
-  public boolean areAllRelativeEncodersInitialized() {
-    return shoulderJoint.isRelativeEncoderInitilized() && elbowJoint.isRelativeEncoderInitilized() && wristJoint.isRelativeEncoderInitilized();
   }
 
   private double applyOffsetToTheta2(double theta1, double theta2) {

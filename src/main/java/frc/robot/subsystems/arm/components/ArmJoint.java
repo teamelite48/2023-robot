@@ -12,6 +12,7 @@ import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.arm.ArmConfig;
 import frc.robot.subsystems.arm.PIDParameters;
 
 public class ArmJoint {
@@ -103,7 +104,7 @@ public class ArmJoint {
 
         relativeEncoder.setPosition(startPosition);
 
-        if ((startAngle - getRelativeAngle()) < 5) {
+        if (Math.abs(startAngle - getRelativeAngle()) < ArmConfig.ACCEPTABLE_ENCODER_INITIALIZATION_ERROR_DEGREES) {
             isRelativeEncoderInitialized = true;
         }
     }

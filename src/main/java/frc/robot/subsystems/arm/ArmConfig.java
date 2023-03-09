@@ -10,7 +10,7 @@ public class ArmConfig {
     public static final double L2_METERS = 0.81838079;
     public static final double MAX_RADIUS = L1_METERS + L2_METERS;
     public static final double MAX_MANUAL_SPEED = 0.05;
-    public static final double MIN_X_POS_IN_METERS = 0.70;
+    public static final double MIN_X_POS_IN_METERS = ArmPreset.STOWED.x;
     public static final double MIN_Y_POS_IN_METERS = -0.15;
 
     public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kBrake;
@@ -18,7 +18,7 @@ public class ArmConfig {
     public static final int ABSOULTE_ENCODER_TICKS_PER_ROTATION = 8192;
     public static final int RELATIVE_ENCODER_TICKS_PER_ROTATION = 42;
 
-    public static final int SHOULDER_RANGE_DEGREES = 90;
+    public static final double ACCEPTABLE_ENCODER_INITIALIZATION_ERROR_DEGREES = 10.0;
 
     public static final int SHOULDER_MOTOR_ID = 13;
     public static final int SHOULDER_MOTOR_CURRENT_LIMIT = 30;
@@ -31,7 +31,7 @@ public class ArmConfig {
     public static final float SHOULDER_REVERSE_LIMIT = 35.0f;
     public static final double SHOULDER_MAX_SPEED = 0.6;
     public static final PIDParameters SHOULDER_PID = new PIDParameters(0.5, 0.0, 0.0, -SHOULDER_MAX_SPEED, SHOULDER_MAX_SPEED);
-    public static final double SHOULDER_START_ANGLE = 73.519;
+    public static final double SHOULDER_START_ANGLE = 73.510;
 
 
     public static final int ELBOW_MOTOR_ID = 12;
@@ -45,7 +45,7 @@ public class ArmConfig {
     public static final float ELBOW_REVERSE_LIMIT = -320.0f;
     public static final double ELBOW_MAX_SPEED = SHOULDER_MAX_SPEED;
     public static final PIDParameters ELBOW_PID = new PIDParameters(0.1, 0.0, 0.0, -ELBOW_MAX_SPEED, ELBOW_MAX_SPEED);
-    public static final double ELBOW_START_ANGLE = -180.0;
+    public static final double ELBOW_START_ANGLE = -162.835;
 
     public static final int WRIST_MOTOR_ID = 11;
     public static final int WRIST_MOTOR_CURRENT_LIMIT = 20;
