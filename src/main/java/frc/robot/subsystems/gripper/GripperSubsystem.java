@@ -70,5 +70,8 @@ public class GripperSubsystem extends SubsystemBase {
     tab.addString("Mode", () -> getMode().toString());
     tab.addDouble("Speed", () -> motorController.get());
     tab.addDouble("Current", () -> motorController.getOutputCurrent());
+
+    tab.addBoolean("Cube Mode", () -> getMode() == GripperMode.Cube);
+    tab.addBoolean("Cone Mode", () -> getMode() == GripperMode.Cone);
   }
 }

@@ -76,6 +76,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
+    RobotContainer.driveSubsystem.setHighGear();
     RobotContainer.ledSubsystem.setLedToYellow();
 
     // This makes sure that the autonomous stops running when

@@ -143,6 +143,7 @@ public class RobotContainer {
     //autoChooser.addOption("Auto Balance", new AutoBalance());
     autoChooser.addOption("Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeHoldCubeBalance));
     autoChooser.addOption("Barrier Score Cone High Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeBalance));
+    autoChooser.addOption("Score Cone Score Cube", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeScoreCube));
 
     SmartDashboard.putData(autoChooser);
   }

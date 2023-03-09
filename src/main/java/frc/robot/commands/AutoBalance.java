@@ -32,7 +32,7 @@ public class AutoBalance extends CommandBase {
   @Override
   public void initialize() {
     driveSubsystem.zeroGyro();
-    speed = 0.15;
+    speed = 0.125;
     desiredAngle = 2.0;
     previousPitch = null;
     balancedMillis = 0;
@@ -44,7 +44,7 @@ public class AutoBalance extends CommandBase {
     currentPitch = getCurrentPitch();
 
     if (previousPitch != null && currentPitch != previousPitch && speed >= 0.0) {
-      speed -= 0.03;
+      speed -= 0.0175;
     }
 
     if (currentPitch == Pitch.Up) {

@@ -13,9 +13,9 @@ public class ArmPreset {
     public static final ArmPosition PICK_UP_CONE_MID = new ArmPosition(0.39, 0.14, -20.0);
     public static final ArmPosition PICK_UP_CONE_HIGH = new ArmPosition(0.79, 0.85, -135.0);
 
-    public static final ArmPosition PICK_UP_CUBE_LOW= new ArmPosition(0.8, -0.15, 45.0);
+    public static final ArmPosition PICK_UP_CUBE_LOW= new ArmPosition(0.8, -0.15, 55.0);
     public static final ArmPosition PICK_UP_CUBE_MID = new ArmPosition(0.39, 0.25, 160.);
-    public static final ArmPosition PICK_UP_CUBE_HIGH = new ArmPosition(0.8, 0.75, 45.0);
+    public static final ArmPosition PICK_UP_CUBE_HIGH = new ArmPosition(0.8, 0.75, 55.0);
 
     public static final ArmPosition SCORE_CONE_LOW = new ArmPosition(0.8, 0.07, -135.0);
     public static final ArmPosition SCORE_CONE_MID = new ArmPosition(0.89, 0.68, -135.0);

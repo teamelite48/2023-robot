@@ -31,7 +31,7 @@ public class ArmConfig {
     public static final float SHOULDER_REVERSE_LIMIT = 35.0f;
     public static final double SHOULDER_MAX_SPEED = 0.6;
     public static final PIDParameters SHOULDER_PID = new PIDParameters(0.5, 0.0, 0.0, -SHOULDER_MAX_SPEED, SHOULDER_MAX_SPEED);
-    public static final double SHOULDER_START_ANGLE = 73.510;
+    public static final double SHOULDER_START_ANGLE = 75.510;
 
 
     public static final int ELBOW_MOTOR_ID = 12;
@@ -45,7 +45,7 @@ public class ArmConfig {
     public static final float ELBOW_REVERSE_LIMIT = -320.0f;
     public static final double ELBOW_MAX_SPEED = SHOULDER_MAX_SPEED;
     public static final PIDParameters ELBOW_PID = new PIDParameters(0.1, 0.0, 0.0, -ELBOW_MAX_SPEED, ELBOW_MAX_SPEED);
-    public static final double ELBOW_START_ANGLE = -162.835;
+    public static final double ELBOW_START_ANGLE = -176.0;
 
     public static final int WRIST_MOTOR_ID = 11;
     public static final int WRIST_MOTOR_CURRENT_LIMIT = 20;
@@ -58,5 +58,5 @@ public class ArmConfig {
     public static final float WRIST_REVERSE_LIMIT = -120.0f;
     public static final double WRIST_MAX_SPEED = 0.3;
     public static final PIDParameters WRIST_PID = new PIDParameters(0.01, 0.0, 0.0, -WRIST_MAX_SPEED, WRIST_MAX_SPEED);
-    public static final double WRIST_START_ANGLE = 89.665;
+    public static final double WRIST_START_ANGLE = 85.665;
 }
