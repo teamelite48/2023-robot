@@ -58,8 +58,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    RobotContainer.driveSubsystem.setGyroBackwards();
-    RobotContainer.ledSubsystem.setLedToConfetti();
+    RobotContainer.driveSubsystem.zeroGyro();
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 

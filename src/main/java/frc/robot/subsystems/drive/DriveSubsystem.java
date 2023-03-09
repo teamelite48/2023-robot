@@ -129,10 +129,6 @@ public class DriveSubsystem extends SubsystemBase{
         gyro.setYaw(0.0);
     }
 
-    public void setGyroBackwards() {
-        gyro.setYaw(180.0);
-    }
-
     public double getPitch() {
         return gyro.getRoll();
     }
@@ -228,5 +224,6 @@ public class DriveSubsystem extends SubsystemBase{
     private void initShuffleBoard() {
         var driveTab = Shuffleboard.getTab("Drive");
         driveTab.addDouble("Pitch", () -> getPitch());
+        driveTab.addDouble("Yaw", () -> gyro.getYaw());
     }
 }

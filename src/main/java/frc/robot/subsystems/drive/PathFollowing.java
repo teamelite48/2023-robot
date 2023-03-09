@@ -44,6 +44,7 @@ public class PathFollowing {
         put("Stop Intake", new InstantCommand(() -> RobotContainer.gripperSubsystem.stop()));
         put("Stow Arm", new StowArm());
         put("Auto Balance", new AutoBalance());
+        put("Zero Gyro", new InstantCommand(() -> RobotContainer.driveSubsystem.zeroGyro()));
 
         put("Wait 0.5", new WaitCommand(0.5));
         put("Wait 1", new WaitCommand(1));

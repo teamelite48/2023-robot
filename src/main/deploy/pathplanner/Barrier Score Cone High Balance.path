@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4674372290182682,
-        "y": 4.90613065718348
+        "x": 2.4677153218641372,
+        "y": 4.9
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -119,7 +119,8 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Auto Balance"
+          "Auto Balance",
+          "Zero Gyro"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
