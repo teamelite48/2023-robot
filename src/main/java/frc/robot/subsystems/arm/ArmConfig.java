@@ -12,6 +12,7 @@ public class ArmConfig {
     public static final double MAX_MANUAL_SPEED = 0.05;
     public static final double MIN_X_POS_IN_METERS = ArmPreset.STOWED.x;
     public static final double MIN_Y_POS_IN_METERS = -0.15;
+    public static final double TEST_MAX_SPEED_MODIFIER = 0.5;
 
     public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kBrake;
 

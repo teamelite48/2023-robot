@@ -117,22 +117,22 @@ public class RobotContainer {
 
   private void initTestController() {
 
-    testController.up.onTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(ArmConfig.SHOULDER_MAX_SPEED)))
+    testController.up.onTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(ArmConfig.SHOULDER_MAX_SPEED * ArmConfig.TEST_MAX_SPEED_MODIFIER)))
       .onFalse(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(0)));
 
-    testController.down.onTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(-ArmConfig.SHOULDER_MAX_SPEED)))
+    testController.down.onTrue(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(-ArmConfig.SHOULDER_MAX_SPEED * ArmConfig.TEST_MAX_SPEED_MODIFIER)))
       .onFalse(new InstantCommand(() -> armSubsystem.setShoulderMotorSpeed(0)));
 
-    testController.lb.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(-ArmConfig.ELBOW_MAX_SPEED)))
+    testController.lb.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(-ArmConfig.ELBOW_MAX_SPEED * ArmConfig.TEST_MAX_SPEED_MODIFIER)))
       .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
 
-    testController.rb.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.ELBOW_MAX_SPEED)))
+    testController.rb.onTrue(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(ArmConfig.ELBOW_MAX_SPEED * ArmConfig.TEST_MAX_SPEED_MODIFIER)))
       .onFalse(new InstantCommand(() -> armSubsystem.setElbowMotorSpeed(0)));
 
-    testController.lt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.WRIST_MAX_SPEED)))
+    testController.lt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(-ArmConfig.WRIST_MAX_SPEED * ArmConfig.TEST_MAX_SPEED_MODIFIER)))
       .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
 
-    testController.rt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_MAX_SPEED)))
+    testController.rt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_MAX_SPEED * ArmConfig.TEST_MAX_SPEED_MODIFIER)))
       .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
 
     testController.back.whileTrue(new AutoBalance());
@@ -141,9 +141,10 @@ public class RobotContainer {
   private void initAutoChooser() {
     autoChooser.setDefaultOption("Do Nothing", new WaitCommand(3));
     //autoChooser.addOption("Auto Balance", new AutoBalance());
-    autoChooser.addOption("Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeHoldCubeBalance));
+    autoChooser.addOption("Wall Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeHoldCubeBalance));
     autoChooser.addOption("Barrier Score Cone High Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeBalance));
-    autoChooser.addOption("Score Cone Score Cube", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeScoreCube));
+    autoChooser.addOption("Wall Score Cone Score Cube", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeScoreCube));
+    autoChooser.addOption("Middle Score Cone High Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.MiddleScoreConeBalance));
 
     SmartDashboard.putData(autoChooser);
   }
