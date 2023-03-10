@@ -124,7 +124,8 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Auto Balance"
+          "Auto Balance",
+          "Zero Gyro"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
