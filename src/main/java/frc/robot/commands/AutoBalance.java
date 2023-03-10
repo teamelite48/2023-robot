@@ -44,7 +44,7 @@ public class AutoBalance extends CommandBase {
     currentPitch = getCurrentPitch();
 
     if (previousPitch != null && currentPitch != previousPitch && speed >= 0.0) {
-      speed -= 0.0175;
+      speed -= 0.0185;
     }
 
     if (currentPitch == Pitch.Up) {
