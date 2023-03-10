@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 2.4,
-        "y": 4.9
+        "x": 1.9,
+        "y": 4.96
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4677153218641372,
-        "y": 4.9
+        "x": 1.9677153218641372,
+        "y": 4.96
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -18,33 +18,7 @@
       "stopEvent": {
         "names": [
           "Cone Mode",
-          "Score High"
-        ],
-        "executionBehavior": "sequential",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 1.9113098740838121,
-        "y": 4.900798940905779
-      },
-      "prevControl": {
-        "x": 1.888816859558701,
-        "y": 4.900798940905779
-      },
-      "nextControl": {
-        "x": 2.757776732133831,
-        "y": 4.900798940905779
-      },
-      "holonomicAngle": 180.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": true,
-      "stopEvent": {
-        "names": [
+          "Score High",
           "Outtake"
         ],
         "executionBehavior": "sequential",
@@ -104,12 +78,12 @@
     },
     {
       "anchorPoint": {
-        "x": 3.8958133639426107,
-        "y": 2.966085861186807
+        "x": 3.9481432261604334,
+        "y": 2.972046952248093
       },
       "prevControl": {
-        "x": 4.2019993950735515,
-        "y": 2.966085861186807
+        "x": 4.254329257291374,
+        "y": 2.972046952248093
       },
       "nextControl": null,
       "holonomicAngle": 0.0,
@@ -130,7 +104,7 @@
   ],
   "markers": [
     {
-      "position": 1.45,
+      "position": 0.3272727272727295,
       "names": [
         "Stow Arm"
       ]

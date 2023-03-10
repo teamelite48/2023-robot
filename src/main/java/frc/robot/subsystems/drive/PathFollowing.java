@@ -22,10 +22,10 @@ import frc.robot.subsystems.arm.ArmPreset;
 
 public class PathFollowing {
 
-    static public final PathPlannerTrajectory ScoreConeHoldCubeBalance = PathPlanner.loadPath("Score Cone Hold Cube Balance", new PathConstraints(2, 2));
-    static public final List<PathPlannerTrajectory> BarrierScoreConeBalance = PathPlanner.loadPathGroup("Barrier Score Cone High Balance", new PathConstraints(1.5, 1.5), new PathConstraints(2.5, 2.5), new PathConstraints(2, 2));
-    static public final PathPlannerTrajectory ScoreConeScoreCube = PathPlanner.loadPath("Score Cone Score Cube", new PathConstraints(2, 2));
-    static public final List<PathPlannerTrajectory> MiddleScoreConeBalance = PathPlanner.loadPathGroup("Middle Score Cone High Balance", new PathConstraints(1.5, 1.5), new PathConstraints(2, 2), new PathConstraints(1.5, 1.5), new PathConstraints(2, 2));
+    static public final PathPlannerTrajectory ScoreConeHoldCubeBalance = PathPlanner.loadPath("Score Cone Hold Cube Balance", new PathConstraints(2.2, 2.2));
+    static public final List<PathPlannerTrajectory> BarrierScoreConeBalance = PathPlanner.loadPathGroup("Barrier Score Cone High Balance", new PathConstraints(2.5, 2.5), new PathConstraints(2, 2));
+    static public final PathPlannerTrajectory ScoreConeScoreCube = PathPlanner.loadPath("Score Cone Score Cube", new PathConstraints(2.2, 2.2));
+    static public final List<PathPlannerTrajectory> MiddleScoreConeBalance = PathPlanner.loadPathGroup("Middle Score Cone High Balance", new PathConstraints(2, 2));
 
     //static public final List<PathPlannerTrajectory> Test = PathPlanner.loadPathGroup("Test", new PathConstraints(1, 1), new PathConstraints(3, 3));
 

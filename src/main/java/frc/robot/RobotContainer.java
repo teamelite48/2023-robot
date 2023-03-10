@@ -139,12 +139,12 @@ public class RobotContainer {
   }
 
   private void initAutoChooser() {
-    autoChooser.setDefaultOption("Do Nothing", new WaitCommand(3));
+    autoChooser.setDefaultOption("GLHF (Do Nothing)", new WaitCommand(3));
     //autoChooser.addOption("Auto Balance", new AutoBalance());
     autoChooser.addOption("Wall Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeHoldCubeBalance));
-    autoChooser.addOption("Barrier Score Cone High Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeBalance));
+    autoChooser.addOption("Barrier Score Cone Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeBalance));
     autoChooser.addOption("Wall Score Cone Score Cube", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeScoreCube));
-    autoChooser.addOption("Middle Score Cone High Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.MiddleScoreConeBalance));
+    autoChooser.addOption("Middle Score Cone Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.MiddleScoreConeBalance));
 
     SmartDashboard.putData(autoChooser);
   }

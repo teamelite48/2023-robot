@@ -25,7 +25,7 @@ public class LedSubsystem extends SubsystemBase {
   private LedState currentState;
 
   public LedSubsystem() {
-    setLedToRed();
+    setLedToConfetti();
     initDashBoard();
   }
 
