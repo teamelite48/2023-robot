@@ -142,8 +142,9 @@ public class RobotContainer {
     autoChooser.setDefaultOption("GLHF (Do Nothing)", new WaitCommand(3));
     //autoChooser.addOption("Auto Balance", new AutoBalance());
     autoChooser.addOption("Wall Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeHoldCubeBalance));
-    autoChooser.addOption("Barrier Score Cone Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeBalance));
     autoChooser.addOption("Wall Score Cone Score Cube", driveSubsystem.getPathPlannerCommand(PathFollowing.ScoreConeScoreCube));
+    autoChooser.addOption("Barrier Score Cone Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeBalance));
+    autoChooser.addOption("Barrier Score Cone Score Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeScoreCube));
     autoChooser.addOption("Middle Score Cone Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.MiddleScoreConeBalance));
 
     SmartDashboard.putData(autoChooser);
