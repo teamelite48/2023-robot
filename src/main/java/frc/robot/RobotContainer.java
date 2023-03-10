@@ -84,8 +84,7 @@ public class RobotContainer {
 
     pilotController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW))
       .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
-    pilotController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID))
-      .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
+    pilotController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID));
     pilotController.triangle.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH))
       .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
     pilotController.circle.onTrue(new ReadyArm(ArmPreset.STOWED, ArmPreset.STOWED))
@@ -113,8 +112,7 @@ public class RobotContainer {
 
     copilotController.share.whileTrue(new AutoTarget());
 
-    copilotController.cross.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW))
-      .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
+    copilotController.cross.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW));
     copilotController.square.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID))
       .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
     copilotController.triangle.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH))
