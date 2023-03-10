@@ -103,7 +103,7 @@ public class DriveSubsystem extends SubsystemBase{
         double speedModifier = MAX_OUTPUT;
 
         if (gear == Gear.Low) {
-            speedModifier *= LOW_GEAR_REDUCTION;
+            speedModifier = LOW_GEAR_SPEED;
         }
 
         var desiredStates = getDesiredStates(x * speedModifier, y * speedModifier, rotation * speedModifier);

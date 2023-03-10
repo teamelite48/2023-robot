@@ -43,10 +43,14 @@
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "Cube Mode",
+          "Pick Up Low",
+          "Intake"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
@@ -93,25 +97,28 @@
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "Stop Intake",
+          "Stow Arm"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 5.685843040730305,
+        "x": 5.75,
         "y": 2.435752546255449
       },
       "prevControl": {
-        "x": 6.072074443289478,
+        "x": 6.136231402559173,
         "y": 2.435752546255449
       },
       "nextControl": {
-        "x": 3.80610457545328,
+        "x": 3.8702615347229754,
         "y": 2.4357525462554492
       },
       "holonomicAngle": 180.5,
@@ -130,11 +137,11 @@
     },
     {
       "anchorPoint": {
-        "x": 3.96653519771087,
+        "x": 3.85,
         "y": 2.44
       },
       "prevControl": {
-        "x": 4.976931721030261,
+        "x": 4.860396523319391,
         "y": 2.44
       },
       "nextControl": null,
@@ -156,27 +163,5 @@
   "maxVelocity": 2.5,
   "maxAcceleration": 2.5,
   "isReversed": null,
-  "markers": [
-    {
-      "position": 0.6136363636363653,
-      "names": [
-        "Stow Arm",
-        "Cube Mode"
-      ]
-    },
-    {
-      "position": 1.659090909090911,
-      "names": [
-        "Pick Up Low",
-        "Intake"
-      ]
-    },
-    {
-      "position": 3.0000000000000044,
-      "names": [
-        "Stop Intake",
-        "Stow Arm"
-      ]
-    }
-  ]
+  "markers": []
 }

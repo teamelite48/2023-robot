@@ -28,25 +28,29 @@
     },
     {
       "anchorPoint": {
-        "x": 2.8998008477855355,
-        "y": 0.5994826222417453
+        "x": 2.501308130859405,
+        "y": 0.5688293363243508
       },
       "prevControl": {
-        "x": 2.6927496826554504,
-        "y": 0.5994826222417453
+        "x": 2.29425696572932,
+        "y": 0.5688293363243508
       },
       "nextControl": {
-        "x": 3.14075845563556,
-        "y": 0.5994826222417453
+        "x": 2.7422657387094294,
+        "y": 0.5688293363243508
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "Cube Mode",
+          "Pick Up Low",
+          "Intake"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
@@ -78,41 +82,44 @@
     },
     {
       "anchorPoint": {
-        "x": 7.058097996367176,
-        "y": 0.9720139269094513
+        "x": 7.1422156187529575,
+        "y": 0.9244074529661295
       },
       "prevControl": {
-        "x": 7.030561071149043,
-        "y": 0.9720139269094513
+        "x": 7.114678693534824,
+        "y": 0.9244074529661295
       },
       "nextControl": {
-        "x": 7.410470181516876,
-        "y": 0.9720139269094513
+        "x": 7.494587803902657,
+        "y": 0.9244074529661295
       },
       "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "Stop Intake",
+          "Stow Arm"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 5.24,
-        "y": 0.8263169380304666
+        "x": 5.474676864846687,
+        "y": 0.8324475952139448
       },
       "prevControl": {
-        "x": 5.399397086770453,
-        "y": 0.8263169380304666
+        "x": 5.63407395161714,
+        "y": 0.8324475952139448
       },
       "nextControl": {
-        "x": 5.111110313773392,
-        "y": 0.8263169380304666
+        "x": 5.345787178620079,
+        "y": 0.8324475952139448
       },
       "holonomicAngle": 179.5,
       "isReversal": false,
@@ -121,7 +128,8 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Auto Balance"
+          "Stop Intake",
+          "Stow Arm"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -154,27 +162,5 @@
       }
     }
   ],
-  "markers": [
-    {
-      "position": 0.6363636363636378,
-      "names": [
-        "Stow Arm",
-        "Cube Mode"
-      ]
-    },
-    {
-      "position": 1.6136363636363658,
-      "names": [
-        "Pick Up Low",
-        "Intake"
-      ]
-    },
-    {
-      "position": 3.068181818181821,
-      "names": [
-        "Stop Intake",
-        "Stow Arm"
-      ]
-    }
-  ]
+  "markers": []
 }

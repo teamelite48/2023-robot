@@ -43,10 +43,14 @@
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "Cube Mode",
+          "Pick Up Low",
+          "Intake"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
@@ -78,15 +82,15 @@
     },
     {
       "anchorPoint": {
-        "x": 6.982818531982506,
+        "x": 7.105431675652084,
         "y": 4.608932420236968
       },
       "prevControl": {
-        "x": 6.283923613065907,
+        "x": 6.406536756735485,
         "y": 4.608932420236968
       },
       "nextControl": {
-        "x": 7.482818531982497,
+        "x": 7.605431675652075,
         "y": 4.608932420236968
       },
       "holonomicAngle": 0.0,
@@ -158,20 +162,5 @@
   "maxVelocity": 2.0,
   "maxAcceleration": 2.0,
   "isReversed": null,
-  "markers": [
-    {
-      "position": 0.2909090909090909,
-      "names": [
-        "Stow Arm",
-        "Cube Mode"
-      ]
-    },
-    {
-      "position": 1.7500000000000013,
-      "names": [
-        "Pick Up Low",
-        "Intake"
-      ]
-    }
-  ]
+  "markers": []
 }

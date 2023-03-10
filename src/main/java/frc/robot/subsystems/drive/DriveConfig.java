@@ -24,8 +24,8 @@ public class DriveConfig {
     public static final int BACK_RIGHT_ANGLE_ENCODER_ID = 37;
     public static final double BACK_RIGHT_ANGLE_OFFSET_DEGREES = 203.994;
 
-    public static final double MAX_OUTPUT = 0.8;
-    public static final double LOW_GEAR_REDUCTION = 1.0 / 3.0;
+    public static final double MAX_OUTPUT = 0.75;
+    public static final double LOW_GEAR_SPEED = 0.35;
     public static final double SLEW_RATE = 2.0;
 
     public static final double WHEEL_DIAMETER = 0.10033;
@@ -36,8 +36,8 @@ public class DriveConfig {
     public static final double MAX_ANGULAR_METERS_PER_SECOND = MAX_METERS_PER_SECOND / Math.hypot(TRACKWIDTH_METERS / 2.0, WHEELBASE_METERS / 2.0);
 
     public static final double NOMINAL_VOLTAGE = 12.0;
-    public static final double DRIVE_MOTOR_CURRENT_LIMIT = 80.0;
-    public static final double ANGLE_MOTOR_CURRENT_LIMIT = 20.0;
+    public static final double DRIVE_MOTOR_CURRENT_LIMIT = 40.0;
+    public static final double ANGLE_MOTOR_CURRENT_LIMIT = 30.0;
 
     public static final boolean DRIVE_MOTOR_INVERTED = true;
     public static final boolean ANGLE_MOTOR_INVERTED = true;

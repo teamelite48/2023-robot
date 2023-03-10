@@ -40,7 +40,7 @@ public class SwerveAngleController {
         motorController.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus1, 20);
         motorController.setPeriodicFramePeriod(CANSparkMax.PeriodicFrame.kStatus2, 20);
 
-        motorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        motorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
         motorEncoder = motorController.getEncoder();
         motorEncoder.setPositionConversionFactor(ANGLE_POSITION_TO_RADIANS_CONVERSION_FACTOR);
