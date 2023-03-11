@@ -202,6 +202,10 @@ public class ArmSubsystem extends SubsystemBase {
     return this.position;
   }
 
+  public boolean isArmInsideFramePerimeter() {
+    return getPosition().getX() < ArmPreset.FRAME_X_BOUNDARY;
+  }
+
   private double applyOffsetToTheta2(double theta1, double theta2) {
     return theta2 + (theta1 - Math.toRadians(90.0));
   }
