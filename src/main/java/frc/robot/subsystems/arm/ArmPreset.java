@@ -9,7 +9,7 @@ public class ArmPreset {
     public static final ArmPosition LOW_DROP_ZONE = new ArmPosition(0.8, 0.1, 45.0);
     public static final ArmPosition HIGH_DROP_ZONE = new ArmPosition(0.4, 0.45, 45.0);
 
-    public static final ArmPosition PICK_UP_CONE_LOW = new ArmPosition(0.8, 0.05, -135.0);
+    public static final ArmPosition PICK_UP_CONE_LOW = new ArmPosition(0.8, 0.07, -135.0);
     public static final ArmPosition PICK_UP_CONE_MID = new ArmPosition(0.425, 0.14, -20.0);
     public static final ArmPosition PICK_UP_CONE_HIGH = new ArmPosition(0.79, 0.85, -135.0);
 

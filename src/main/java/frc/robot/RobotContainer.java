@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoTarget;
 import frc.robot.commands.ReadyArm;
+import frc.robot.commands.RunAutoCommand;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.controls.DualShock4Controller;
@@ -143,12 +144,12 @@ public class RobotContainer {
     testController.rt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_MAX_SPEED * ArmConfig.TEST_MAX_SPEED_MODIFIER)))
       .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
 
-    testController.back.whileTrue(new AutoBalance());
+    testController.back.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
   }
 
   private void initAutoChooser() {
     autoChooser.setDefaultOption("GLHF (Do Nothing)", new WaitCommand(3));
-    //autoChooser.addOption("Auto Balance", new AutoBalance());
+    autoChooser.addOption("Auto Balance", new AutoBalance());
     //autoChooser.addOption("Wall Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.ScoreConeHoldCubeBalance));
     //autoChooser.addOption("Wall Score Cone Score Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.ScoreConeScoreCube));
     autoChooser.addOption("Wall Score Cone Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreBalance));
@@ -156,7 +157,7 @@ public class RobotContainer {
     autoChooser.addOption("Barrier Score Cone Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeBalance));
     autoChooser.addOption("Barrier Score Cone Score Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeScoreCube));
     autoChooser.addOption("Middle Score Cone Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.MiddleScoreConeBalance));
-    //autoChooser.addOption("Test", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.Test));
+    autoChooser.addOption("Test", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.Test));
 
     SmartDashboard.putData(autoChooser);
   }

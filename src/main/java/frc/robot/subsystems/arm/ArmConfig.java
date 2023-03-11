@@ -46,13 +46,13 @@ public class ArmConfig {
     public static final float ELBOW_REVERSE_LIMIT = -320.0f;
     public static final double ELBOW_MAX_SPEED = SHOULDER_MAX_SPEED;
     public static final PIDParameters ELBOW_PID = new PIDParameters(0.1, 0.0, 0.0, -ELBOW_MAX_SPEED, ELBOW_MAX_SPEED);
-    public static final double ELBOW_START_ANGLE = -176.0;
+    public static final double ELBOW_START_ANGLE = -177.89;
 
     public static final int WRIST_MOTOR_ID = 11;
     public static final int WRIST_MOTOR_CURRENT_LIMIT = 20;
     public static final boolean WRIST_MOTOR_INVERTED = false;
     public static final double WRIST_ABSOLUTE_ENCODER_POSITION_CONVERSION_FACTOR = 360 / (36.0 / 18.0);
-    public static final double WRIST_ABSOLUTE_ENCODER_OFFSET =  40.5 + 90.0;
+    public static final double WRIST_ABSOLUTE_ENCODER_OFFSET = 48.0 + 90.0;
     public static final boolean WRIST_ABSOULTE_ENCODER_INVERTED = false;
     public static final double WRIST_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / ((60.0 / 12.0) * (36.0 /12.0) * (36.0 / 18.0));
     public static final float WRIST_FORWARD_LIMIT = 180.0f;

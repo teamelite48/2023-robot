@@ -145,7 +145,7 @@ public class DriveSubsystem extends SubsystemBase{
                 this::resetOdometry,
                 kinematics,
                 new PIDConstants(5.0, 0.0, 0.0),
-                new PIDConstants(0.5, 0.0, 0.0),
+                new PIDConstants(1.0, 0.0, 0.0),
                 this::setDesiredStates,
                 PathFollowing.EventMap,
                 true,
