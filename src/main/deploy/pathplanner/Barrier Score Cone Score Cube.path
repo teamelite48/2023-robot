@@ -28,16 +28,16 @@
     },
     {
       "anchorPoint": {
-        "x": 3.359600136546456,
-        "y": 4.786721478557857
+        "x": 2.961107419620325,
+        "y": 4.762198849823942
       },
       "prevControl": {
-        "x": 3.034675305822073,
-        "y": 4.780590821374378
+        "x": 2.636182588895942,
+        "y": 4.756068192640463
       },
       "nextControl": {
-        "x": 3.5254798166948693,
-        "y": 4.789851283843676
+        "x": 3.1269870997687383,
+        "y": 4.7653286551097604
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -84,22 +84,22 @@
     },
     {
       "anchorPoint": {
-        "x": 7.105431675652084,
-        "y": 4.608932420236968
+        "x": 7.123823647202521,
+        "y": 4.725414906723068
       },
       "prevControl": {
-        "x": 6.3574914992676534,
-        "y": 4.516972562484784
+        "x": 6.37588347081809,
+        "y": 4.633455048970884
       },
       "nextControl": {
-        "x": 6.3574914992676534,
-        "y": 4.516972562484784
+        "x": 6.37588347081809,
+        "y": 4.633455048970884
       },
       "holonomicAngle": 0.0,
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": true,
+      "isStopPoint": false,
       "stopEvent": {
         "names": [
           "Stop Intake",
@@ -164,5 +164,13 @@
   "maxVelocity": 2.0,
   "maxAcceleration": 2.0,
   "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 3.05,
+      "names": [
+        "Stop Intake",
+        "Stow Arm"
+      ]
+    }
+  ]
 }

@@ -26,9 +26,9 @@ public class PathFollowing {
     static public final List<PathPlannerTrajectory> BarrierScoreConeBalance = PathPlanner.loadPathGroup("Barrier Score Cone High Balance", new PathConstraints(2.5, 2.5), new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> WallScoreBalance = PathPlanner.loadPathGroup("Wall Score Balance", new PathConstraints(1.75, 1.75), new PathConstraints(1.5, 1.5), new PathConstraints(1, 1), new PathConstraints(2, 2), new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> WallScoreConeScoreCube = PathPlanner.loadPathGroup("Wall Score Cone Score Cube", new PathConstraints(2, 2), new PathConstraints(1.5, 1.5), new PathConstraints(2, 2), new PathConstraints(1.5, 1.5), new PathConstraints(2, 2));
-    static public final List<PathPlannerTrajectory> BarrierScoreConeScoreCube = PathPlanner.loadPathGroup("Barrier Score Cone Score Cube", new PathConstraints(2.25, 2.25));
+    static public final List<PathPlannerTrajectory> BarrierScoreConeScoreCube = PathPlanner.loadPathGroup("Barrier Score Cone Score Cube", new PathConstraints(2.5, 2.5), new PathConstraints(2.75, 2.75), new PathConstraints(2.75, 2.75), new PathConstraints(3.25, 3.25));
     //static public final List<PathPlannerTrajectory> ScoreConeScoreCube = PathPlanner.loadPathGroup("Score Cone Score Cube", new PathConstraints(2, 2));
-    static public final List<PathPlannerTrajectory> MiddleScoreConeBalance = PathPlanner.loadPathGroup("Middle Score Cone High Balance", new PathConstraints(2, 2));
+    static public final List<PathPlannerTrajectory> MiddleScoreConeBalance = PathPlanner.loadPathGroup("Middle Score Hold Cube Balance", new PathConstraints(2, 2), new PathConstraints(1, 1), new PathConstraints(2.25, 2.25));
     static public final List<PathPlannerTrajectory> Test = PathPlanner.loadPathGroup("Test", new PathConstraints(2, 2));
 
     //static public final List<PathPlannerTrajectory> Test = PathPlanner.loadPathGroup("Test", new PathConstraints(1, 1), new PathConstraints(3, 3));
