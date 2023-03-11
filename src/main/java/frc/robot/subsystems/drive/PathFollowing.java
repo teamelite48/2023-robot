@@ -17,7 +17,7 @@ import frc.robot.commands.ReadyArm;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.commands.StowArm;
-
+import frc.robot.commands.WaitForArmToBeInsideFramePerimeter;
 import frc.robot.subsystems.arm.ArmPreset;
 
 public class PathFollowing {
@@ -48,6 +48,7 @@ public class PathFollowing {
         ));
         put("Stop Intake", new InstantCommand(() -> RobotContainer.gripperSubsystem.stop()));
         put("Stow Arm", new StowArm());
+        put("Wait For Arm To Be Inside Frame Perimeter", new WaitForArmToBeInsideFramePerimeter());
         put("Auto Balance", new AutoBalance());
         put("Zero Gyro", new InstantCommand(() -> RobotContainer.driveSubsystem.zeroGyro()));
 

@@ -22,11 +22,9 @@ public class ReadyArm extends SequentialCommandGroup {
       new ConditionalCommand(
         new ReadyArmFromInsideFramePerimeter(conePosition, cubePosition),
         new ReadyArmFromOutsideFramePerimeter(conePosition, cubePosition),
-        () -> isArmInsideFramePerimeter()
+        () -> armSubsystem.isArmInsideFramePerimeter()
       )
     );
   }
-  private boolean isArmInsideFramePerimeter() {
-    return armSubsystem.getPosition().getX() < ArmPreset.FRAME_X_BOUNDARY;
-  }
+  
 }
