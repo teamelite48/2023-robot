@@ -129,6 +129,10 @@ public class DriveSubsystem extends SubsystemBase{
         gyro.setYaw(0.0);
     }
 
+    public void reverseGyro() {
+        gyro.addYaw(180.0);
+    }
+
     public double getPitch() {
         return gyro.getRoll();
     }
