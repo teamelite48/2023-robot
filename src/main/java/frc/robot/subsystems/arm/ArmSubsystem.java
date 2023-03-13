@@ -22,7 +22,14 @@ public class ArmSubsystem extends SubsystemBase {
     Transitioning
   }
 
+  public enum ArmOrientation {
+    Front,
+    Rear
+  }
+
   private ArmState armState = ArmState.Ready;
+  private ArmOrientation armOrientation = ArmOrientation.Front;
+
   private Translation2d position;
   private double wristDegrees = 0.0;
 
@@ -171,6 +178,12 @@ public class ArmSubsystem extends SubsystemBase {
 
     double theta2WithOffset = applyOffsetToTheta2(theta1, theta2);
 
+    if (this.armOrientation == ArmOrientation.Rear) {
+      theta1 = Math.toRadians(180.0) - theta1;
+      theta2WithOffset = Math.toRadians(-360.0) - theta2WithOffset;
+      theta3 *= -1.0;
+    }
+
     shoulderJoint.setTargetAngle(Math.toDegrees(theta1));
     elbowJoint.setTargetAngle(Math.toDegrees(theta2WithOffset));
     wristJoint.setTargetAngle(Math.toDegrees(theta3));
@@ -191,7 +204,7 @@ public class ArmSubsystem extends SubsystemBase {
     double theta2WithoutOffset = removeOffsetFromTheta2();
 
 		Translation2d effectorPosition = new Translation2d(
-			elbowPosition.getX() + (l2 * Math.cos(theta1 + theta2WithoutOffset)),
+			elbowPosition.getX() + (l2 * Math.cos(theta1 + theta2WithoutOffset)) * (armOrientation == ArmOrientation.Front ? 1.0 : -1.0),
 			elbowPosition.getY() + (l2 * Math.sin(theta1 + theta2WithoutOffset))
 		);
 
@@ -228,15 +241,19 @@ public class ArmSubsystem extends SubsystemBase {
 
     var tab = Shuffleboard.getTab("Arm");
 
-    tab.addString("State", () -> this.armState.toString())
+    tab.addString("Orientation", () -> this.armOrientation.toString())
       .withPosition(0, 0)
       .withSize(2, 1);
 
+    tab.addString("State", () -> this.armState.toString())
+      .withPosition(0, 1)
+      .withSize(2, 1);
+
     tab.addString("X Position", () -> df.format(this.position.getX()))
-      .withPosition(0, 1);
+      .withPosition(0, 2);
 
     tab.addString("Y Position", () -> df.format(this.position.getY()))
-      .withPosition(1, 1);
+      .withPosition(1, 2);
 
     addJointToDashboardTab(tab, "J1", shoulderJoint, 2);
     addJointToDashboardTab(tab, "J2", elbowJoint, 3);

@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoTarget;
 import frc.robot.commands.ReadyArm;
-import frc.robot.commands.RunAutoCommand;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.controls.DualShock4Controller;
@@ -100,6 +99,8 @@ public class RobotContainer {
       -copilotController.getRightYAxis()),
       armSubsystem
     ));
+
+    copilotController.ps.onTrue(new InstantCommand(() -> armSubsystem.toggleOrientation()));
 
     copilotController.l1.onTrue(new SetGripperModeToCone());
     copilotController.r1.onTrue(new SetGripperModeToCube());
