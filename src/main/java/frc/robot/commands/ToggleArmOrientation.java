@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.arm.ArmPreset;
 import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.arm.ArmSubsystem.ArmState;
 
 public class ToggleArmOrientation extends SequentialCommandGroup {
 
@@ -23,7 +24,7 @@ public class ToggleArmOrientation extends SequentialCommandGroup {
           new ReadyArm(ArmPreset.STOWED, ArmPreset.STOWED)
         ),
         new DoNothing(),
-        () -> armSubsystem.isArmInsideFramePerimeter() // TODO: arm is not transitioning
+        () -> armSubsystem.getArmState() == ArmState.Ready && armSubsystem.isArmInsideFramePerimeter()
       )
     );
   }
