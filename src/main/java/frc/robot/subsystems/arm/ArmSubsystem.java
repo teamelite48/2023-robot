@@ -96,6 +96,20 @@ public class ArmSubsystem extends SubsystemBase {
     }
   }
 
+  public void toggleOrientation() {
+
+    if (armState == ArmState.Transitioning || isArmInsideFramePerimeter() == false) {
+      return;
+    }
+
+    if (armOrientation == ArmOrientation.Front) {
+      armOrientation = ArmOrientation.Rear;
+    }
+    else {
+      armOrientation = ArmOrientation.Front;
+    }
+  }
+
   public void setShoulderMotorSpeed(double speed) {
     shoulderJoint.setMotorSpeed(speed);
   }
@@ -174,14 +188,14 @@ public class ArmSubsystem extends SubsystemBase {
     double gamma = lawOfCosines(r, a, b);
     double theta2 = -Math.PI + gamma;
 
-    double theta3 = -theta2 - theta1 + Math.toRadians(this.wristDegrees);
 
     double theta2WithOffset = applyOffsetToTheta2(theta1, theta2);
+    double theta3 = -theta2 - theta1 + Math.toRadians(this.wristDegrees);
 
     if (this.armOrientation == ArmOrientation.Rear) {
       theta1 = Math.toRadians(180.0) - theta1;
       theta2WithOffset = Math.toRadians(-360.0) - theta2WithOffset;
-      theta3 *= -1.0;
+      theta3 = Math.toRadians(180.0) - theta3;
     }
 
     shoulderJoint.setTargetAngle(Math.toDegrees(theta1));
@@ -204,7 +218,7 @@ public class ArmSubsystem extends SubsystemBase {
     double theta2WithoutOffset = removeOffsetFromTheta2();
 
 		Translation2d effectorPosition = new Translation2d(
-			elbowPosition.getX() + (l2 * Math.cos(theta1 + theta2WithoutOffset)) * (armOrientation == ArmOrientation.Front ? 1.0 : -1.0),
+			(elbowPosition.getX() + (l2 * Math.cos(theta1 + theta2WithoutOffset))) * (armOrientation == ArmOrientation.Front ? 1.0 : -1.0),
 			elbowPosition.getY() + (l2 * Math.sin(theta1 + theta2WithoutOffset))
 		);
 
@@ -220,13 +234,21 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   private double applyOffsetToTheta2(double theta1, double theta2) {
+
+    if (Robot.isSimulation()) {
+      return theta2;
+    }
+
     return theta2 + (theta1 - Math.toRadians(90.0));
   }
 
   private double removeOffsetFromTheta2() {
-
     double theta1 = Math.toRadians(shoulderJoint.getRelativeAngle());
     double theta2 = Math.toRadians(elbowJoint.getRelativeAngle());
+
+    if (Robot.isSimulation()) {
+      return theta2;
+    }
 
     return theta2 + (Math.toRadians(90.0) - theta1);
   }

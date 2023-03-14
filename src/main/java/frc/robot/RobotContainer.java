@@ -16,8 +16,10 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoTarget;
 import frc.robot.commands.ReadyArm;
+import frc.robot.commands.RunAutoCommand;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
+import frc.robot.commands.ToggleArmOrientation;
 import frc.robot.controls.DualShock4Controller;
 import frc.robot.controls.LogitechDualActionGamepad;
 import frc.robot.subsystems.arm.ArmConfig;
@@ -65,6 +67,8 @@ public class RobotContainer {
       pilotController.getRightXAxis()
     ), driveSubsystem));
 
+    pilotController.ps.onTrue(new ToggleArmOrientation());
+
     pilotController.l1.onTrue(new SetGripperModeToCone());
     pilotController.r1.onTrue(new SetGripperModeToCube());
 
@@ -100,7 +104,7 @@ public class RobotContainer {
       armSubsystem
     ));
 
-    copilotController.ps.onTrue(new InstantCommand(() -> armSubsystem.toggleOrientation()));
+    copilotController.ps.onTrue(new ToggleArmOrientation());
 
     copilotController.l1.onTrue(new SetGripperModeToCone());
     copilotController.r1.onTrue(new SetGripperModeToCube());

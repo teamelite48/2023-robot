@@ -55,7 +55,7 @@ public class ArmConfig {
     public static final double WRIST_ABSOLUTE_ENCODER_OFFSET = 48.0 + 90.0;
     public static final boolean WRIST_ABSOULTE_ENCODER_INVERTED = false;
     public static final double WRIST_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / ((60.0 / 12.0) * (36.0 /12.0) * (36.0 / 18.0));
-    public static final float WRIST_FORWARD_LIMIT = 180.0f;
+    public static final float WRIST_FORWARD_LIMIT = 320.0f;
     public static final float WRIST_REVERSE_LIMIT = -120.0f;
     public static final double WRIST_MAX_SPEED = 0.3;
     public static final PIDParameters WRIST_PID = new PIDParameters(0.01, 0.0, 0.0, -WRIST_MAX_SPEED, WRIST_MAX_SPEED);
