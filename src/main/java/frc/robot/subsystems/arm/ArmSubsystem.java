@@ -270,8 +270,8 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   private void initDashboard() {
-    DecimalFormat df = new DecimalFormat("#.##");
-    df.setMinimumFractionDigits(2);
+    DecimalFormat df = new DecimalFormat("#.###");
+    df.setMinimumFractionDigits(3);
 
     var tab = Shuffleboard.getTab("Arm");
 
