@@ -207,10 +207,10 @@ public class ArmSubsystem extends SubsystemBase {
 
     double angle = endAngle - startAngle;
 
-    if (angle > 180) {
-        angle -= 360;
-    } else if (angle < -180) {
-        angle += 360;
+    if (angle > Math.PI) {
+        angle -= 2 * Math.PI;
+    } else if (angle < -Math.PI) {
+        angle += 2 * Math.PI;
     }
     return angle;
   }
