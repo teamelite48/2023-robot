@@ -24,7 +24,7 @@ public class DriveConfig {
     public static final int BACK_RIGHT_ANGLE_ENCODER_ID = 37;
     public static final double BACK_RIGHT_ANGLE_OFFSET_DEGREES = 204.521;
 
-    public static final double MAX_OUTPUT = 0.8;
+    public static final double MAX_OUTPUT = 0.9;
     public static final double LOW_GEAR_SPEED = 0.4;
     public static final double SLEW_RATE = 2.0;
 
