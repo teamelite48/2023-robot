@@ -61,11 +61,7 @@ public class RobotContainer {
 
   private void initPilotController() {
 
-    driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.manualDrive(
-      pilotController.getLeftXAxis(),
-      pilotController.getLeftYAxis(),
-      pilotController.getRightXAxis()
-    ), driveSubsystem));
+    driveSubsystem.setDefaultCommand(new RunCommand(() -> drive(), driveSubsystem));
 
     pilotController.ps.onTrue(new ToggleArmOrientation());
 
@@ -175,5 +171,16 @@ public class RobotContainer {
     camera.setResolution(160, 120);
     camera.setFPS(20);
     camera.setExposureAuto();
+  }
+
+  private void drive() {
+
+    var left = pilotController.getLeftAxes();
+
+    driveSubsystem.manualDrive(
+      left.getFirst(),
+      left.getSecond(),
+      pilotController.getRightXAxis()
+    );
   }
 }
