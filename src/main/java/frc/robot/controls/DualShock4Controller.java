@@ -60,25 +60,21 @@ public class DualShock4Controller {
         left = new Trigger(() -> hid.getPOV() == 270);
     }
 
-    public double getLeftXAxis() {
-        return modifyAxis(hid.getRawAxis(0));
-    }
-    public double getLeftYAxis() {
-        return modifyAxis(hid.getRawAxis(1));
-    }
-    public double getRightXAxis() {
-        return modifyAxis(hid.getRawAxis(2));
-    }
-
-    public double getRightYAxis() {
-         return modifyAxis(hid.getRawAxis(5));
-    }
-
     public Translation2d getLeftAxes() {
-
         double x = getLeftXAxis();
         double y = getLeftYAxis();
 
+        return normalizeVector(x, y);
+    }
+
+    public Translation2d getRightAxes() {
+        double x = getRightXAxis();
+        double y = getRightYAxis();
+
+        return normalizeVector(x, y);
+    }
+
+    public Translation2d normalizeVector(double x, double y) {
         double r = Math.sqrt(x*x + y*y);
 
         double maxComponent = Math.max(Math.abs(x), Math.abs(y));
@@ -102,5 +98,19 @@ public class DualShock4Controller {
         }
 
         return value;
+    }
+
+    private double getLeftXAxis() {
+        return modifyAxis(hid.getRawAxis(0));
+    }
+    private double getLeftYAxis() {
+        return modifyAxis(hid.getRawAxis(1));
+    }
+    private double getRightXAxis() {
+        return modifyAxis(hid.getRawAxis(2));
+    }
+
+    private double getRightYAxis() {
+         return modifyAxis(hid.getRawAxis(5));
     }
 }

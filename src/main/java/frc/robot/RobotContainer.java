@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoTarget;
+import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ReadyArm;
 import frc.robot.commands.RunAutoCommand;
 import frc.robot.commands.SetGripperModeToCone;
@@ -54,11 +54,6 @@ public class RobotContainer {
 
     initAutoChooser();
     initCamera();
-
-    // var tab = Shuffleboard.getTab("Controllers");
-    // tab.addDouble("Left X Axis", () -> pilotController.getLeftAxes().getX());
-    // tab.addDouble("Left Y Axis", () -> pilotController.getLeftAxes().getY());
-
   }
 
   public Command getAutonomousCommand() {
@@ -67,7 +62,7 @@ public class RobotContainer {
 
   private void initPilotController() {
 
-    driveSubsystem.setDefaultCommand(new RunCommand(() -> drive(), driveSubsystem));
+    driveSubsystem.setDefaultCommand(new DriveCommand(() -> pilotController.getLeftAxes(), () -> pilotController.getRightAxes()));
 
     pilotController.ps.onTrue(new ToggleArmOrientation());
 
@@ -88,21 +83,28 @@ public class RobotContainer {
     pilotController.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
     pilotController.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
 
-    pilotController.cross.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW))
+    pilotController.cross
+      .onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW))
       .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
-    pilotController.square.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID))
+
+    pilotController.square
+      .onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID))
       .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
-    pilotController.triangle.onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH))
+
+    pilotController.triangle
+      .onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH))
       .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
-    pilotController.circle.onTrue(new ReadyArm(ArmPreset.STOWED, ArmPreset.STOWED))
+
+    pilotController.circle
+      .onTrue(new ReadyArm(ArmPreset.STOWED, ArmPreset.STOWED))
       .onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
     }
 
   private void initCopilotController() {
 
     armSubsystem.setDefaultCommand(new RunCommand(() -> armSubsystem.manualPosition(
-      -copilotController.getLeftYAxis(),
-      -copilotController.getRightYAxis()),
+      -copilotController.getLeftAxes().getY(),
+      -copilotController.getRightAxes().getY()),
       armSubsystem
     ));
 
@@ -121,13 +123,20 @@ public class RobotContainer {
 
     copilotController.share.whileTrue(new AutoTarget());
 
-    copilotController.cross.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW))
+    copilotController.cross
+      .onTrue(new ReadyArm(ArmPreset.SCORE_CONE_LOW, ArmPreset.SCORE_CUBE_LOW))
       .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
-    copilotController.square.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID))
+
+    copilotController.square
+      .onTrue(new ReadyArm(ArmPreset.SCORE_CONE_MID, ArmPreset.SCORE_CUBE_MID))
       .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
-    copilotController.triangle.onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH))
+
+    copilotController.triangle
+      .onTrue(new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH))
       .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
-    copilotController.circle.onTrue(new ReadyArm(ArmPreset.STOWED, ArmPreset.STOWED))
+
+    copilotController.circle
+      .onTrue(new ReadyArm(ArmPreset.STOWED, ArmPreset.STOWED))
       .onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
   }
 
@@ -177,16 +186,5 @@ public class RobotContainer {
     camera.setResolution(160, 120);
     camera.setFPS(20);
     camera.setExposureAuto();
-  }
-
-  private void drive() {
-
-    var leftAxes = pilotController.getLeftAxes();
-
-    driveSubsystem.manualDrive(
-      leftAxes.getX(),
-      leftAxes.getY(),
-      pilotController.getRightXAxis()
-    );
   }
 }
