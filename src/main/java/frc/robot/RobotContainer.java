@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -53,6 +54,11 @@ public class RobotContainer {
 
     initAutoChooser();
     initCamera();
+
+    // var tab = Shuffleboard.getTab("Controllers");
+    // tab.addDouble("Left X Axis", () -> pilotController.getLeftAxes().getX());
+    // tab.addDouble("Left Y Axis", () -> pilotController.getLeftAxes().getY());
+
   }
 
   public Command getAutonomousCommand() {
@@ -175,11 +181,11 @@ public class RobotContainer {
 
   private void drive() {
 
-    var left = pilotController.getLeftAxes();
+    var leftAxes = pilotController.getLeftAxes();
 
     driveSubsystem.manualDrive(
-      left.getFirst(),
-      left.getSecond(),
+      leftAxes.getX(),
+      leftAxes.getY(),
       pilotController.getRightXAxis()
     );
   }

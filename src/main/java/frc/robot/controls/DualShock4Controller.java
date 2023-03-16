@@ -1,6 +1,7 @@
 package frc.robot.controls;
 
 import edu.wpi.first.math.Pair;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -73,23 +74,21 @@ public class DualShock4Controller {
          return modifyAxis(hid.getRawAxis(5));
     }
 
-    public Pair<Double, Double> getLeftAxes() {
+    public Translation2d getLeftAxes() {
 
-        double diagonalMovementSpeed = 1.0;
+        double x = getLeftXAxis();
+        double y = getLeftYAxis();
 
-        double horizontalMovement = getLeftXAxis();
-        double verticalMovement = getLeftYAxis();
+        double r = Math.sqrt(x*x + y*y);
 
-        if (Math.abs(horizontalMovement) > 0.0 && Math.abs(verticalMovement) > 0.0) {
+        double maxComponent = Math.max(Math.abs(x), Math.abs(y));
 
-            // Calculate the diagonal movement speed and adjust the horizontal and vertical values accordingly
-            double movementMagnitude = Math.sqrt(Math.pow(horizontalMovement, 2.0) + Math.pow(verticalMovement, 2.0));
-            double adjustmentFactor = diagonalMovementSpeed / movementMagnitude;
-            horizontalMovement = horizontalMovement * adjustmentFactor;
-            verticalMovement = verticalMovement * adjustmentFactor;
+        if (maxComponent > 0) {
+            x *= r / maxComponent;
+            y *= r / maxComponent;
         }
 
-        return new Pair<Double, Double>(horizontalMovement, verticalMovement);
+        return new Translation2d(x, y);
     }
 
     private double modifyAxis(Double value) {
@@ -99,7 +98,7 @@ public class DualShock4Controller {
         }
 
         if (squareInputs == true){
-            return Math.abs(value) * Math.abs(value) * value;
+            return Math.abs(value) * value;
         }
 
         return value;
