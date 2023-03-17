@@ -52,7 +52,7 @@ public class ArmConfig {
     public static final int WRIST_MOTOR_CURRENT_LIMIT = 20;
     public static final boolean WRIST_MOTOR_INVERTED = false;
     public static final double WRIST_ABSOLUTE_ENCODER_POSITION_CONVERSION_FACTOR = 360 / (36.0 / 18.0);
-    public static final double WRIST_ABSOLUTE_ENCODER_OFFSET = 44.935 + 90.0;
+    public static final double WRIST_ABSOLUTE_ENCODER_OFFSET = 73.75 + 90.0;
     public static final boolean WRIST_ABSOULTE_ENCODER_INVERTED = false;
     public static final double WRIST_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / ((60.0 / 12.0) * (36.0 /12.0) * (36.0 / 18.0));
     public static final float WRIST_FORWARD_LIMIT = 320.0f;
