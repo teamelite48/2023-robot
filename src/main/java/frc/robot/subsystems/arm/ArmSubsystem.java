@@ -195,24 +195,12 @@ public class ArmSubsystem extends SubsystemBase {
     if (this.armOrientation == ArmOrientation.Rear) {
       theta1 = Math.toRadians(180.0) - theta1;
       theta2WithOffset = Math.toRadians(-360.0) - theta2WithOffset;
-      theta3 = shortestAngle(Math.toRadians(0.0), Math.toRadians(180.0) - theta3);
+      theta3 = Math.toRadians(180.0) - theta3;
     }
 
     shoulderJoint.setTargetAngle(Math.toDegrees(theta1));
     elbowJoint.setTargetAngle(Math.toDegrees(theta2WithOffset));
     wristJoint.setTargetAngle(Math.toDegrees(theta3));
-  }
-
-  public static double shortestAngle(double startAngle, double endAngle) {
-
-    double angle = endAngle - startAngle;
-
-    if (angle > Math.PI) {
-        angle -= 2 * Math.PI;
-    } else if (angle < -Math.PI) {
-        angle += 2 * Math.PI;
-    }
-    return angle;
   }
 
   public void updatePosition() {
