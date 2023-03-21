@@ -226,8 +226,15 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     private void initShuffleBoard() {
+
         var driveTab = Shuffleboard.getTab("Drive");
+
         driveTab.addDouble("Pitch", () -> getPitch());
         driveTab.addDouble("Yaw", () -> gyro.getYaw());
+        driveTab.addString("Odometry", () -> getOdometry().getPoseMeters().toString());
+    }
+
+    public SwerveDriveOdometry getOdometry() {
+        return odometry;
     }
 }

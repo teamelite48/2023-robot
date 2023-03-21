@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AutoBalance;
+import frc.robot.commands.AutoBalance2;
 import frc.robot.commands.AutoTarget;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ReadyArm;
@@ -77,7 +78,7 @@ public class RobotContainer {
       .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
-    pilotController.share.whileTrue(new AutoBalance());
+    pilotController.share.whileTrue(new AutoBalance2());
     pilotController.options.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
     pilotController.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
@@ -166,6 +167,7 @@ public class RobotContainer {
   private void initAutoChooser() {
     autoChooser.setDefaultOption("GLHF (Do Nothing)", new WaitCommand(3));
     autoChooser.addOption("Auto Balance", new AutoBalance());
+    autoChooser.addOption("Auto Balance 2", new AutoBalance2());
     //autoChooser.addOption("Wall Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.ScoreConeHoldCubeBalance));
     //autoChooser.addOption("Wall Score Cone Score Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.ScoreConeScoreCube));
     autoChooser.addOption("Wall Score Cone Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreBalance));
