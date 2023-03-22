@@ -164,7 +164,7 @@ public class DriveSubsystem extends SubsystemBase{
                 this::resetOdometry,
                 kinematics,
                 new PIDConstants(5.0, 0.0, 0.0),
-                new PIDConstants(2.1, 0.0, 0.0),
+                new PIDConstants(3.0, 0.0, 0.0),
                 this::setDesiredStates,
                 PathFollowing.EventMap,
                 true,
@@ -229,9 +229,15 @@ public class DriveSubsystem extends SubsystemBase{
 
         var driveTab = Shuffleboard.getTab("Drive");
 
-        driveTab.addDouble("Pitch", () -> getPitch());
-        driveTab.addDouble("Yaw", () -> gyro.getYaw());
-        driveTab.addString("Odometry", () -> getOdometry().getPoseMeters().toString());
+        driveTab.addDouble("Pitch", () -> getPitch())
+            .withPosition(0, 0);
+
+            driveTab.addDouble("Yaw", () -> gyro.getYaw())
+            .withPosition(1, 0);
+
+        driveTab.addString("Odometry", () -> getOdometry().getPoseMeters().toString())
+            .withPosition(2, 0)
+            .withSize(2, 1);
     }
 
     public SwerveDriveOdometry getOdometry() {

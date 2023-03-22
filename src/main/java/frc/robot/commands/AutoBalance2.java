@@ -12,11 +12,14 @@ public class AutoBalance2 extends CommandBase {
 
   DriveSubsystem driveSubsystem = RobotContainer.driveSubsystem;
 
-  double metersToCenter = 0.535;
-  double onRampPitch = 14.0;
-  double initialOnRampXPos = 0.0;
+  final double INITIAL_SPEED = 0.25;
+  final double METERS_TO_CENTER = 0.535;
+  final double ON_RAMP_PITCH_FLOOR = 13.5;
+  final double ON_RAMP_PITCH_CEILING = 14.0;
+
+  double initialRampPosition = 0.0;
   boolean isOnRamp = false;
-  double speed = 0.25;
+  double speed;
 
   public AutoBalance2() {
     addRequirements(driveSubsystem);
@@ -24,8 +27,9 @@ public class AutoBalance2 extends CommandBase {
 
   @Override
   public void initialize() {
+    speed = INITIAL_SPEED;
     isOnRamp = false;
-    initialOnRampXPos = 0.0;
+    initialRampPosition = 0.0;
   }
 
   @Override
@@ -33,24 +37,29 @@ public class AutoBalance2 extends CommandBase {
 
     driveSubsystem.autoDrive(0, -speed, 0);
 
-    var currentPitch = driveSubsystem.getPitch();
+    var currentPitch = Math.abs(driveSubsystem.getPitch());
 
-    if (isOnRamp == false && 13.5 < currentPitch && currentPitch < 14) {
-      initialOnRampXPos = driveSubsystem.getOdometry().getPoseMeters().getX();
+    if (isOnRamp == false && ON_RAMP_PITCH_FLOOR < currentPitch && currentPitch < ON_RAMP_PITCH_CEILING) {
+      initialRampPosition = driveSubsystem.getOdometry().getPoseMeters().getX();
       isOnRamp = true;
     }
   }
 
   @Override
   public void end(boolean interrupted) {
+    driveSubsystem.autoDrive(0, 0, 0);
   }
 
   @Override
   public boolean isFinished() {
 
-    double currentPos = driveSubsystem.getOdometry().getPoseMeters().getX();
-    double distanceTraveledOnRamp = currentPos - initialOnRampXPos;
+    if (isOnRamp == false) {
+      return false;
+    }
 
-    return isOnRamp && distanceTraveledOnRamp > metersToCenter;
+    double currentPosition = driveSubsystem.getOdometry().getPoseMeters().getX();
+    double distanceTraveled = Math.abs(currentPosition - initialRampPosition);
+
+    return distanceTraveled > METERS_TO_CENTER;
   }
 }

@@ -30,7 +30,7 @@ public class ArmConfig {
     public static final double SHOULDER_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / ((5.0 * 4.0 * 3.0) * (70.0 / 24.0) * (52.0 / 15.0));
     public static final float SHOULDER_FORWARD_LIMIT = 145.0f;
     public static final float SHOULDER_REVERSE_LIMIT = 35.0f;
-    public static final double SHOULDER_MAX_SPEED = 0.6;
+    public static final double SHOULDER_MAX_SPEED = 0.90;
     public static final PIDParameters SHOULDER_PID = new PIDParameters(0.5, 0.0, 0.0, -SHOULDER_MAX_SPEED, SHOULDER_MAX_SPEED);
     public static final double SHOULDER_START_ANGLE = 75.510;
 
@@ -44,7 +44,7 @@ public class ArmConfig {
     public static final double ELBOW_RELATIVE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / ((5.0 * 5.0) * (70.0 / 24.0) * (52.0 / 15.0));
     public static final float ELBOW_FORWARD_LIMIT = -40.0f;
     public static final float ELBOW_REVERSE_LIMIT = -320.0f;
-    public static final double ELBOW_MAX_SPEED = SHOULDER_MAX_SPEED;
+    public static final double ELBOW_MAX_SPEED = 0.6;
     public static final PIDParameters ELBOW_PID = new PIDParameters(0.1, 0.0, 0.0, -ELBOW_MAX_SPEED, ELBOW_MAX_SPEED);
     public static final double ELBOW_START_ANGLE = -177.89;
 
