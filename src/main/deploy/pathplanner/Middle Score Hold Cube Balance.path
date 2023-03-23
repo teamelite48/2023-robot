@@ -28,16 +28,16 @@
     },
     {
       "anchorPoint": {
-        "x": 2.2254285576028527,
-        "y": 3.2785798114220395
+        "x": 5.652465923167577,
+        "y": 3.3521476976237867
       },
       "prevControl": {
-        "x": 2.0046397673999974,
-        "y": 3.2785798114220395
+        "x": 5.326679245718976,
+        "y": 3.3521476976237867
       },
       "nextControl": {
-        "x": 2.458715973598536,
-        "y": 3.2785798114220395
+        "x": 6.027295146822819,
+        "y": 3.3521476976237867
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -46,59 +46,7 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "Stow Arm",
-          "Cube Mode"
-        ],
-        "executionBehavior": "sequential",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 5.689249866268451,
-        "y": 3.29
-      },
-      "prevControl": {
-        "x": 5.36346318881985,
-        "y": 3.29
-      },
-      "nextControl": {
-        "x": 6.064079089923693,
-        "y": 3.29
-      },
-      "holonomicAngle": 180.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": true,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 5.695380523451929,
-        "y": 3.2908411257889973
-      },
-      "prevControl": {
-        "x": 5.431121462987587,
-        "y": 3.2908411257889973
-      },
-      "nextControl": {
-        "x": 5.97765717835425,
-        "y": 3.2908411257889973
-      },
-      "holonomicAngle": 0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": true,
-      "stopEvent": {
-        "names": [
+          "Toggle Arm Orientation",
           "Pick Up Low",
           "Intake"
         ],
@@ -109,18 +57,18 @@
     },
     {
       "anchorPoint": {
-        "x": 7.099301018468606,
-        "y": 3.303102440155955
+        "x": 7.074778389734689,
+        "y": 3.3582783548072657
       },
       "prevControl": {
-        "x": 6.854000133534503,
-        "y": 3.3137676960226563
+        "x": 6.872466702679884,
+        "y": 3.364409011990745
       },
       "nextControl": {
-        "x": 6.854000133534503,
-        "y": 3.3137676960226563
+        "x": 6.872466702679884,
+        "y": 3.364409011990745
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
@@ -137,22 +85,23 @@
     },
     {
       "anchorPoint": {
-        "x": 3.8623140255917283,
-        "y": 2.659383435890667
+        "x": 4.340505285903085,
+        "y": 3.064006810000277
       },
       "prevControl": {
-        "x": 7.178999561853831,
-        "y": 2.622599492789793
+        "x": 5.676988551901492,
+        "y": 3.027222866899403
       },
       "nextControl": null,
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Auto Balance"
+          "Auto Balance 2",
+          "Toggle Arm Orientation"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -160,5 +109,13 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.1499999999999998,
+      "names": [
+        "Stow Arm",
+        "Cube Mode"
+      ]
+    }
+  ]
 }
