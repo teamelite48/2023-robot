@@ -26,6 +26,7 @@ public class PathFollowing {
     static public final List<PathPlannerTrajectory> BarrierScoreConeHoldCubeBalance = PathPlanner.loadPathGroup("Barrier Score Cone Hold Cube Balance", new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> BarrierScoreConeScoreCube = PathPlanner.loadPathGroup("Barrier Score Cone Score Cube", new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> BarrierScoreConeScoreCubeBalance = PathPlanner.loadPathGroup("Barrier Score Cone Score Cube Balance", new PathConstraints(2, 2));
+    static public final List<PathPlannerTrajectory> BarrierThreePiece = PathPlanner.loadPathGroup("3 Piece", new PathConstraints(2.5, 2.5));
     static public final List<PathPlannerTrajectory> WallScoreConeHoldCubeBalance = PathPlanner.loadPathGroup("Wall Score Cone Hold Cube Balance", new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> WallScoreConeScoreCube = PathPlanner.loadPathGroup("Wall Score Cone Score Cube", new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> WallScoreConeScoreCubeBalance = PathPlanner.loadPathGroup("Wall Score Cone Score Cube Balance", new PathConstraints(2, 2));
