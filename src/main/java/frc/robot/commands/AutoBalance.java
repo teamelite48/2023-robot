@@ -10,17 +10,7 @@ import frc.robot.subsystems.drive.DriveSubsystem;
 
 public class AutoBalance extends CommandBase {
 
-  enum State {
-    OnGround,
-    Balancing
-  }
-
   DriveSubsystem driveSubsystem;
-
-  final double DESIRED_ANGLE = 2.5;
-  double balancedMillis = 0.0;
-  State currentState;
-
 
   public AutoBalance() {
     driveSubsystem = RobotContainer.driveSubsystem;
@@ -28,37 +18,22 @@ public class AutoBalance extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-    currentState = State.OnGround;
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
-
-    if (currentState == State.OnGround && Math.abs(driveSubsystem.getPitch()) > 10.0) {
-      driveSubsystem.autoDrive(0, -0.3, 0);
-      return;
-    }
-
-    currentState = State.Balancing;
-
     var pitch = driveSubsystem.getPitch();
     var speed = 0.00984375 * -pitch;
-
     driveSubsystem.autoDrive(0, speed, 0);
   }
 
   @Override
   public void end(boolean interrupted) {
-    stop();
+    driveSubsystem.autoDrive(0, 0, 0);
   }
 
   @Override
   public boolean isFinished() {
     return false;
-  }
-
-  private void stop() {
-    driveSubsystem.autoDrive(0, 0, 0);
   }
 }
