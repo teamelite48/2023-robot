@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoBalance2;
 import frc.robot.commands.AutoTarget;
 import frc.robot.commands.DriveCommand;
@@ -72,7 +71,7 @@ public class RobotContainer {
 
     pilotController.l2
       .whileTrue(new InstantCommand(() -> gripperSubsystem.intake()))
-      .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
+      .onFalse(new InstantCommand(() -> gripperSubsystem.hold()));
 
     pilotController.r2
       .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
@@ -116,7 +115,7 @@ public class RobotContainer {
 
     copilotController.l2
       .onTrue(new InstantCommand(() -> gripperSubsystem.intake()))
-      .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
+      .onFalse(new InstantCommand(() -> gripperSubsystem.hold()));
 
     copilotController.r2
       .onTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
@@ -174,7 +173,7 @@ public class RobotContainer {
     autoChooser.addOption("Wall Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeHoldCubeBalance));
     autoChooser.addOption("Wall Score Cone Score Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCube));
     autoChooser.addOption("Wall Score Cone Score Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCubeBalance));
-    
+
     autoChooser.addOption("Middle Score Cone Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.MiddleScoreConeBalance));
 
     SmartDashboard.putData(autoChooser);

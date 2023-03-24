@@ -60,10 +60,14 @@ public class GripperSubsystem extends SubsystemBase {
   }
 
   public void stop() {
+    motorController.set(0.0);
+  }
+
+  public void hold() {
     motorController.set(0.035);
   }
 
-    private void initDashboard() {
+  private void initDashboard() {
 
     var tab = Shuffleboard.getTab("Gripper");
 

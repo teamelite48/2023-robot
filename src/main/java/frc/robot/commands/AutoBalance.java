@@ -11,6 +11,7 @@ import frc.robot.subsystems.drive.DriveSubsystem;
 public class AutoBalance extends CommandBase {
 
   enum Pitch {
+    Initial,
     Balanced,
     Up,
     Down
