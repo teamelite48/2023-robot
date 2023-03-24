@@ -97,7 +97,7 @@ public class RobotContainer {
       .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
 
     pilotController.circle
-      .onTrue(new ReadyArm(ArmPreset.STOWED, ArmPreset.STOWED))
+      .onTrue(new ReadyArm(ArmPreset.STOWED_CONE, ArmPreset.STOWED_CUBE))
       .onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
     }
 
@@ -137,7 +137,7 @@ public class RobotContainer {
       .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
 
     copilotController.circle
-      .onTrue(new ReadyArm(ArmPreset.STOWED, ArmPreset.STOWED))
+      .onTrue(new ReadyArm(ArmPreset.STOWED_CONE, ArmPreset.STOWED_CONE))
       .onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
   }
 

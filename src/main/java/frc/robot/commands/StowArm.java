@@ -22,7 +22,7 @@ public class StowArm extends SequentialCommandGroup {
             new MoveArmTo(ArmPreset.HIGH_DROP_ZONE),
             () -> armSubsystem.getPosition().getY() <  ArmPreset.SCORE_CUBE_MID.y
           ),
-          new MoveArmTo(ArmPreset.STOWED)
+          new MoveArmTo(ArmPreset.STOWED_CONE)
         )
     );
   }

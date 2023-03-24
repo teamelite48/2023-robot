@@ -35,7 +35,7 @@ public class GripperSubsystem extends SubsystemBase {
 
   public void intake() {
     if (gripperMode == GripperMode.Cone) {
-      motorController.set(GRIPPER_MOTOR_SPEED);
+      motorController.set(-GRIPPER_MOTOR_SPEED);
     }
     else if (gripperMode == GripperMode.Cube) {
       motorController.set(-GRIPPER_MOTOR_SPEED);
@@ -44,7 +44,7 @@ public class GripperSubsystem extends SubsystemBase {
 
   public void outtake() {
     if (gripperMode == GripperMode.Cone) {
-      motorController.set(-GRIPPER_MOTOR_SPEED);
+      motorController.set(GRIPPER_MOTOR_SPEED);
     }
     else if (gripperMode == GripperMode.Cube) {
       motorController.set(GRIPPER_MOTOR_SPEED);
@@ -60,7 +60,7 @@ public class GripperSubsystem extends SubsystemBase {
   }
 
   public void stop() {
-    motorController.set(0);
+    motorController.set(0.035);
   }
 
     private void initDashboard() {

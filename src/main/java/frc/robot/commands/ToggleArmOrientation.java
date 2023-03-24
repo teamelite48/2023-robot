@@ -21,7 +21,7 @@ public class ToggleArmOrientation extends SequentialCommandGroup {
       new ConditionalCommand(
         new SequentialCommandGroup(
           new InstantCommand(() -> armSubsystem.toggleOrientation()),
-          new ReadyArm(ArmPreset.STOWED, ArmPreset.STOWED)
+          new ReadyArm(ArmPreset.STOWED_CONE, ArmPreset.STOWED_CONE)
         ),
         new DoNothing(),
         () -> armSubsystem.getArmState() == ArmState.Ready && armSubsystem.isArmInsideFramePerimeter()
