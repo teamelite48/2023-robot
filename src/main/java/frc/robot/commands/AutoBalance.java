@@ -10,20 +10,17 @@ import frc.robot.subsystems.drive.DriveSubsystem;
 
 public class AutoBalance extends CommandBase {
 
-  enum Pitch {
-    Initial,
-    Balanced,
-    Up,
-    Down
+  enum State {
+    OnGround,
+    Balancing
   }
 
-  private DriveSubsystem driveSubsystem;
+  DriveSubsystem driveSubsystem;
 
-  private Pitch previousPitch;
-  private Pitch currentPitch;
-  private double speed;
-  private double desiredAngle;
-  private long balancedMillis;
+  final double DESIRED_ANGLE = 2.5;
+  double balancedMillis = 0.0;
+  State currentState;
+
 
   public AutoBalance() {
     driveSubsystem = RobotContainer.driveSubsystem;
@@ -32,39 +29,23 @@ public class AutoBalance extends CommandBase {
 
   @Override
   public void initialize() {
-    driveSubsystem.zeroGyro();
-    speed = 0.125;
-    desiredAngle = 2.5;
-    previousPitch = null;
-    balancedMillis = 0;
+    currentState = State.OnGround;
   }
 
   @Override
   public void execute() {
 
-    currentPitch = getCurrentPitch();
-
-    if (previousPitch != null && currentPitch != previousPitch && speed >= 0.0) {
-      speed -= 0.015;
+    if (currentState == State.OnGround && Math.abs(driveSubsystem.getPitch()) > 10.0) {
+      driveSubsystem.autoDrive(0, -0.3, 0);
+      return;
     }
 
-    if (currentPitch == Pitch.Up) {
-      driveForward();
-      balancedMillis = 0;
-    }
-    else if (currentPitch == Pitch.Down) {
-       driveBackward();
-       balancedMillis = 0;
-    }
-    else {
-      stop();
+    currentState = State.Balancing;
 
-      if (balancedMillis == 0) {
-        balancedMillis = System.currentTimeMillis();
-      }
-    }
+    var pitch = driveSubsystem.getPitch();
+    var speed = 0.00984375 * -pitch;
 
-    previousPitch = currentPitch;
+    driveSubsystem.autoDrive(0, speed, 0);
   }
 
   @Override
@@ -74,34 +55,7 @@ public class AutoBalance extends CommandBase {
 
   @Override
   public boolean isFinished() {
-
-    if (currentPitch == Pitch.Balanced) {
-      var balancedDuration = System.currentTimeMillis() - balancedMillis;
-      return balancedDuration > 2000;
-    }
-
     return false;
-  }
-
-  private Pitch getCurrentPitch() {
-
-    if (driveSubsystem.getPitch() > desiredAngle) {
-      return Pitch.Up;
-    }
-    else if (driveSubsystem.getPitch() < -desiredAngle) {
-      return Pitch.Down;
-    }
-    else {
-      return Pitch.Balanced;
-    }
-  }
-
-  private void driveForward() {
-    driveSubsystem.autoDrive(0, -speed, 0);
-  }
-
-  private void driveBackward() {
-    driveSubsystem.autoDrive(0, speed, 0);
   }
 
   private void stop() {

@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.AutoBalance2;
+import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoTarget;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ReadyArm;
@@ -77,7 +77,7 @@ public class RobotContainer {
       .whileTrue(new InstantCommand(() -> gripperSubsystem.outtake()))
       .onFalse(new InstantCommand(() -> gripperSubsystem.stop()));
 
-    pilotController.share.whileTrue(new AutoBalance2());
+    pilotController.share.whileTrue(new AutoBalance());
     pilotController.options.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
     pilotController.l3.onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
