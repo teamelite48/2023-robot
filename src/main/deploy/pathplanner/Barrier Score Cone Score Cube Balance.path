@@ -81,12 +81,12 @@
     },
     {
       "anchorPoint": {
-        "x": 3.457690651482119,
-        "y": 3.1682279821194186
+        "x": 3.874575339958686,
+        "y": 3.174358639302898
       },
       "prevControl": {
-        "x": 1.5204029815027755,
-        "y": 3.16209732493594
+        "x": 1.937287669979343,
+        "y": 3.1682279821194195
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -96,7 +96,7 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Auto Balance 2"
+          "Auto Balance"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",

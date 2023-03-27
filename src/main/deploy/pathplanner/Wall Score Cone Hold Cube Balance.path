@@ -56,12 +56,12 @@
     },
     {
       "anchorPoint": {
-        "x": 4.297590685618733,
-        "y": 2.2363680902306213
+        "x": 3.886836654325644,
+        "y": 2.377373205450636
       },
       "prevControl": {
-        "x": 6.412667413918965,
-        "y": 2.371242548267158
+        "x": 6.001913382625875,
+        "y": 2.5122476634871727
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -71,7 +71,7 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Auto Balance 2",
+          "Auto Balance",
           "Toggle Arm Orientation"
         ],
         "executionBehavior": "sequential",

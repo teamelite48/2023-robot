@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
+import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoBalance2;
 import frc.robot.commands.ReadyArm;
 import frc.robot.commands.SetGripperModeToCone;
@@ -51,6 +52,7 @@ public class PathFollowing {
         put("Stow Arm", new StowArm());
         put("Toggle Arm Orientation", new ToggleArmOrientation());
         put("Wait For Arm To Be Inside Frame Perimeter", new WaitForArmToBeInsideFramePerimeter());
+        put("Auto Balance", new AutoBalance());
         put("Auto Balance 2", new AutoBalance2());
         put("Zero Gyro", new InstantCommand(() -> RobotContainer.driveSubsystem.zeroGyro()));
 
