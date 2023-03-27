@@ -14,12 +14,14 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
 import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoBalance2;
+import frc.robot.commands.AutoStow;
 import frc.robot.commands.ReadyArm;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.commands.StowArm;
 import frc.robot.commands.ToggleArmOrientation;
 import frc.robot.commands.WaitForArmToBeInsideFramePerimeter;
+import frc.robot.commands.WaitUntilArmIsReady;
 import frc.robot.subsystems.arm.ArmPreset;
 
 public class PathFollowing {
@@ -45,19 +47,22 @@ public class PathFollowing {
         put("Score High", new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
         put("Outtake", new SequentialCommandGroup(
             new InstantCommand(() -> RobotContainer.gripperSubsystem.outtake()),
-            new WaitCommand(.75),
+            new WaitCommand(.4),
             new InstantCommand(() -> RobotContainer.gripperSubsystem.stop())
         ));
         put("Stop Intake", new InstantCommand(() -> RobotContainer.gripperSubsystem.stop()));
         put("Stow Arm", new StowArm());
+        put("Auto Stow", new AutoStow());
         put("Toggle Arm Orientation", new ToggleArmOrientation());
         put("Wait For Arm To Be Inside Frame Perimeter", new WaitForArmToBeInsideFramePerimeter());
+        put("Arm Ready", new WaitUntilArmIsReady());
         put("Auto Balance", new AutoBalance());
         put("Auto Balance 2", new AutoBalance2());
         put("Zero Gyro", new InstantCommand(() -> RobotContainer.driveSubsystem.zeroGyro()));
 
         put("Wait 0.5", new WaitCommand(0.5));
         put("Wait 1", new WaitCommand(1));
+        put("Wait 1.5", new WaitCommand(1.5));
         put("Wait 2", new WaitCommand(2));
         put("Wait 3", new WaitCommand(3));
     }};
