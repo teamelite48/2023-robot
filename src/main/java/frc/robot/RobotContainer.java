@@ -171,10 +171,10 @@ public class RobotContainer {
     autoChooser.addOption("Barrier Low 3 Piece", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierLowThreePiece));
 
     autoChooser.addOption("Wall Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeHoldCubeBalance));
-    autoChooser.addOption("Wall Score Cone Score Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCube));
-    autoChooser.addOption("Wall Score Cone Score Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCubeBalance));
+    //autoChooser.addOption("Wall Score Cone Score Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCube));
+    //autoChooser.addOption("Wall Score Cone Score Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCubeBalance));
 
-    autoChooser.addOption("Middle Score Cone Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.MiddleScoreConeBalance));
+    autoChooser.addOption("Middle Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.MiddleScoreConeBalance));
 
     SmartDashboard.putData(autoChooser);
   }
