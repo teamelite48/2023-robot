@@ -28,15 +28,15 @@
     },
     {
       "anchorPoint": {
-        "x": 7.074778389734689,
+        "x": 6.676285672808558,
         "y": 4.615063077420447
       },
       "prevControl": {
-        "x": 6.2923576589659875,
+        "x": 5.893864942039857,
         "y": 4.615063077420447
       },
       "nextControl": {
-        "x": 6.2923576589659875,
+        "x": 5.893864942039857,
         "y": 4.615063077420447
       },
       "holonomicAngle": 180.0,
@@ -57,8 +57,8 @@
         "y": 3.143705353385503
       },
       "prevControl": {
-        "x": 6.271662298698949,
-        "y": 3.082398781550714
+        "x": 6.4555820142033165,
+        "y": 3.070137467183756
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -82,21 +82,26 @@
   "isReversed": null,
   "markers": [
     {
-      "position": 0.2636363636363636,
+      "position": 0.2,
       "names": [
         "Stow Arm",
-        "Toggle Arm Orientation"
+        "Cube Mode"
       ]
     },
     {
       "position": 0.4818181818181818,
       "names": [
-        "Pick Up Low",
+        "Pick Up Low"
+      ]
+    },
+    {
+      "position": 0.6909090909090909,
+      "names": [
         "Intake"
       ]
     },
     {
-      "position": 1.0909090909090893,
+      "position": 1.036363636363635,
       "names": [
         "Stop Intake",
         "Stow Arm"
