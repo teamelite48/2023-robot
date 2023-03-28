@@ -29,11 +29,11 @@ public class PathFollowing {
     static public final List<PathPlannerTrajectory> BarrierScoreConeHoldCubeBalance = PathPlanner.loadPathGroup("Barrier Score Cone Hold Cube Balance", new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> BarrierScoreConeScoreCube = PathPlanner.loadPathGroup("Barrier Score Cone Score Cube", new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(3.5, 3.5));
     static public final List<PathPlannerTrajectory> BarrierScoreConeScoreCubeBalance = PathPlanner.loadPathGroup("Barrier Score Cone Score Cube Balance", new PathConstraints(2, 2));
-    static public final List<PathPlannerTrajectory> BarrierThreePiece = PathPlanner.loadPathGroup("3 Piece", new PathConstraints(2.5, 2.5));
+    static public final List<PathPlannerTrajectory> BarrierLowThreePiece = PathPlanner.loadPathGroup("Barrier Low 3 Piece", new PathConstraints(2.25, 2.25));
     static public final List<PathPlannerTrajectory> WallScoreConeHoldCubeBalance = PathPlanner.loadPathGroup("Wall Score Cone Hold Cube Balance", new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> WallScoreConeScoreCube = PathPlanner.loadPathGroup("Wall Score Cone Score Cube", new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> WallScoreConeScoreCubeBalance = PathPlanner.loadPathGroup("Wall Score Cone Score Cube Balance", new PathConstraints(2, 2));
-    static public final List<PathPlannerTrajectory> MiddleScoreConeBalance = PathPlanner.loadPathGroup("Middle Score Hold Cube Balance", new PathConstraints(2, 2));
+    static public final List<PathPlannerTrajectory> MiddleScoreConeBalance = PathPlanner.loadPathGroup("Middle Score Hold Cube Balance", new PathConstraints(1.25, 1.25), new PathConstraints(2.3, 2.3));
 
     //static public final List<PathPlannerTrajectory> Test = PathPlanner.loadPathGroup("Test", new PathConstraints(1, 1), new PathConstraints(3, 3));
 
@@ -47,17 +47,12 @@ public class PathFollowing {
         put("Score High", new ReadyArm(ArmPreset.SCORE_CONE_HIGH, ArmPreset.SCORE_CUBE_HIGH));
         put("Outtake", new SequentialCommandGroup(
             new InstantCommand(() -> RobotContainer.gripperSubsystem.outtake()),
-            new WaitCommand(.4),
+            new WaitCommand(.3),
             new InstantCommand(() -> RobotContainer.gripperSubsystem.stop())
         ));
         put("Stop Intake", new InstantCommand(() -> RobotContainer.gripperSubsystem.stop()));
         put("Stow Arm", new StowArm());
         put("Auto Stow", new AutoStow());
-        // put("Stow Pick Up Cube Low", new SequentialCommandGroup(
-        //     new AutoStow(),
-        //     new SetGripperModeToCube(),
-        //     new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW)
-        // ));
         put("Toggle Arm Orientation", new ToggleArmOrientation());
         put("Wait For Arm To Be Inside Frame Perimeter", new WaitForArmToBeInsideFramePerimeter());
         put("Arm Ready", new WaitUntilArmIsReady());

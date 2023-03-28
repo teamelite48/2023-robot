@@ -28,24 +28,27 @@
     },
     {
       "anchorPoint": {
-        "x": 6.676285672808558,
-        "y": 4.615063077420447
+        "x": 4.775781945930089,
+        "y": 4.725414906723068
       },
       "prevControl": {
-        "x": 5.893864942039857,
-        "y": 4.615063077420447
+        "x": 4.00224607562385,
+        "y": 4.842992359009616
       },
       "nextControl": {
-        "x": 5.893864942039857,
-        "y": 4.615063077420447
+        "x": 5.542114093864956,
+        "y": 4.608932420236968
       },
       "holonomicAngle": 180.0,
-      "isReversal": true,
+      "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "Toggle Arm Orientation",
+          "Pick Up Low"
+        ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
@@ -53,12 +56,40 @@
     },
     {
       "anchorPoint": {
-        "x": 3.874575339958686,
-        "y": 3.143705353385503
+        "x": 6.688546987175516,
+        "y": 4.48018861938391
       },
       "prevControl": {
-        "x": 6.4555820142033165,
-        "y": 3.070137467183756
+        "x": 6.283923613065906,
+        "y": 4.504711248117826
+      },
+      "nextControl": {
+        "x": 6.283923613065906,
+        "y": 4.504711248117826
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "Auto Balance",
+          "Toggle Arm Orientation"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 3.85005271122477,
+        "y": 3.0517454956333188
+      },
+      "prevControl": {
+        "x": 6.498496614487669,
+        "y": 2.8371724942115564
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -82,28 +113,32 @@
   "isReversed": null,
   "markers": [
     {
-      "position": 0.2,
+      "position": 0.05,
       "names": [
-        "Stow Arm",
         "Cube Mode"
       ]
     },
     {
-      "position": 0.4818181818181818,
+      "position": 0.14545454545454556,
       "names": [
-        "Pick Up Low"
+        "Stow Arm"
       ]
     },
     {
-      "position": 0.6909090909090909,
+      "position": 1.1863636363636352,
       "names": [
         "Intake"
       ]
     },
     {
-      "position": 1.036363636363635,
+      "position": 1.9636363636363636,
       "names": [
-        "Stop Intake",
+        "Stop Intake"
+      ]
+    },
+    {
+      "position": 2.1136363636363638,
+      "names": [
         "Stow Arm"
       ]
     }
