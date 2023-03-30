@@ -23,7 +23,7 @@ public class AutoBalance extends CommandBase {
   @Override
   public void execute() {
     var pitch = driveSubsystem.getPitch();
-    var speed = 0.008671875 * -pitch;              //speed was 0.00984375
+    var speed = 0.0075 * -pitch;
     driveSubsystem.autoDrive(0, speed, 0);
   }
 
