@@ -8,7 +8,7 @@ public class ArmPreset {
     public static final ArmPosition STOWED_CUBE = new ArmPosition(0.28, 0.1, 0.0);
 
     public static final ArmPosition LOW_DROP_ZONE = new ArmPosition(0.676, 0.1, -90.0);
-    public static final ArmPosition HIGH_DROP_ZONE = new ArmPosition(0.4, 0.45, -90.0);
+    public static final ArmPosition HIGH_DROP_ZONE = new ArmPosition(0.4, 0.5, -90.0);
 
     public static final ArmPosition PICK_UP_CONE_LOW = new ArmPosition(0.676, -0.047, -120.0);
     public static final ArmPosition PICK_UP_CONE_MID = new ArmPosition(0.343, 0.14, -20.0);
@@ -23,6 +23,6 @@ public class ArmPreset {
     public static final ArmPosition SCORE_CONE_HIGH = new ArmPosition(1.40, 0.791, -135.0);
 
     public static final ArmPosition SCORE_CUBE_LOW= new ArmPosition(0.28, 0.1, -90.0);
-    public static final ArmPosition SCORE_CUBE_MID = new ArmPosition(0.8, 0.45, -90.0);
+    public static final ArmPosition SCORE_CUBE_MID = new ArmPosition(0.8, 0.5, -90.0);
     public static final ArmPosition SCORE_CUBE_HIGH = new ArmPosition(1.12, 0.65, -90.0);
 }
