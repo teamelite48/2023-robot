@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoTarget;
@@ -84,16 +85,24 @@ public class RobotContainer {
     pilotController.r3.onTrue(new InstantCommand(() -> driveSubsystem.setHighGear()));
 
     pilotController.cross
-      .onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW))
-      .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
+      .onTrue(new SequentialCommandGroup(
+        new ReadyArm(ArmPreset.PICK_UP_CONE_LOW, ArmPreset.PICK_UP_CUBE_LOW),
+        new InstantCommand(() -> driveSubsystem.setLowGear())
+      ));
+
 
     pilotController.square
-      .onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID))
-      .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
+      .onTrue(new SequentialCommandGroup(
+        new ReadyArm(ArmPreset.PICK_UP_CONE_MID, ArmPreset.PICK_UP_CUBE_MID),
+        new InstantCommand(() -> driveSubsystem.setLowGear())
+      ));
+
 
     pilotController.triangle
-      .onTrue(new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH))
-      .onTrue(new InstantCommand(() -> driveSubsystem.setLowGear()));
+      .onTrue(new SequentialCommandGroup(
+        new ReadyArm(ArmPreset.PICK_UP_CONE_HIGH, ArmPreset.PICK_UP_CUBE_HIGH),
+        new InstantCommand(() -> driveSubsystem.setLowGear())
+      ));
 
     pilotController.circle
       .onTrue(new ReadyArm(ArmPreset.STOWED_CONE, ArmPreset.STOWED_CUBE))
