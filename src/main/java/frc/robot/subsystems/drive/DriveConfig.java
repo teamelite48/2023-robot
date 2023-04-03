@@ -25,7 +25,7 @@ public class DriveConfig {
     public static final double BACK_RIGHT_ANGLE_OFFSET_DEGREES = 204.521;
 
     public static final double MAX_OUTPUT = 1.0;
-    public static final double LOW_GEAR_SPEED = 0.4;
+    public static final double LOW_GEAR_SPEED = 0.5;
     public static final double SLEW_RATE = 2.0;
 
     public static final double WHEEL_DIAMETER = 0.10033;
