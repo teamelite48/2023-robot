@@ -283,6 +283,12 @@ public class ArmSubsystem extends SubsystemBase {
 
     tab.addDouble("J2 Without Offset", () -> Math.toDegrees(removeOffsetFromTheta2()))
       .withPosition(3, 4);
+
+    tab.addDouble("J2 Current", () -> elbowJoint.getCurrent())
+      .withPosition(3, 5);
+
+    tab.addDouble("J2 Max Current", () -> elbowJoint.getMaxCurrent())
+      .withPosition(3, 6);
   }
 
   private void addJointToDashboardTab(ShuffleboardTab tab, String jointName, ArmJoint armJoint, int column) {

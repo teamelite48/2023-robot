@@ -26,6 +26,7 @@ public class ArmJoint {
     private double targetAngle;
     private double currentAngle;
     private double startAngle;
+    private double maxCurrent = 0.0;
 
     public ArmJoint(
         int motorId,
@@ -158,5 +159,14 @@ public class ArmJoint {
 
     public boolean isRelativeEncoderInitilized() {
         return isRelativeEncoderInitialized;
+    }
+
+    public double getMaxCurrent() {
+        maxCurrent = Math.max(maxCurrent, motorController.getOutputCurrent());
+        return maxCurrent;
+    }
+
+    public double getCurrent() {
+        return motorController.getOutputCurrent();
     }
 }

@@ -36,7 +36,7 @@ public class ArmConfig {
 
 
     public static final int ELBOW_MOTOR_ID = 12;
-    public static final int ELBOW_MOTOR_CURRENT_LIMIT = 30;
+    public static final int ELBOW_MOTOR_CURRENT_LIMIT = 35;
     public static final boolean ELBOW_MOTOR_INVERTED = false;
     public static final double ELBOW_ABSOULTE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / (1.0 / 1.0);
     public static final double ELBOW_ABSOULTE_ENCODER_OFFSET = 207.552 - 180;
@@ -45,7 +45,7 @@ public class ArmConfig {
     public static final float ELBOW_FORWARD_LIMIT = -40.0f;
     public static final float ELBOW_REVERSE_LIMIT = -320.0f;
     public static final double ELBOW_MAX_SPEED = 0.6;
-    public static final PIDParameters ELBOW_PID = new PIDParameters(0.1, 0.0, 0.0, -ELBOW_MAX_SPEED, ELBOW_MAX_SPEED);
+    public static final PIDParameters ELBOW_PID = new PIDParameters(0.4, 0.0, 0.0, -ELBOW_MAX_SPEED, ELBOW_MAX_SPEED);
     public static final double ELBOW_START_ANGLE = -177.89;
 
     public static final int WRIST_MOTOR_ID = 11;
