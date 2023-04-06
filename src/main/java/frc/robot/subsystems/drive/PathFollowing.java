@@ -30,9 +30,9 @@ public class PathFollowing {
     static public final List<PathPlannerTrajectory> BarrierScoreConeScoreCube = PathPlanner.loadPathGroup("Barrier Score Cone Score Cube", new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(3.5, 3.5));
     static public final List<PathPlannerTrajectory> BarrierScoreConeScoreCubeBalance = PathPlanner.loadPathGroup("The Redo", new PathConstraints(2.5, 2.5));
     static public final List<PathPlannerTrajectory> BarrierLowThreePiece = PathPlanner.loadPathGroup("Barrier Low 3 Piece", new PathConstraints(2.25, 2.25));
-    static public final List<PathPlannerTrajectory> WallScoreConeHoldCubeBalance = PathPlanner.loadPathGroup("Wall Score Cone Hold Cube Balance", new PathConstraints(2, 2));
+    //static public final List<PathPlannerTrajectory> WallScoreConeHoldCubeBalance = PathPlanner.loadPathGroup("Wall Score Cone Hold Cube Balance", new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> WallScoreConeScoreCube = PathPlanner.loadPathGroup("Wall Score Cone Score Cube", new PathConstraints(2, 2));
-    static public final List<PathPlannerTrajectory> WallScoreConeScoreCubeBalance = PathPlanner.loadPathGroup("Wall Score Cone Score Cube Balance", new PathConstraints(2, 2));
+    //static public final List<PathPlannerTrajectory> WallScoreConeScoreCubeBalance = PathPlanner.loadPathGroup("Wall Score Cone Score Cube Balance", new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> BarrierMiddleScoreConeHoldCubeBalance = PathPlanner.loadPathGroup("Barrier Middle Score Hold Cube Balance", new PathConstraints(1.25, 1.25), new PathConstraints(2.3, 2.3));
     static public final List<PathPlannerTrajectory> WallMiddleScoreConeHoldCubeBalance = PathPlanner.loadPathGroup("Wall Middle Score Hold Cube Balance", new PathConstraints(1.25, 1.25), new PathConstraints(2.3, 2.3));
     static public final List<PathPlannerTrajectory> MiddleScoreConeBalance = PathPlanner.loadPathGroup("Middle Score Cone Balance", new PathConstraints(1.25, 1.25), new PathConstraints(2.2, 2.2));
@@ -63,6 +63,7 @@ public class PathFollowing {
         put("Auto Balance 2", new AutoBalance2());
         put("Zero Gyro", new InstantCommand(() -> RobotContainer.driveSubsystem.zeroGyro()));
 
+        put("Wait 0.3", new WaitCommand(0.3));
         put("Wait 0.5", new WaitCommand(0.5));
         put("Wait 1", new WaitCommand(1));
         put("Wait 1.5", new WaitCommand(1.5));

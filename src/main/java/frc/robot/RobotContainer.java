@@ -185,7 +185,7 @@ public class RobotContainer {
 
     autoChooser.addOption("Middle Barrier SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierMiddleScoreConeHoldCubeBalance));
     autoChooser.addOption("Middle Wall SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallMiddleScoreConeHoldCubeBalance));
-    autoChooser.addOption("Middle SCORE Cone BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.MiddleScoreConeBalance));
+    autoChooser.addOption("Middle Barrier SCORE Cone BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.MiddleScoreConeBalance));
 
     SmartDashboard.putData(autoChooser);
   }
