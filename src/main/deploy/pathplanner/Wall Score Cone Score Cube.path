@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.9,
-        "y": 0.48
+        "x": 1.854406548209725,
+        "y": 0.476565354195482
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9733687339872827,
-        "y": 0.8631008811313393
+        "x": 2.8544065482097274,
+        "y": 0.476565354195482
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -28,22 +28,76 @@
     },
     {
       "anchorPoint": {
-        "x": 7.050255761000774,
-        "y": 0.936668767333087
+        "x": 5.382412752403145,
+        "y": 0.8037594779714842
       },
       "prevControl": {
-        "x": 6.198094412497202,
-        "y": 0.9182767957826501
+        "x": 5.106051913562574,
+        "y": 0.779728100680999
       },
       "nextControl": {
-        "x": 6.198094412497202,
-        "y": 0.9182767957826501
+        "x": 5.546009814291147,
+        "y": 0.8179853094400066
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "Toggle Arm Orientation",
+          "Pick Up Low",
+          "Intake"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.684076331772895,
+        "y": 0.9460177926567028
+      },
+      "prevControl": {
+        "x": 5.097896123032708,
+        "y": 0.7753078150344405
+      },
+      "nextControl": {
+        "x": 5.097896123032708,
+        "y": 0.7753078150344405
       },
       "holonomicAngle": 180.0,
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.8259548852726812,
+        "y": 1.0882761073419214
+      },
+      "prevControl": {
+        "x": 2.6581660261812097,
+        "y": 0.753969067831658
+      },
+      "nextControl": {
+        "x": 2.6581660261812097,
+        "y": 0.753969067831658
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
       "stopEvent": {
         "names": [
           "Score High",
@@ -56,25 +110,22 @@
     },
     {
       "anchorPoint": {
-        "x": 1.925026355612385,
-        "y": 1.059281911002666
+        "x": 6.3070917978570655,
+        "y": 1.4723735569920122
       },
       "prevControl": {
-        "x": 3.010152677088157,
-        "y": 0.9918446819843978
+        "x": 4.358152886669571,
+        "y": 0.1493712304194798
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": -151.84380855172748,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [
-          "Score High",
-          "Outtake"
-        ],
-        "executionBehavior": "sequential",
+        "names": [],
+        "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
       }
@@ -82,26 +133,33 @@
   ],
   "markers": [
     {
-      "position": 0.08181818181818183,
+      "position": 0.02,
       "names": [
-        "Stow Arm",
-        "Cube Mode",
-        "Toggle Arm Orientation"
+        "Cube Mode"
       ]
     },
     {
-      "position": 0.5363636363636366,
+      "position": 0.07,
       "names": [
-        "Pick Up Low",
-        "Intake"
+        "Stow Arm"
       ]
     },
     {
-      "position": 1.0909090909090904,
+      "position": 1.95,
       "names": [
-        "Stop Intake",
-        "Stow Arm",
-        "Toggle Arm Orientation"
+        "Stop Intake"
+      ]
+    },
+    {
+      "position": 2.0,
+      "names": [
+        "Auto Stow"
+      ]
+    },
+    {
+      "position": 3.1,
+      "names": [
+        "Auto Stow"
       ]
     }
   ]

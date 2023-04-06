@@ -23,6 +23,6 @@ public class ArmPreset {
     public static final ArmPosition SCORE_CONE_HIGH = new ArmPosition(1.40, 0.791, -135.0);
 
     public static final ArmPosition SCORE_CUBE_LOW= new ArmPosition(0.28, 0.1, -90.0);
-    public static final ArmPosition SCORE_CUBE_MID = new ArmPosition(0.8, 0.5, -90.0);
+    public static final ArmPosition SCORE_CUBE_MID = new ArmPosition(0.8, 0.501, -90.0);
     public static final ArmPosition SCORE_CUBE_HIGH = new ArmPosition(1.12, 0.65, -90.0);
 }

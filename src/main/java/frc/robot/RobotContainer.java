@@ -174,17 +174,17 @@ public class RobotContainer {
 
   private void initAutoChooser() {
     autoChooser.setDefaultOption("GLHF (Do Nothing)", new WaitCommand(3));
-    autoChooser.addOption("Barrier SCORE Cone HOLD Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeHoldCubeBalance));
+    autoChooser.addOption("Barrier SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeHoldCubeBalance));
     autoChooser.addOption("Barrier SCORE Cone SCORE Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeScoreCube));
     autoChooser.addOption("Barrier SCORE Cone SCORE Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeScoreCubeBalance));
-    autoChooser.addOption("Barrier Low 3 Piece", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierLowThreePiece));
+    autoChooser.addOption("Barrier SCORE 3 Low", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierLowThreePiece));
 
-    autoChooser.addOption("Wall Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeHoldCubeBalance));
-    autoChooser.addOption("Wall Score Cone Score Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCube));
-    autoChooser.addOption("Wall Score Cone Score Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCubeBalance));
+    //autoChooser.addOption("Wall Score Cone Hold Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeHoldCubeBalance));
+    autoChooser.addOption("Wall SCORE Cone SCORE Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCube));
+    //autoChooser.addOption("Wall Score Cone Score Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCubeBalance));
 
-    autoChooser.addOption("Barrier Middle SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierMiddleScoreConeHoldCubeBalance));
-    autoChooser.addOption("Wall Middle SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallMiddleScoreConeHoldCubeBalance));
+    autoChooser.addOption("Middle Barrier SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierMiddleScoreConeHoldCubeBalance));
+    autoChooser.addOption("Middle Wall SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallMiddleScoreConeHoldCubeBalance));
     autoChooser.addOption("Middle SCORE Cone BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.MiddleScoreConeBalance));
 
     SmartDashboard.putData(autoChooser);
