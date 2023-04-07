@@ -22,7 +22,7 @@ public class ArmConfig {
     public static final double ACCEPTABLE_ENCODER_INITIALIZATION_ERROR_DEGREES = 10.0;
 
     public static final int SHOULDER_MOTOR_ID = 13;
-    public static final int SHOULDER_MOTOR_CURRENT_LIMIT = 30;
+    public static final int SHOULDER_MOTOR_CURRENT_LIMIT = 40;
     public static final boolean SHOULDER_MOTOR_INVERTED = false;
     public static final double SHOULDER_ABSOULTE_ENCODER_POSITION_CONVERSION_FACTOR = 360.0 / (52.0 / 15.0);
     public static final double SHOULDER_ABSOLUTE_ENCODER_OFFSET = 56.67 + (SHOULDER_ABSOULTE_ENCODER_POSITION_CONVERSION_FACTOR - 90.0);
