@@ -181,7 +181,7 @@ public class RobotContainer {
 
     autoChooser.addOption("Wall SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeHoldCubeBalance));
     autoChooser.addOption("Wall SCORE Cone SCORE Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCube));
-    //autoChooser.addOption("Wall Score Cone Score Cube Balance", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCubeBalance));
+    autoChooser.addOption("Wall SCORE Cone SCORE Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallScoreConeScoreCubeBalance));
 
     autoChooser.addOption("Middle Barrier SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierMiddleScoreConeHoldCubeBalance));
     autoChooser.addOption("Middle Wall SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.WallMiddleScoreConeHoldCubeBalance));
