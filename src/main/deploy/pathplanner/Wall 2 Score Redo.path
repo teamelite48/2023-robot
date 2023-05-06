@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.9,
-        "y": 0.48
+        "x": 1.8882424125115114,
+        "y": 0.4462161926547717
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9733687339872827,
-        "y": 0.8631008811313393
+        "x": 2.9059315049690144,
+        "y": 0.6240052509756616
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -28,26 +28,27 @@
     },
     {
       "anchorPoint": {
-        "x": 7.050255761000774,
-        "y": 0.936668767333087
+        "x": 5.523722122314519,
+        "y": 0.9427994245165664
       },
       "prevControl": {
-        "x": 6.198094412497202,
-        "y": 0.9182767957826501
+        "x": 5.217005472062297,
+        "y": 0.9489337575216114
       },
       "nextControl": {
-        "x": 6.198094412497202,
-        "y": 0.9182767957826501
+        "x": 5.830254981488466,
+        "y": 0.936668767333087
       },
       "holonomicAngle": 180.0,
-      "isReversal": true,
+      "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "Score High",
-          "Outtake"
+          "Toggle Arm Orientation",
+          "Pick Up Low",
+          "Intake"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -56,16 +57,41 @@
     },
     {
       "anchorPoint": {
-        "x": 1.925026355612385,
-        "y": 1.059281911002666
+        "x": 6.762114873377264,
+        "y": 0.936668767333087
       },
       "prevControl": {
-        "x": 2.24382052915329,
-        "y": 1.1267191400209344
+        "x": 6.523019243221585,
+        "y": 0.9611913960670021
       },
       "nextControl": {
-        "x": 2.24382052915329,
-        "y": 1.1267191400209344
+        "x": 6.523019243221585,
+        "y": 0.9611913960670021
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.8208051834932435,
+        "y": 1.0899351969200606
+      },
+      "prevControl": {
+        "x": 2.709750475097689,
+        "y": 0.715965108727845
+      },
+      "nextControl": {
+        "x": 2.709750475097689,
+        "y": 0.715965108727845
       },
       "holonomicAngle": 180.0,
       "isReversal": true,
@@ -74,7 +100,6 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "Score High",
           "Outtake"
         ],
         "executionBehavior": "sequential",
@@ -84,22 +109,22 @@
     },
     {
       "anchorPoint": {
-        "x": 3.8929673115091226,
-        "y": 2.3651118910836786
+        "x": 6.124526526295455,
+        "y": 1.623302371882728
       },
       "prevControl": {
-        "x": 1.3034144603250362,
-        "y": 2.3650914782406702
+        "x": 4.806435231847483,
+        "y": 0.37877896363650443
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": -152.31893843151477,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Auto Balance"
+          "Pick Up Low"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -109,32 +134,39 @@
   ],
   "markers": [
     {
-      "position": 0.09545454545454544,
+      "position": 0.02,
       "names": [
-        "Stow Arm",
-        "Cube Mode",
-        "Toggle Arm Orientation"
+        "Cube Mode"
       ]
     },
     {
-      "position": 0.47727272727272735,
-      "names": [
-        "Pick Up Low",
-        "Intake"
-      ]
-    },
-    {
-      "position": 1.0909090909090895,
-      "names": [
-        "Stop Intake",
-        "Stow Arm",
-        "Toggle Arm Orientation"
-      ]
-    },
-    {
-      "position": 2.113636363636359,
+      "position": 0.07,
       "names": [
         "Stow Arm"
+      ]
+    },
+    {
+      "position": 2.0,
+      "names": [
+        "Stop Intake"
+      ]
+    },
+    {
+      "position": 2.05,
+      "names": [
+        "Auto Stow"
+      ]
+    },
+    {
+      "position": 2.67,
+      "names": [
+        "Score High"
+      ]
+    },
+    {
+      "position": 3.1636363636363556,
+      "names": [
+        "Auto Stow"
       ]
     }
   ]
