@@ -54,7 +54,7 @@ public class RobotContainer {
     initTestController();
 
     initAutoChooser();
-    initCamera();
+    //initCamera();
   }
 
   public Command getAutonomousCommand() {
@@ -190,13 +190,13 @@ public class RobotContainer {
     SmartDashboard.putData(autoChooser);
   }
 
-  private void initCamera(){
+  // private void initCamera(){
 
-    if (RobotBase.isSimulation()) return;
+  //   if (RobotBase.isSimulation()) return;
 
-    UsbCamera camera = CameraServer.startAutomaticCapture();
-    camera.setResolution(160, 120);
-    camera.setFPS(20);
-    camera.setExposureAuto();
-  }
+  //   UsbCamera camera = CameraServer.startAutomaticCapture();
+  //   camera.setResolution(160, 120);
+  //   camera.setFPS(20);
+  //   camera.setExposureAuto();
+  // }
 }
