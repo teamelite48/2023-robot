@@ -28,39 +28,12 @@
     },
     {
       "anchorPoint": {
-        "x": 6.087742583194582,
-        "y": 3.364409011990745
+        "x": 3.8929673115091226,
+        "y": 3.3950622979081393
       },
       "prevControl": {
-        "x": 5.761955905745981,
-        "y": 3.364409011990745
-      },
-      "nextControl": {
-        "x": 5.761955905745981,
-        "y": 3.364409011990745
-      },
-      "holonomicAngle": 180.0,
-      "isReversal": true,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": true,
-      "stopEvent": {
-        "names": [
-          "Toggle Arm Orientation"
-        ],
-        "executionBehavior": "sequential",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 3.8010074537569385,
-        "y": 3.1069214102846296
-      },
-      "prevControl": {
-        "x": 6.118395869111976,
-        "y": 3.211142582403771
+        "x": 3.457690651482119,
+        "y": 3.3766703263577025
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -70,8 +43,7 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Auto Balance",
-          "Toggle Arm Orientation"
+          "Auto Balance"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
