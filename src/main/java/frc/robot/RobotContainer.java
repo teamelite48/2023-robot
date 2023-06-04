@@ -166,7 +166,7 @@ public class RobotContainer {
     testController.rt.onTrue(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(ArmConfig.WRIST_MAX_SPEED * ArmConfig.TEST_MAX_SPEED_MODIFIER)))
       .onFalse(new InstantCommand(() -> armSubsystem.setWristMotorSpeed(0)));
 
-    testController.back.whileTrue(new RunAutoCommand(() -> autoChooser.getSelected()));
+    testController.back.whileTrue(new AutoBalance());
   }
 
   private void initAutoChooser() {

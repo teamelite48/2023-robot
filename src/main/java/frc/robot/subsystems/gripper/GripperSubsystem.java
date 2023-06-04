@@ -51,6 +51,15 @@ public class GripperSubsystem extends SubsystemBase {
     }
   }
 
+  public void outtakeSlower() {
+    if (gripperMode == GripperMode.Cone) {
+      motorController.set(GRIPPER_MOTOR_SPEED * 0.75);
+    }
+    else if (gripperMode == GripperMode.Cube) {
+      motorController.set(GRIPPER_MOTOR_SPEED * 0.75);
+    }
+  }
+
   public void setMode(GripperMode _gripperMode) {
       gripperMode = _gripperMode;
   }

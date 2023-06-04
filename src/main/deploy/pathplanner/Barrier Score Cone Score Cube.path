@@ -86,15 +86,15 @@
     {
       "anchorPoint": {
         "x": 1.8269358406767222,
-        "y": 4.28
+        "y": 4.2
       },
       "prevControl": {
         "x": 3.73357022473867,
-        "y": 4.9482416329992045
+        "y": 4.868241632999204
       },
       "nextControl": {
         "x": 3.73357022473867,
-        "y": 4.9482416329992045
+        "y": 4.868241632999204
       },
       "holonomicAngle": 180.0,
       "isReversal": true,
@@ -103,6 +103,7 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
+          "Wait 0.3",
           "Outtake"
         ],
         "executionBehavior": "sequential",

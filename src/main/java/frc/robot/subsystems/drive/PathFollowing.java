@@ -53,6 +53,11 @@ public class PathFollowing {
             new WaitCommand(.35),
             new InstantCommand(() -> RobotContainer.gripperSubsystem.stop())
         ));
+        put("OuttakeSlower", new SequentialCommandGroup(
+            new InstantCommand(() -> RobotContainer.gripperSubsystem.outtakeSlower()),
+            new WaitCommand(.35),
+            new InstantCommand(() -> RobotContainer.gripperSubsystem.stop())
+        ));
         put("Stop Intake", new InstantCommand(() -> RobotContainer.gripperSubsystem.stop()));
         put("Stow Arm", new StowArm());
         put("Auto Stow", new AutoStow());
