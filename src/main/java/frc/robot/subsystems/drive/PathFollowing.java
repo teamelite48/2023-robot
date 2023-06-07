@@ -28,7 +28,7 @@ public class PathFollowing {
 
     static public final List<PathPlannerTrajectory> BarrierScoreConeHoldCubeBalance = PathPlanner.loadPathGroup("Barrier Score Cone Hold Cube Balance", new PathConstraints(2, 2));
     static public final List<PathPlannerTrajectory> BarrierScoreConeScoreCube = PathPlanner.loadPathGroup("Barrier Score Cone Score Cube", new PathConstraints(2, 2), new PathConstraints(2, 2), new PathConstraints(3.5, 3.5));
-    static public final List<PathPlannerTrajectory> BarrierScoreConeScoreCubeBalance = PathPlanner.loadPathGroup("The Redo", new PathConstraints(2.5, 2.5), new PathConstraints(3, 3), new PathConstraints(2.5, 2.5));
+    static public final List<PathPlannerTrajectory> BarrierScoreConeScoreCubeBalance = PathPlanner.loadPathGroup("The Redo", new PathConstraints(2.5, 2.5), new PathConstraints(3, 3), new PathConstraints(2.75, 2.75));
     static public final List<PathPlannerTrajectory> BarrierLowThreePiece = PathPlanner.loadPathGroup("Barrier Low 3 Piece", new PathConstraints(2.25, 2.25));
     static public final List<PathPlannerTrajectory> WallScoreConeHoldCubeBalance = PathPlanner.loadPathGroup("Wall Score Cone Hold Cube Balance", new PathConstraints(2.25, 2.25));
     static public final List<PathPlannerTrajectory> WallScoreConeScoreCube = PathPlanner.loadPathGroup("Wall 2 Score Redo", new PathConstraints(2.25, 2.25));
