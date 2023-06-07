@@ -171,6 +171,7 @@ public class RobotContainer {
 
   private void initAutoChooser() {
     autoChooser.setDefaultOption("GLHF (Do Nothing)", new WaitCommand(3));
+    
     autoChooser.addOption("Barrier SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeHoldCubeBalance));
     autoChooser.addOption("Barrier SCORE Cone SCORE Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeScoreCube));
     autoChooser.addOption("Barrier SCORE Cone SCORE Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeScoreCubeBalance));
