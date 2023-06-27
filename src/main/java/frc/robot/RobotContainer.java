@@ -15,7 +15,6 @@ import frc.robot.commands.AutoBalance;
 import frc.robot.commands.AutoTarget;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ReadyArm;
-import frc.robot.commands.RunAutoCommand;
 import frc.robot.commands.SetGripperModeToCone;
 import frc.robot.commands.SetGripperModeToCube;
 import frc.robot.commands.ToggleArmOrientation;
@@ -171,7 +170,7 @@ public class RobotContainer {
 
   private void initAutoChooser() {
     autoChooser.setDefaultOption("GLHF (Do Nothing)", new WaitCommand(3));
-    
+
     autoChooser.addOption("Barrier SCORE Cone HOLD Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeHoldCubeBalance));
     autoChooser.addOption("Barrier SCORE Cone SCORE Cube", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeScoreCube));
     autoChooser.addOption("Barrier SCORE Cone SCORE Cube BALANCE", driveSubsystem.getPathPlannerGroupCommand(PathFollowing.BarrierScoreConeScoreCubeBalance));
