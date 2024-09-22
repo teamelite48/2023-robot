@@ -82,8 +82,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
-    RobotContainer.driveSubsystem.setHighGear();
-    RobotContainer.driveSubsystem.reverseGyro();
+    // Commented out for demos, so the robot maintains state between disable and enable
+    // RobotContainer.driveSubsystem.setHighGear();
+    // RobotContainer.driveSubsystem.reverseGyro();
 
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
